@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,84 +8,25 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#09090d;--panel:#15151d;--panel2:#20202b;--text:#f7f7fb;--muted:#a2a2b3;--pink:#ff2d75;--purple:#8a5cff;--border:#30303d}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
 .topbar{height:68px;position:sticky;top:0;z-index:10;background:#0b0b10ed;backdrop-filter:blur(18px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:16px}
-.brand{font-size:25px;font-weight:900;letter-spacing:-1.2px;white-space:nowrap}
-.brand span{color:var(--pink)}
+.brand{font-size:25px;font-weight:900;letter-spacing:-1.2px;white-space:nowrap}.brand span{color:var(--pink)}
 .search{max-width:360px;width:100%;background:var(--panel);border:1px solid var(--border);border-radius:25px;padding:11px 16px;color:white;outline:none}
-.actions{display:flex;align-items:center;gap:9px}
-.btn{border:0;border-radius:11px;padding:11px 15px;font-weight:750;background:var(--panel2);color:white}
-.btn.primary{background:linear-gradient(110deg,var(--pink),var(--purple))}
-.btn.outline{border:1px solid var(--border);background:transparent}
+.actions{display:flex;align-items:center;gap:9px}.btn{border:0;border-radius:11px;padding:11px 15px;font-weight:750;background:var(--panel2);color:white}.btn.primary{background:linear-gradient(110deg,var(--pink),var(--purple))}.btn.outline{border:1px solid var(--border);background:transparent}.btn:disabled{opacity:.55;cursor:wait}
 .layout{display:grid;grid-template-columns:220px minmax(0,1fr) 270px;max-width:1500px;margin:auto;gap:22px;padding:20px}
-.sidebar{position:sticky;top:88px;height:calc(100vh - 105px);overflow:auto}
-.navitem{width:100%;display:flex;align-items:center;gap:13px;padding:14px;border-radius:12px;background:transparent;border:0;color:#d6d6e1;text-align:left;margin:3px 0;font-size:15px}
-.navitem:hover,.navitem.active{background:var(--panel2);color:white}
-.navitem.active{box-shadow:inset 3px 0 var(--pink)}
-.navicon{width:24px;font-size:20px;text-align:center}
-.smalltitle{font-size:12px;letter-spacing:1.3px;color:var(--muted);font-weight:800;margin:24px 12px 8px}
-main{min-width:0}
-.section{display:none}
-.section.active{display:block}
-.heading{font-size:25px;margin:4px 0 7px;font-weight:850}
-.subheading{color:var(--muted);margin:0 0 20px;font-size:14px;line-height:1.6}
-.tabs{display:flex;gap:8px;border-bottom:1px solid var(--border);margin-bottom:17px;padding-bottom:12px;flex-wrap:wrap}
-.tab{border:0;background:transparent;color:var(--muted);padding:9px 13px;border-radius:9px}
-.tab.active{background:var(--panel2);color:white}
-.feed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.video-card{min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.video-art{height:330px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(145deg,#282040,#10101a 55%,#551a3c)}
-.video-art.alt{background:linear-gradient(145deg,#17403d,#151526 55%,#48265f)}
-.video-art.third{background:linear-gradient(145deg,#392b1a,#141420 60%,#a52d56)}
-.video-art.fourth{background:linear-gradient(145deg,#202f56,#14141d 60%,#512f7c)}
-.play{border:1px solid #ffffff55;background:#11111177;color:white;width:58px;height:58px;border-radius:50%;font-size:22px;backdrop-filter:blur(8px)}
-.video-label{position:absolute;top:12px;left:12px;border-radius:6px;background:#08080ab5;padding:7px 9px;font-size:11px}
-.video-bottom{position:absolute;bottom:0;left:0;right:0;padding:45px 13px 13px;background:linear-gradient(transparent,#000d)}
-.video-bottom strong{display:block;margin-bottom:6px}
-.video-bottom p{font-size:13px;line-height:1.45;margin:0;color:#ededf5}
-.postmeta{padding:12px}
-.creator{font-size:13px;color:#dddde9}
-.engagement{display:flex;justify-content:space-between;gap:4px;margin-top:12px}
-.engagement button{background:transparent;color:#d6d6e1;border:0;padding:7px 4px;font-size:12px}
-.engagement button:hover,.engagement button.selected{color:var(--pink)}
-.rightbox{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:17px;margin-bottom:15px}
-.rightbox h3{font-size:15px;margin:0 0 13px}
-.rightbox p{color:var(--muted);font-size:13px;line-height:1.6}
-.live-card{background:linear-gradient(140deg,#301a36,#161523);border:1px solid #5b3158;border-radius:15px;padding:16px;margin-bottom:15px}
-.live-pill{display:inline-block;background:#ff2d75;color:white;font-size:11px;font-weight:800;border-radius:6px;padding:5px 8px}
-.empty{padding:35px 15px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:15px;grid-column:1/-1}
-.profilehead{display:flex;gap:17px;align-items:center;background:var(--panel);border:1px solid var(--border);padding:22px;border-radius:17px;margin-bottom:18px}
-.avatar{width:75px;height:75px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple));display:grid;place-items:center;font-size:27px;font-weight:900;flex-shrink:0}
-.profilehead h2{margin:0 0 5px}
-.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:11px}
-.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}
-.field label{font-size:13px;color:#d6d6e1}
-.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:10px;background:#0e0e14;color:white;padding:12px;outline:none}
-.field textarea{min-height:100px;resize:vertical}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--purple)}
-.panel{background:var(--panel);border:1px solid var(--border);padding:19px;border-radius:16px;margin-bottom:16px}
-.panel h3{margin-top:0}
-.settingrow{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:1px solid var(--border);padding:14px 0}
-.settingrow:last-child{border-bottom:0}
-.settingrow p{color:var(--muted);font-size:13px;margin:5px 0 0}
-.live-preview{aspect-ratio:16/9;background:radial-gradient(ellipse,#27213b,#09090d 70%);border:1px solid var(--border);border-radius:15px;display:grid;place-items:center;text-align:center;margin:12px 0 18px}
-.live-preview video{width:100%;height:100%;object-fit:cover;border-radius:15px}
-.notice{color:var(--muted);font-size:12px;line-height:1.6}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:16px}
-.modal.open{display:flex}
-.dialog{width:min(550px,100%);max-height:92vh;overflow:auto;background:#12121a;border:1px solid var(--border);border-radius:19px;padding:22px;box-shadow:0 25px 90px #0009}
-.dialoghead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.dialoghead h2{margin:0;font-size:21px}
-.close{background:var(--panel2);color:white;border:0;border-radius:9px;width:36px;height:36px;font-size:20px}
-.authswitch{display:flex;gap:8px;margin-bottom:18px}
-.authswitch button{flex:1}
-.status{font-size:13px;line-height:1.6;color:var(--muted);margin-top:10px}
-.mobilebar{display:none}
+.sidebar{position:sticky;top:88px;height:calc(100vh - 105px);overflow:auto}.navitem{width:100%;display:flex;align-items:center;gap:13px;padding:14px;border-radius:12px;background:transparent;border:0;color:#d6d6e1;text-align:left;margin:3px 0;font-size:15px}.navitem:hover,.navitem.active{background:var(--panel2);color:white}.navitem.active{box-shadow:inset 3px 0 var(--pink)}.navicon{width:24px;font-size:20px;text-align:center}
+.smalltitle{font-size:12px;letter-spacing:1.3px;color:var(--muted);font-weight:800;margin:24px 12px 8px}main{min-width:0}.section{display:none}.section.active{display:block}.heading{font-size:25px;margin:4px 0 7px;font-weight:850}.subheading{color:var(--muted);margin:0 0 20px;font-size:14px;line-height:1.6}
+.tabs{display:flex;gap:8px;border-bottom:1px solid var(--border);margin-bottom:17px;padding-bottom:12px;flex-wrap:wrap}.tab{border:0;background:transparent;color:var(--muted);padding:9px 13px;border-radius:9px}.tab.active{background:var(--panel2);color:white}
+.feed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.video-card{min-width:0;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden}.video-art{height:330px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(145deg,#282040,#10101a 55%,#551a3c)}.video-art.alt{background:linear-gradient(145deg,#17403d,#151526 55%,#48265f)}.video-art.third{background:linear-gradient(145deg,#392b1a,#141420 60%,#a52d56)}.video-art.fourth{background:linear-gradient(145deg,#202f56,#14141d 60%,#512f7c)}
+.play{border:1px solid #ffffff55;background:#11111177;color:white;width:58px;height:58px;border-radius:50%;font-size:22px;backdrop-filter:blur(8px)}.video-label{position:absolute;top:12px;left:12px;border-radius:6px;background:#08080ab5;padding:7px 9px;font-size:11px}.video-bottom{position:absolute;bottom:0;left:0;right:0;padding:45px 13px 13px;background:linear-gradient(transparent,#000d)}.video-bottom strong{display:block;margin-bottom:6px}.video-bottom p{font-size:13px;line-height:1.45;margin:0;color:#ededf5}
+.postmeta{padding:12px}.creator{font-size:13px;color:#dddde9}.engagement{display:flex;justify-content:space-between;gap:4px;margin-top:12px}.engagement button{background:transparent;color:#d6d6e1;border:0;padding:7px 4px;font-size:12px}.engagement button:hover,.engagement button.selected{color:var(--pink)}
+.rightbox{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:17px;margin-bottom:15px}.rightbox h3{font-size:15px;margin:0 0 13px}.rightbox p{color:var(--muted);font-size:13px;line-height:1.6}.live-card{background:linear-gradient(140deg,#301a36,#161523);border:1px solid #5b3158;border-radius:15px;padding:16px;margin-bottom:15px}.live-pill{display:inline-block;background:#ff2d75;color:white;font-size:11px;font-weight:800;border-radius:6px;padding:5px 8px}
+.empty{padding:35px 15px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:15px;grid-column:1/-1}.profilehead{display:flex;gap:17px;align-items:center;background:var(--panel);border:1px solid var(--border);padding:22px;border-radius:17px;margin-bottom:18px}.avatar{width:75px;height:75px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple));display:grid;place-items:center;font-size:27px;font-weight:900;flex-shrink:0}.profilehead h2{margin:0 0 5px}.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:11px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}.field label{font-size:13px;color:#d6d6e1}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:10px;background:#0e0e14;color:white;padding:12px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--purple)}.field textarea{min-height:100px;resize:vertical}
+.panel{background:var(--panel);border:1px solid var(--border);padding:19px;border-radius:16px;margin-bottom:16px}.panel h3{margin-top:0}.settingrow{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:1px solid var(--border);padding:14px 0}.settingrow:last-child{border-bottom:0}.settingrow p{color:var(--muted);font-size:13px;margin:5px 0 0}
+.live-preview{aspect-ratio:16/9;background:radial-gradient(ellipse,#27213b,#09090d 70%);border:1px solid var(--border);border-radius:15px;display:grid;place-items:center;text-align:center;margin:12px 0 18px;overflow:hidden}.live-preview video{width:100%;height:100%;object-fit:cover;border-radius:15px}.notice{color:var(--muted);font-size:12px;line-height:1.6}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}.dialog{width:min(550px,100%);max-height:92vh;overflow:auto;background:#12121a;border:1px solid var(--border);border-radius:19px;padding:22px;box-shadow:0 25px 90px #0009}.dialoghead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.dialoghead h2{margin:0;font-size:21px}.close{background:var(--panel2);color:white;border:0;border-radius:9px;width:36px;height:36px;font-size:20px}.authswitch{display:flex;gap:8px;margin-bottom:18px}.authswitch button{flex:1}.status{font-size:13px;line-height:1.6;color:var(--muted);margin-top:10px}.mobilebar{display:none}
 @media(max-width:1100px){.layout{grid-template-columns:190px minmax(0,1fr)}.rightcol{display:none}}
 @media(max-width:700px){.topbar{height:60px;padding:0 12px}.brand{font-size:21px}.search{display:none}.actions .btn{padding:9px;font-size:12px}.layout{display:block;padding:12px 10px 82px}.sidebar{display:none}.feed{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.video-art{height:260px}.postmeta{padding:9px}.engagement{flex-wrap:wrap}.engagement button{font-size:11px}.profilehead{padding:15px}.formgrid{grid-template-columns:1fr}.mobilebar{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;justify-content:space-around;background:#101017f5;border-top:1px solid var(--border);padding:8px 2px calc(8px + env(safe-area-inset-bottom))}.mobilebar button{border:0;background:transparent;color:#c9c9d8;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:4px}.mobilebar span{font-size:20px}.heading{font-size:23px}}
 </style>
@@ -95,12 +35,8 @@ main{min-width:0}
 <header class="topbar">
   <a class="brand" href="#" onclick="showSection('home');return false">FFine<span>XX</span></a>
   <input class="search" id="searchInput" placeholder="Search creators, videos, #hashtags..." aria-label="Search">
-  <div class="actions">
-    <button class="btn outline" id="authButton" onclick="openAuth()">Log in</button>
-    <button class="btn primary" id="createButton" onclick="openPost()">＋ Create</button>
-  </div>
+  <div class="actions"><button class="btn outline" id="authButton" onclick="openAuth()">Log in</button><button class="btn primary" id="createButton" onclick="openPost()">＋ Create</button></div>
 </header>
-
 <div class="layout">
 <aside class="sidebar">
   <div class="smalltitle">DISCOVER</div>
@@ -118,502 +54,70 @@ main{min-width:0}
   <button class="navitem" onclick="logout()"><span class="navicon">↪</span>Log out</button>
   <p class="notice" style="padding:12px">FFineXX · Create your world.</p>
 </aside>
-
 <main>
 <section class="section active" id="section-home">
-  <h1 class="heading">Your world, your feed.</h1>
-  <p class="subheading">Discover short videos and creators from everywhere.</p>
-  <div class="tabs">
-    <button class="tab active" onclick="setFeedTab(this,'For You')">For You</button>
-    <button class="tab" onclick="setFeedTab(this,'Trending')">Trending</button>
-    <button class="tab" onclick="setFeedTab(this,'Photos')">Photos</button>
-  </div>
+  <h1 class="heading">Your world, your feed.</h1><p class="subheading">Discover short videos and creators from everywhere.</p>
+  <div class="tabs"><button class="tab active" onclick="setFeedTab(this,'For You')">For You</button><button class="tab" onclick="setFeedTab(this,'Trending')">Trending</button><button class="tab" onclick="setFeedTab(this,'Photos')">Photos</button></div>
   <div class="feed" id="feed">
-    <article class="video-card">
-      <div class="video-art"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('This is a sample preview. Real video playback is available when a creator uploads a video.')">▶</button><div class="video-bottom"><strong>Creative moments ✨</strong><p>Little moments, big memories. #FFineXX #Life</p></div></div>
-      <div class="postmeta"><div class="creator">@ffineXX_creator · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>128</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>42</span></button><button onclick="sharePost()">↗ Share</button></div></div>
-    </article>
-    <article class="video-card">
-      <div class="video-art alt"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('Sample post. Upload a real video to enable playback.')">▶</button><div class="video-bottom"><strong>Find your rhythm 🎵</strong><p>Feel the music. #Music #Vibes</p></div></div>
-      <div class="postmeta"><div class="creator">@music_world · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>96</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>27</span></button><button onclick="sharePost()">↗ Share</button></div></div>
-    </article>
-    <article class="video-card">
-      <div class="video-art third"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('Sample post. Upload a real video to enable playback.')">▶</button><div class="video-bottom"><strong>Make it happen 🔥</strong><p>Keep moving forward. #Motivation</p></div></div>
-      <div class="postmeta"><div class="creator">@daily_inspiration · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>204</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>55</span></button><button onclick="sharePost()">↗ Share</button></div></div>
-    </article>
-    <article class="video-card">
-      <div class="video-art fourth"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('Sample post. Upload a real video to enable playback.')">▶</button><div class="video-bottom"><strong>Explore something new 🌍</strong><p>Your next adventure awaits. #Discover</p></div></div>
-      <div class="postmeta"><div class="creator">@explore_more · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>73</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>19</span></button><button onclick="sharePost()">↗ Share</button></div></div>
-    </article>
-  </div>
-  <p class="notice" style="margin-top:15px">Sample posts are for design preview only. Public uploads and real engagement need database and storage setup.</p>
+    <article class="video-card"><div class="video-art"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('This is a sample preview. Real video playback is available when a creator uploads a video.')">▶</button><div class="video-bottom"><strong>Creative moments ✨</strong><p>Little moments, big memories. #FFineXX #Life</p></div></div><div class="postmeta"><div class="creator">@ffineXX_creator · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>128</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>42</span></button><button onclick="sharePost()">↗ Share</button></div></div></article>
+    <article class="video-card"><div class="video-art alt"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('Sample post. Upload a real video to enable playback.')">▶</button><div class="video-bottom"><strong>Find your rhythm 🎵</strong><p>Feel the music. #Music #Vibes</p></div></div><div class="postmeta"><div class="creator">@music_world · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>96</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>27</span></button><button onclick="sharePost()">↗ Share</button></div></div></article>
+    <article class="video-card"><div class="video-art third"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('Sample post. Upload a real video to enable playback.')">▶</button><div class="video-bottom"><strong>Make it happen 🔥</strong><p>Keep moving forward. #Motivation</p></div></div><div class="postmeta"><div class="creator">@daily_inspiration · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>204</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>55</span></button><button onclick="sharePost()">↗ Share</button></div></div></article>
+    <article class="video-card"><div class="video-art fourth"><span class="video-label">▶ SHORT VIDEO</span><button class="play" onclick="alert('Sample post. Upload a real video to enable playback.')">▶</button><div class="video-bottom"><strong>Explore something new 🌍</strong><p>Your next adventure awaits. #Discover</p></div></div><div class="postmeta"><div class="creator">@explore_more · Sample post</div><div class="engagement"><button onclick="likePost(this)">♡ <span>73</span></button><button onclick="commentPost()">▤ Comment</button><button onclick="favoritePost(this)">☆ <span>19</span></button><button onclick="sharePost()">↗ Share</button></div></div></article>
+  </div><p class="notice" style="margin-top:15px">Sample posts are for design preview only. Public uploads and real engagement need database and storage setup.</p>
 </section>
-
-<section class="section" id="section-following">
-  <h1 class="heading">Following</h1><p class="subheading">Posts from creators you follow.</p>
-  <div class="empty">Your following feed will appear here when real accounts and follows are connected.</div>
-</section>
-
-<section class="section" id="section-discover">
-  <h1 class="heading">Discover</h1><p class="subheading">Find new creators, trends and communities.</p>
-  <div class="panel"><h3>Explore hashtags</h3><p>#Music　#Comedy　#Dance　#Fashion　#Travel　#Lifestyle　#FFineXX</p></div>
-  <div class="panel"><h3>Search FFineXX</h3><div class="field"><input id="discoverSearch" placeholder="Search videos or hashtags"></div><button class="btn primary" onclick="searchPosts()">Search</button><p id="searchMessage" class="status"></p></div>
-</section>
-
-<section class="section" id="section-live">
-  <h1 class="heading">FFineXX LIVE</h1><p class="subheading">Go live, connect with viewers, and share moments in real time.</p>
-  <div class="live-card"><span class="live-pill">LIVE STUDIO</span><h2>It's your time to shine.</h2><p>Prepare your camera, microphone, title and audience settings.</p><button class="btn primary" onclick="openLive()">Set up a LIVE</button></div>
-  <div class="panel"><h3>Live broadcasts</h3><p class="notice">Public live broadcasts will appear here after a real streaming service is connected. This preview does not broadcast to other users.</p></div>
-</section>
-
-<section class="section" id="section-profile">
-  <h1 class="heading">Your profile</h1><p class="subheading">Your creator identity on FFineXX.</p>
-  <div class="profilehead"><div class="avatar" id="avatar">F</div><div><h2 id="profileName">FFineXX Creator</h2><div id="profileUsername" class="creator">@yourusername</div><div class="stats"><span>0 posts</span><span>0 followers</span><span>0 following</span></div></div></div>
-  <div class="panel"><h3>Profile details</h3><div class="field"><label>Display name</label><input id="displayName" placeholder="Your name"></div><div class="field"><label>Username</label><input id="username" placeholder="yourusername"></div><div class="field"><label>Bio</label><textarea id="bio" placeholder="Tell the world about yourself"></textarea></div><button class="btn primary" onclick="saveProfile()">Save profile</button></div>
-  <div class="panel"><h3>Account shortcuts</h3><button class="btn" onclick="showSection('settings')">⚙ Account settings</button> <button class="btn" onclick="showSection('dashboard')">▥ Dashboard</button> <button class="btn" onclick="showSection('studio')">✧ Creator Studio</button></div>
-</section>
-
-<section class="section" id="section-dashboard">
-  <h1 class="heading">Creator dashboard</h1><p class="subheading">Your performance overview.</p>
-  <div class="formgrid"><div class="panel"><p class="notice">Total views</p><h2>—</h2><p class="notice">Connect real posts to see analytics.</p></div><div class="panel"><p class="notice">Engagement</p><h2>—</h2><p class="notice">Real likes and comments will appear here.</p></div><div class="panel"><p class="notice">Followers</p><h2>—</h2></div><div class="panel"><p class="notice">Published posts</p><h2>—</h2></div></div>
-</section>
-
-<section class="section" id="section-studio">
-  <h1 class="heading">Creator Studio</h1><p class="subheading">Create, prepare and manage your content.</p>
-  <div class="panel"><h3>Publish content</h3><p class="notice">Choose a video or image, add a caption and hashtags, and set who can see it.</p><button class="btn primary" onclick="openPost()">＋ Create a post</button></div>
-  <div class="panel"><h3>Go LIVE</h3><p class="notice">Configure a public broadcast in the LIVE section.</p><button class="btn" onclick="showSection('live')">Open LIVE studio</button></div>
-</section>
-
-<section class="section" id="section-settings">
-  <h1 class="heading">Account settings</h1><p class="subheading">Manage your account and preferences.</p>
-  <div class="panel"><h3>Account</h3>
-    <div class="settingrow"><div><strong>Profile details</strong><p>Change your display name and username.</p></div><button class="btn" onclick="showSection('profile')">Edit</button></div>
-    <div class="settingrow"><div><strong>Sign in or add account</strong><p>Add another account or sign in.</p></div><button class="btn" onclick="openAuth()">Open</button></div>
-    <div class="settingrow"><div><strong>Privacy</strong><p>Manage your content visibility when publishing.</p></div><button class="btn" onclick="openPost()">Post settings</button></div>
-    <div class="settingrow"><div><strong>Log out</strong><p>Sign out of this account on this device.</p></div><button class="btn outline" onclick="logout()">Log out</button></div>
-  </div>
-  <div class="panel"><h3>Account safety</h3><p class="notice">Use a strong password and never share your verification codes. Birthday and country collection, account switching, and Google sign-in require additional authentication configuration.</p></div>
-</section>
+<section class="section" id="section-following"><h1 class="heading">Following</h1><p class="subheading">Posts from creators you follow.</p><div class="empty">Your following feed will appear here when real accounts and follows are connected.</div></section>
+<section class="section" id="section-discover"><h1 class="heading">Discover</h1><p class="subheading">Find new creators, trends and communities.</p><div class="panel"><h3>Explore hashtags</h3><p>#Music　#Comedy　#Dance　#Fashion　#Travel　#Lifestyle　#FFineXX</p></div><div class="panel"><h3>Search FFineXX</h3><div class="field"><input id="discoverSearch" placeholder="Search videos or hashtags"></div><button class="btn primary" onclick="searchPosts()">Search</button><p id="searchMessage" class="status"></p></div></section>
+<section class="section" id="section-live"><h1 class="heading">FFineXX LIVE</h1><p class="subheading">Go live, connect with viewers, and share moments in real time.</p><div class="live-card"><span class="live-pill">LIVE STUDIO</span><h2>It's your time to shine.</h2><p>Prepare your camera, microphone, title and audience settings.</p><button class="btn primary" onclick="openLive()">Set up a LIVE</button></div><div class="panel"><h3>Live broadcasts</h3><p class="notice">Public live broadcasts will appear here after a real streaming service is connected. This preview does not broadcast to other users.</p></div></section>
+<section class="section" id="section-profile"><h1 class="heading">Your profile</h1><p class="subheading">Your creator identity on FFineXX.</p><div class="profilehead"><div class="avatar" id="avatar">F</div><div><h2 id="profileName">FFineXX Creator</h2><div id="profileUsername" class="creator">@yourusername</div><div class="stats"><span>0 posts</span><span>0 followers</span><span>0 following</span></div></div></div><div class="panel"><h3>Profile details</h3><div class="field"><label>Display name</label><input id="displayName" placeholder="Your name"></div><div class="field"><label>Username</label><input id="username" placeholder="yourusername"></div><div class="field"><label>Bio</label><textarea id="bio" placeholder="Tell the world about yourself"></textarea></div><button class="btn primary" onclick="saveProfile()">Save profile</button></div><div class="panel"><h3>Account shortcuts</h3><button class="btn" onclick="showSection('settings')">⚙ Account settings</button> <button class="btn" onclick="showSection('dashboard')">▥ Dashboard</button> <button class="btn" onclick="showSection('studio')">✧ Creator Studio</button></div></section>
+<section class="section" id="section-dashboard"><h1 class="heading">Creator dashboard</h1><p class="subheading">Your performance overview.</p><div class="formgrid"><div class="panel"><p class="notice">Total views</p><h2>—</h2><p class="notice">Connect real posts to see analytics.</p></div><div class="panel"><p class="notice">Engagement</p><h2>—</h2><p class="notice">Real likes and comments will appear here.</p></div><div class="panel"><p class="notice">Followers</p><h2>—</h2></div><div class="panel"><p class="notice">Published posts</p><h2>—</h2></div></div></section>
+<section class="section" id="section-studio"><h1 class="heading">Creator Studio</h1><p class="subheading">Create, prepare and manage your content.</p><div class="panel"><h3>Publish content</h3><p class="notice">Choose a video or image, add a caption and hashtags, and set who can see it.</p><button class="btn primary" onclick="openPost()">＋ Create a post</button></div><div class="panel"><h3>Go LIVE</h3><p class="notice">Configure a public broadcast in the LIVE section.</p><button class="btn" onclick="showSection('live')">Open LIVE studio</button></div></section>
+<section class="section" id="section-settings"><h1 class="heading">Account settings</h1><p class="subheading">Manage your account and preferences.</p><div class="panel"><h3>Account</h3><div class="settingrow"><div><strong>Profile details</strong><p>Change your display name and username.</p></div><button class="btn" onclick="showSection('profile')">Edit</button></div><div class="settingrow"><div><strong>Sign in or add account</strong><p>Add another account or sign in.</p></div><button class="btn" onclick="openAuth()">Open</button></div><div class="settingrow"><div><strong>Privacy</strong><p>Manage your content visibility when publishing.</p></div><button class="btn" onclick="openPost()">Post settings</button></div><div class="settingrow"><div><strong>Log out</strong><p>Sign out of this account on this device.</p></div><button class="btn outline" onclick="logout()">Log out</button></div></div><div class="panel"><h3>Account safety</h3><p class="notice">Use a strong password and never share your verification codes. Birthday and country collection, account switching, and Google sign-in require additional authentication configuration.</p></div></section>
 </main>
-
-<aside class="rightcol">
-  <div class="rightbox"><h3>Welcome to FFineXX</h3><p>Watch public content and discover creators. Sign in when you're ready to post and interact.</p><button class="btn primary" style="width:100%" onclick="openAuth()">Join FFineXX</button></div>
-  <div class="rightbox"><h3>Go LIVE</h3><p>Prepare your live broadcast and connect with your audience.</p><button class="btn" style="width:100%" onclick="showSection('live')">Open LIVE studio</button></div>
-  <div class="rightbox"><h3>Creator tools</h3><button class="navitem" onclick="showSection('dashboard')">▥ Dashboard</button><button class="navitem" onclick="showSection('studio')">✧ Creator Studio</button><button class="navitem" onclick="showSection('settings')">⚙ Account settings</button></div>
-  <p class="notice">FFineXX · Create. Connect. Go Live.</p>
-</aside>
+<aside class="rightcol"><div class="rightbox"><h3>Welcome to FFineXX</h3><p>Watch public content and discover creators. Sign in when you're ready to post and interact.</p><button class="btn primary" style="width:100%" onclick="openAuth()">Join FFineXX</button></div><div class="rightbox"><h3>Go LIVE</h3><p>Prepare your live broadcast and connect with your audience.</p><button class="btn" style="width:100%" onclick="showSection('live')">Open LIVE studio</button></div><div class="rightbox"><h3>Creator tools</h3><button class="navitem" onclick="showSection('dashboard')">▥ Dashboard</button><button class="navitem" onclick="showSection('studio')">✧ Creator Studio</button><button class="navitem" onclick="showSection('settings')">⚙ Account settings</button></div><p class="notice">FFineXX · Create. Connect. Go Live.</p></aside>
 </div>
+<nav class="mobilebar"><button onclick="showSection('home')"><span>⌂</span>Home</button><button onclick="showSection('discover')"><span>⌕</span>Discover</button><button onclick="openPost()"><span>＋</span>Create</button><button onclick="showSection('live')"><span>◉</span>LIVE</button><button onclick="showSection('profile')"><span>◎</span>Profile</button></nav>
 
-<nav class="mobilebar">
-  <button onclick="showSection('home')"><span>⌂</span>Home</button>
-  <button onclick="showSection('discover')"><span>⌕</span>Discover</button>
-  <button onclick="openPost()"><span>＋</span>Create</button>
-  <button onclick="showSection('live')"><span>◉</span>LIVE</button>
-  <button onclick="showSection('profile')"><span>◎</span>Profile</button>
-</nav>
-
-<!-- SIGN UP / LOGIN -->
-<div class="modal" id="authModal">
- <div class="dialog">
-  <div class="dialoghead"><h2>Welcome to FFineXX</h2><button class="close" onclick="closeModal('authModal')">×</button></div>
-  <div class="authswitch"><button class="btn primary" id="signupTab" onclick="setAuthMode('signup')">Sign up</button><button class="btn" id="loginTab" onclick="setAuthMode('login')">Log in</button></div>
-  <form id="authForm">
-   <div id="signupFields">
-    <div class="field"><label>Full name</label><input id="authName" autocomplete="name" placeholder="Your full name"></div>
-    <div class="field"><label>Username</label><input id="authUsername" autocomplete="username" placeholder="Choose a username"></div>
-    <div class="formgrid">
-     <div class="field"><label>Country</label><select id="authCountry"><option value="">Select country</option></select></div>
-     <div class="field"><label>Birthday</label><input id="authBirthday" type="date"></div>
-    </div>
-   </div>
-   <div class="field"><label>Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div>
-   <div class="field"><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required></div>
-   <button class="btn primary" id="authSubmit" style="width:100%" type="submit">Create account</button>
-  </form>
-  <div class="status" id="authStatus">By continuing, you agree to use FFineXX responsibly.</div>
-  <p class="notice">Phone sign-up and Google sign-in require additional Supabase provider setup. Do not enter private information on a shared device.</p>
- </div>
-</div>
-
-<!-- CREATE POST -->
-<div class="modal" id="postModal">
- <div class="dialog">
-  <div class="dialoghead"><h2>Create a post</h2><button class="close" onclick="closeModal('postModal')">×</button></div>
-  <form id="postForm">
-   <div class="field"><label>Choose a photo or short video</label><input id="postFile" type="file" accept="image/*,video/*" required></div>
-   <div class="field"><label>Description and hashtags</label><textarea id="postCaption" maxlength="2200" placeholder="Write a caption... #FFineXX" required></textarea></div>
-   <div class="field"><label>Who can see this post?</label><select id="postVisibility"><option value="public">Public — everyone</option><option value="private">Private — only you</option><option value="friends">Friends only</option><option value="following">Following only</option></select></div>
-   <div class="field"><label>Preview</label><div id="postPreview" class="live-preview">Your selected media will appear here.</div></div>
-   <button class="btn primary" style="width:100%" type="submit">Prepare post</button>
-  </form>
-  <p class="notice">This starter page can preview media, but does not upload or publish posts to other users yet.</p>
-  <div class="status" id="postStatus"></div>
- </div>
-</div>
-
-<!-- LIVE SETUP -->
-<div class="modal" id="liveModal">
- <div class="dialog">
-  <div class="dialoghead"><h2>Professional LIVE setup</h2><button class="close" onclick="closeModal('liveModal')">×</button></div>
-  <form id="liveForm">
-   <div class="field"><label>Live title</label><input id="liveTitle" maxlength="100" placeholder="Give your live a title" required></div>
-   <div class="field"><label>Audience</label><select id="liveAudience"><option value="public">Public — anyone can watch</option><option value="friends">Friends only</option></select></div>
-   <div class="formgrid"><div class="field"><label>Camera</label><select id="cameraSelect"><option value="">Default camera</option></select></div><div class="field"><label>Microphone</label><select id="micSelect"><option value="">Default microphone</option></select></div></div>
-   <div class="live-preview" id="livePreview">Camera preview will appear here.</div>
-   <div class="actions" style="margin-bottom:15px"><button class="btn" type="button" onclick="startCamera()">Enable camera</button><button class="btn" type="button" onclick="stopCamera()">Stop camera</button></div>
-   <button class="btn primary" style="width:100%" type="submit">Prepare public LIVE</button>
-  </form>
-  <p class="notice">Camera preview is not a public broadcast. To stream to viewers, FFineXX must be connected to a real streaming provider or media server.</p>
-  <div class="status" id="liveStatus"></div>
- </div>
-</div>
+<div class="modal" id="authModal"><div class="dialog"><div class="dialoghead"><h2>Welcome to FFineXX</h2><button class="close" onclick="closeModal('authModal')">×</button></div><div class="authswitch"><button class="btn primary" id="signupTab" onclick="setAuthMode('signup')">Sign up</button><button class="btn" id="loginTab" onclick="setAuthMode('login')">Log in</button></div><form id="authForm"><div id="signupFields"><div class="field"><label>Full name</label><input id="authName" autocomplete="name" placeholder="Your full name"></div><div class="field"><label>Username</label><input id="authUsername" autocomplete="username" placeholder="Choose a username"></div><div class="formgrid"><div class="field"><label>Country</label><select id="authCountry"><option value="">Select country</option></select></div><div class="field"><label>Birthday</label><input id="authBirthday" type="date"></div></div></div><div class="field"><label>Email address</label><input id="authEmail" type="email" autocomplete="email" placeholder="you@example.com" required></div><div class="field"><label>Password</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="At least 6 characters" required></div><button class="btn primary" id="authSubmit" style="width:100%" type="submit">Create account</button></form><div class="status" id="authStatus">By continuing, you agree to use FFineXX responsibly.</div><p class="notice">Phone sign-up and Google sign-in require additional Supabase provider setup. Do not enter private information on a shared device.</p></div></div>
+<div class="modal" id="postModal"><div class="dialog"><div class="dialoghead"><h2>Create a post</h2><button class="close" onclick="closeModal('postModal')">×</button></div><form id="postForm"><div class="field"><label>Choose a photo or short video</label><input id="postFile" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm" required></div><div class="field"><label>Description and hashtags</label><textarea id="postCaption" maxlength="2200" placeholder="Write a caption... #FFineXX" required></textarea></div><div class="field"><label>Who can see this post?</label><select id="postVisibility"><option value="public">Public — everyone</option><option value="private">Private — only you</option><option value="friends">Friends only</option><option value="following">Following only</option></select></div><div class="field"><label>Preview</label><div id="postPreview" class="live-preview">Your selected media will appear here.</div></div><button class="btn primary" style="width:100%" type="submit">Publish post</button></form><p class="notice">Note: the current public storage bucket means uploaded media can be accessed by anyone with its URL, even if a post is marked private. Friends/following permissions are not enforced yet.</p><div class="status" id="postStatus"></div></div></div>
+<div class="modal" id="liveModal"><div class="dialog"><div class="dialoghead"><h2>Professional LIVE setup</h2><button class="close" onclick="closeModal('liveModal')">×</button></div><form id="liveForm"><div class="field"><label>Live title</label><input id="liveTitle" maxlength="100" placeholder="Give your live a title" required></div><div class="field"><label>Audience</label><select id="liveAudience"><option value="public">Public — anyone can watch</option><option value="friends">Friends only</option></select></div><div class="formgrid"><div class="field"><label>Camera</label><select id="cameraSelect"><option value="">Default camera</option></select></div><div class="field"><label>Microphone</label><select id="micSelect"><option value="">Default microphone</option></select></div></div><div class="live-preview" id="livePreview">Camera preview will appear here.</div><div class="actions" style="margin-bottom:15px"><button class="btn" type="button" onclick="startCamera()">Enable camera</button><button class="btn" type="button" onclick="stopCamera()">Stop camera</button></div><button class="btn primary" style="width:100%" type="submit">Prepare public LIVE</button></form><p class="notice">Camera preview is not a public broadcast. To stream to viewers, FFineXX must be connected to a real streaming provider or media server.</p><div class="status" id="liveStatus"></div></div></div>
 
 <script>
-/* Replace these with your own Supabase project values if needed. */
-const SUPABASE_URL = "https://ogzkrakaypfhowkgvvzp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_uzizmRLBZehb_4MkQcgqEg_DPQ0pyKl";
-let supabaseClient = null;
-let currentUser = null;
-let authMode = "signup";
-let cameraStream = null;
-let previewUrl = null;
-
-try {
- if (window.supabase && SUPABASE_URL && SUPABASE_KEY) {
-  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
- }
-} catch (e) { console.error("Supabase initialization error", e); }
-
-function showSection(name) {
- document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
- const target=document.getElementById("section-"+name);
- if(target) target.classList.add("active");
- document.querySelectorAll(".navitem[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));
- window.scrollTo({top:0,behavior:"smooth"});
-}
-function setFeedTab(button, label) {
- document.querySelectorAll(".tabs .tab").forEach(t=>t.classList.remove("active"));
- button.classList.add("active");
- if(label==="Photos") alert("Photo feed will be available when real posts are connected.");
- else if(label==="Trending") alert("Trending posts will be available when real post data is connected.");
-}
+"use strict";
+const SUPABASE_URL="https://ogzkrakaypfhowkgvvzp.supabase.co";
+const SUPABASE_KEY="sb_publishable_uzizmRLBZehb_4MkQcgqEg_DPQ0pyKl";
+let supabaseClient=null,currentUser=null,authMode="signup",cameraStream=null,previewUrl=null;
+try{if(window.supabase&&SUPABASE_URL&&SUPABASE_KEY)supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);}catch(e){console.error("Supabase initialization error",e);}
+function showSection(name){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));const target=document.getElementById("section-"+name);if(target)target.classList.add("active");document.querySelectorAll(".navitem[data-section]").forEach(b=>b.classList.toggle("active",b.dataset.section===name));window.scrollTo({top:0,behavior:"smooth"});}
+function setFeedTab(button,label){document.querySelectorAll(".tabs .tab").forEach(t=>t.classList.remove("active"));button.classList.add("active");if(label==="Photos")alert("Photo feed will be available when real posts are connected.");else if(label==="Trending")alert("Trending posts will be available when real post data is connected.");}
 function openAuth(){document.getElementById("authModal").classList.add("open");}
-function openPost(){
- if(!currentUser){openAuth();return;}
- document.getElementById("postModal").classList.add("open");
-}
-function openLive(){
- if(!currentUser){openAuth();return;}
- document.getElementById("liveModal").classList.add("open");
-}
-function closeModal(id){
- document.getElementById(id).classList.remove("open");
- if(id==="liveModal") stopCamera();
-}
-function setAuthMode(mode){
- authMode=mode;
- document.getElementById("signupFields").style.display=mode==="signup"?"block":"none";
- document.getElementById("authSubmit").textContent=mode==="signup"?"Create account":"Log in";
- document.getElementById("signupTab").className=mode==="signup"?"btn primary":"btn";
- document.getElementById("loginTab").className=mode==="login"?"btn primary":"btn";
- document.getElementById("authStatus").textContent=mode==="signup"?"Create your FFineXX account.":"Log in to your FFineXX account.";
-}
-function updateAuthUI(){
- const authButton=document.getElementById("authButton");
- authButton.textContent=currentUser?"My account":"Log in";
- authButton.onclick=()=>currentUser?showSection("profile"):openAuth();
- document.getElementById("createButton").textContent=currentUser?"＋ Create":"＋ Create";
- if(currentUser){
-  document.getElementById("profileName").textContent=currentUser.user_metadata?.full_name||currentUser.email?.split("@")[0]||"FFineXX Creator";
-  document.getElementById("profileUsername").textContent="@"+(currentUser.user_metadata?.username||"creator");
-  document.getElementById("avatar").textContent=(document.getElementById("profileName").textContent[0]||"F").toUpperCase();
-  document.getElementById("displayName").value=currentUser.user_metadata?.full_name||"";
-  document.getElementById("username").value=currentUser.user_metadata?.username||"";
-  document.getElementById("authStatus").textContent="Signed in as "+(currentUser.email||"your account");
- }else{
-  document.getElementById("profileName").textContent="FFineXX Creator";
-  document.getElementById("profileUsername").textContent="@yourusername";
- }
-}
-async function refreshSession(){
- if(!supabaseClient)return;
- try{
-  const {data}=await supabaseClient.auth.getSession();
-  currentUser=data?.session?.user||null;
-  updateAuthUI();
- }catch(e){console.error(e);}
-}
-document.getElementById("authForm").addEventListener("submit",async e=>{
- e.preventDefault();
- const status=document.getElementById("authStatus");
- const email=document.getElementById("authEmail").value.trim();
- const password=document.getElementById("authPassword").value;
- const button=document.getElementById("authSubmit");
- if(!supabaseClient){status.textContent="Account service could not load. Check your internet connection and Supabase settings.";return;}
- button.disabled=true;
- status.textContent="Please wait...";
- try{
-  if(authMode==="signup"){
-   const name=document.getElementById("authName").value.trim();
-   const username=document.getElementById("authUsername").value.trim().replace(/^@/,"");
-   const country=document.getElementById("authCountry").value;
-   const birthday=document.getElementById("authBirthday").value;
-   if(!name||!username||!country||!birthday){status.textContent="Please complete all sign-up fields.";button.disabled=false;return;}
-   if(!/^[a-zA-Z0-9_.]{3,24}$/.test(username)){status.textContent="Username must be 3–24 characters using letters, numbers, underscores or dots.";button.disabled=false;return;}
-   const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{full_name:name,username,country,birthday}}});
-   if(error)throw error;
-   if(data.user&&!data.session){
-    status.textContent="Account created. Check your email for a confirmation link, then log in.";
-   }else{
-    currentUser=data.user;updateAuthUI();status.textContent="Welcome to FFineXX!";
-   }
-  }else{
-   const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
-   if(error)throw error;
-   currentUser=data.user;updateAuthUI();status.textContent="You are signed in!";
-   setTimeout(()=>closeModal("authModal"),700);
-  }
- }catch(err){status.textContent=err.message||"Authentication failed. Please try again.";}
- finally{button.disabled=false;}
-});
-async function logout(){
- if(!currentUser){openAuth();return;}
- if(!confirm("Log out of FFineXX?"))return;
- if(supabaseClient)await supabaseClient.auth.signOut();
- currentUser=null;updateAuthUI();showSection("home");
-}
-function saveProfile(){
- if(!currentUser){openAuth();return;}
- const name=document.getElementById("displayName").value.trim();
- const username=document.getElementById("username").value.trim().replace(/^@/,"");
- const bio=document.getElementById("bio").value.trim();
- if(!name||!username){alert("Enter your name and username.");return;}
- if(!supabaseClient){alert("Account service is unavailable.");return;}
- supabaseClient.auth.updateUser({data:{full_name:name,username,bio}})
- .then(({error})=>{if(error)alert(error.message);else{currentUser={...currentUser,user_metadata:{...currentUser.user_metadata,full_name:name,username,bio}};updateAuthUI();alert("Profile details saved.");}});
-}
-function requireSignIn(action){
- if(!currentUser){openAuth();return false;}
- return true;
-}
-function likePost(button){
- if(!requireSignIn())return;
- button.classList.toggle("selected");
- const count=button.querySelector("span");
- let n=Number(count.textContent)||0;
- count.textContent=button.classList.contains("selected")?n+1:Math.max(0,n-1);
-}
-function favoritePost(button){
- if(!requireSignIn())return;
- button.classList.toggle("selected");
- const count=button.querySelector("span");
- let n=Number(count.textContent)||0;
- count.textContent=button.classList.contains("selected")?n+1:Math.max(0,n-1);
-}
-function commentPost(){
- if(!requireSignIn())return;
- const text=prompt("Write your comment:");
- if(text&&text.trim())alert("Comment preview: "+text.trim()+"\n\nReal comments need database integration.");
-}
-async function sharePost(){
- if(!requireSignIn())return;
- try{await navigator.clipboard.writeText(location.href);alert("Page link copied.");}
- catch(e){prompt("Copy this link:",location.href);}
-}
-function searchPosts(){
- const q=(document.getElementById("discoverSearch").value||"").trim();
- document.getElementById("searchMessage").textContent=q?"Search for “"+q+"” will work when the real post database is connected.":"Enter a creator name or hashtag.";
-}
-document.getElementById("searchInput").addEventListener("keydown",e=>{
- if(e.key==="Enter"){showSection("discover");document.getElementById("discoverSearch").value=e.target.value;searchPosts();}
-});
-document.getElementById("postFile").addEventListener("change",e=>{
- const file=e.target.files?.[0];
- const preview=document.getElementById("postPreview");
- if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;}
- preview.innerHTML="";
- if(!file){preview.textContent="Your selected media will appear here.";return;}
- previewUrl=URL.createObjectURL(file);
- if(file.type.startsWith("image/")){
-  const img=document.createElement("img");img.src=previewUrl;img.style.cssText="width:100%;height:100%;object-fit:contain";preview.appendChild(img);
- }else if(file.type.startsWith("video/")){
-  const video=document.createElement("video");video.src=previewUrl;video.controls=true;video.playsInline=true;video.style.cssText="width:100%;height:100%;object-fit:contain";preview.appendChild(video);
- }else preview.textContent="Please select an image or video.";
-});
-
-document.getElementById("postForm").addEventListener("submit", async e => {
-  e.preventDefault();
-
-  if (!requireSignIn()) return;
-
-  const file = document.getElementById("postFile").files[0];
-  const caption = document.getElementById("postCaption").value.trim();
-  const visibility = document.getElementById("postVisibility").value;
-  const status = document.getElementById("postStatus");
-  const button = document.querySelector('#postForm button[type="submit"]');
-
-  if (!supabaseClient || !currentUser) {
-    status.textContent = "Please log in again and try.";
-    return;
-  }
-
-  if (!file) {
-    status.textContent = "Please choose a photo or video.";
-    return;
-  }
-
-  if (!file.type.startsWith("image/") &&
-      !file.type.startsWith("video/")) {
-    status.textContent = "Choose a valid image or video.";
-    return;
-  }
-
-  // Keep uploads within reasonable limits.
-  const maxSize = file.type.startsWith("image/")
-    ? 5 * 1024 * 1024
-    : 100 * 1024 * 1024;
-
-  if (file.size > maxSize) {
-    status.textContent = file.type.startsWith("image/")
-      ? "Images must be 5 MB or smaller."
-      : "Videos must be 100 MB or smaller.";
-    return;
-  }
-
-  button.disabled = true;
-  status.textContent = "Uploading your media... Please wait.";
-
-  try {
-    const mediaType = file.type.startsWith("image/")
-      ? "image"
-      : "video";
-
-    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-    const filePath =
-      currentUser.id + "/" + crypto.randomUUID() + "-" + safeName;
-
-    // Upload to a dedicated post-media bucket.
-    const { error: uploadError } = await supabaseClient.storage
-      .from("ffinexx-posts")
-      .upload(filePath, file, {
-        cacheControl: "3600",
-        upsert: false,
-        contentType: file.type
-      });
-
-    if (uploadError) throw uploadError;
-
-    const { data: urlData } = supabaseClient.storage
-      .from("ffinexx-posts")
-      .getPublicUrl(filePath);
-
-    const mediaUrl = urlData.publicUrl;
-
-    status.textContent = "Media uploaded. Saving your post...";
-
-    const { data: post, error: postError } = await supabaseClient
-      .from("ffinexx_posts")
-      .insert({
-        user_id: currentUser.id,
-        media_url: mediaUrl,
-        media_type: mediaType,
-        caption: caption,
-        visibility: visibility
-      })
-      .select()
-      .single();
-
-    if (postError) {
-      // Remove the uploaded file if saving the post fails.
-      await supabaseClient.storage
-        .from("ffinexx-posts")
-        .remove([filePath]);
-      throw postError;
-    }
-
-    status.textContent =
-      "Post published successfully! Your post ID is " + post.id;
-
-    document.getElementById("postForm").reset();
-    document.getElementById("postPreview").textContent =
-      "Your selected media will appear here.";
-
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-      previewUrl = null;
-    }
-
-  } catch (err) {
-    console.error("FFineXX post upload failed:", err);
-    status.textContent =
-      "Upload failed: " + (err.message || "Please try again.");
-  } finally {
-    button.disabled = false;
-  }
-});
-
- e.preventDefault();
- if(!requireSignIn())return;
- const file=document.getElementById("postFile").files[0];
- const caption=document.getElementById("postCaption").value.trim();
- const visibility=document.getElementById("postVisibility").value;
- document.getElementById("postStatus").textContent="Your "+visibility+" post is prepared for preview, but it has NOT been uploaded or published. Database and storage integration is required.";
- console.log("Post draft:",{filename:file?.name,caption,visibility});
-});
-async function startCamera(){
- if(!requireSignIn())return;
- const preview=document.getElementById("livePreview");
- try{
-  stopCamera();
-  const cameraId=document.getElementById("cameraSelect").value;
-  const micId=document.getElementById("micSelect").value;
-  const videoConstraints=cameraId?{deviceId:{exact:cameraId}}:true;
-  const audioConstraints=micId?{deviceId:{exact:micId}}:true;
-  cameraStream=await navigator.mediaDevices.getUserMedia({video:videoConstraints,audio:audioConstraints});
-  preview.innerHTML="";
-  const video=document.createElement("video");video.autoplay=true;video.muted=true;video.playsInline=true;video.srcObject=cameraStream;preview.appendChild(video);
-  await loadDevices();
-  document.getElementById("liveStatus").textContent="Camera and microphone preview are ready. You are NOT broadcasting publicly.";
- }catch(err){document.getElementById("liveStatus").textContent="Could not access camera or microphone. Allow browser permission and use HTTPS. "+err.message;}
-}
-function stopCamera(){
- if(cameraStream){cameraStream.getTracks().forEach(track=>track.stop());cameraStream=null;}
- const preview=document.getElementById("livePreview");
- if(preview){preview.innerHTML="Camera preview will appear here.";}
-}
-async function loadDevices(){
- try{
-  const devices=await navigator.mediaDevices.enumerateDevices();
-  const camera=document.getElementById("cameraSelect");
-  const mic=document.getElementById("micSelect");
-  const selectedCamera=camera.value,selectedMic=mic.value;
-  camera.innerHTML='<option value="">Default camera</option>';
-  mic.innerHTML='<option value="">Default microphone</option>';
-  devices.filter(d=>d.kind==="videoinput").forEach((d,i)=>camera.add(new Option(d.label||"Camera "+(i+1),d.deviceId)));
-  devices.filter(d=>d.kind==="audioinput").forEach((d,i)=>mic.add(new Option(d.label||"Microphone "+(i+1),d.deviceId)));
-  camera.value=selectedCamera;mic.value=selectedMic;
- }catch(e){}
-}
-document.getElementById("liveForm").addEventListener("submit",e=>{
- e.preventDefault();
- if(!requireSignIn())return;
- const title=document.getElementById("liveTitle").value.trim();
- const audience=document.getElementById("liveAudience").value;
- document.getElementById("liveStatus").textContent="LIVE setup saved for preview: “"+title+"”, audience: "+audience+". No public broadcast has started. Connect a streaming provider to broadcast to viewers.";
- console.log("Live configuration:",{title,audience});
-});
-document.getElementById("authCountry").innerHTML='<option value="">Select country</option>'+[
-"Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belgium","Belize","Benin","Bhutan","Bolivia","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Chad","Chile","China","Colombia","Comoros","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","DR Congo","Ecuador","Egypt","El Salvador","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kuwait","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Republic of the Congo","Romania","Russia","Rwanda","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Türkiye","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
-].map(c=>'<option>'+c+'</option>').join("");
+function openPost(){if(!currentUser){openAuth();return;}document.getElementById("postModal").classList.add("open");}
+function openLive(){if(!currentUser){openAuth();return;}document.getElementById("liveModal").classList.add("open");}
+function closeModal(id){document.getElementById(id).classList.remove("open");if(id==="liveModal")stopCamera();}
+function setAuthMode(mode){authMode=mode;document.getElementById("signupFields").style.display=mode==="signup"?"block":"none";document.getElementById("authSubmit").textContent=mode==="signup"?"Create account":"Log in";document.getElementById("signupTab").className=mode==="signup"?"btn primary":"btn";document.getElementById("loginTab").className=mode==="login"?"btn primary":"btn";document.getElementById("authStatus").textContent=mode==="signup"?"Create your FFineXX account.":"Log in to your FFineXX account.";document.getElementById("authName").required=mode==="signup";document.getElementById("authUsername").required=mode==="signup";document.getElementById("authCountry").required=mode==="signup";document.getElementById("authBirthday").required=mode==="signup";}
+function updateAuthUI(){const authButton=document.getElementById("authButton");authButton.textContent=currentUser?"My account":"Log in";authButton.onclick=()=>currentUser?showSection("profile"):openAuth();if(currentUser){document.getElementById("profileName").textContent=currentUser.user_metadata?.full_name||currentUser.email?.split("@")[0]||"FFineXX Creator";document.getElementById("profileUsername").textContent="@"+(currentUser.user_metadata?.username||"creator");document.getElementById("avatar").textContent=(document.getElementById("profileName").textContent[0]||"F").toUpperCase();document.getElementById("displayName").value=currentUser.user_metadata?.full_name||"";document.getElementById("username").value=currentUser.user_metadata?.username||"";document.getElementById("bio").value=currentUser.user_metadata?.bio||"";}else{document.getElementById("profileName").textContent="FFineXX Creator";document.getElementById("profileUsername").textContent="@yourusername";}}
+async function refreshSession(){if(!supabaseClient)return;try{const {data,error}=await supabaseClient.auth.getSession();if(error)throw error;currentUser=data?.session?.user||null;updateAuthUI();}catch(e){console.error("Session refresh failed",e);}}
+document.getElementById("authForm").addEventListener("submit",async e=>{e.preventDefault();const status=document.getElementById("authStatus"),email=document.getElementById("authEmail").value.trim(),password=document.getElementById("authPassword").value,button=document.getElementById("authSubmit");if(!supabaseClient){status.textContent="Account service could not load. Check your internet connection and Supabase settings.";return;}button.disabled=true;status.textContent="Please wait...";try{if(authMode==="signup"){const name=document.getElementById("authName").value.trim(),username=document.getElementById("authUsername").value.trim().replace(/^@/,""),country=document.getElementById("authCountry").value,birthday=document.getElementById("authBirthday").value;if(!name||!username||!country||!birthday)throw new Error("Please complete all sign-up fields.");if(!/^[a-zA-Z0-9_.]{3,24}$/.test(username))throw new Error("Username must be 3–24 characters using letters, numbers, underscores or dots.");const {data,error}=await supabaseClient.auth.signUp({email,password,options:{data:{full_name:name,username,country,birthday}}});if(error)throw error;if(data.user&&!data.session){status.textContent="Account created. Check your email for a confirmation link, then log in.";}else{currentUser=data.user;updateAuthUI();status.textContent="Welcome to FFineXX!";}}else{const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)throw error;currentUser=data.user;updateAuthUI();status.textContent="You are signed in!";setTimeout(()=>closeModal("authModal"),700);}}catch(err){status.textContent=err.message||"Authentication failed. Please try again.";}finally{button.disabled=false;}});
+async function logout(){if(!currentUser){openAuth();return;}if(!confirm("Log out of FFineXX?"))return;try{if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)throw error;}currentUser=null;updateAuthUI();showSection("home");}catch(e){alert("Could not log out: "+e.message);}}
+async function saveProfile(){if(!currentUser){openAuth();return;}const name=document.getElementById("displayName").value.trim(),username=document.getElementById("username").value.trim().replace(/^@/,""),bio=document.getElementById("bio").value.trim();if(!name||!username){alert("Enter your name and username.");return;}if(!/^[a-zA-Z0-9_.]{3,24}$/.test(username)){alert("Username must be 3–24 characters using letters, numbers, underscores or dots.");return;}if(!supabaseClient){alert("Account service is unavailable.");return;}try{const {data,error}=await supabaseClient.auth.updateUser({data:{full_name:name,username,bio}});if(error)throw error;currentUser=data.user||currentUser;updateAuthUI();alert("Profile details saved.");}catch(e){alert("Could not save profile: "+e.message);}}
+function requireSignIn(){if(!currentUser){openAuth();return false;}return true;}
+function likePost(button){if(!requireSignIn())return;button.classList.toggle("selected");const count=button.querySelector("span");let n=Number(count.textContent)||0;count.textContent=button.classList.contains("selected")?n+1:Math.max(0,n-1);}
+function favoritePost(button){if(!requireSignIn())return;button.classList.toggle("selected");const count=button.querySelector("span");let n=Number(count.textContent)||0;count.textContent=button.classList.contains("selected")?n+1:Math.max(0,n-1);}
+function commentPost(){if(!requireSignIn())return;const text=prompt("Write your comment:");if(text&&text.trim())alert("Comment preview: "+text.trim()+"\n\nReal comments need database integration.");}
+async function sharePost(){if(!requireSignIn())return;try{await navigator.clipboard.writeText(location.href);alert("Page link copied.");}catch(e){prompt("Copy this link:",location.href);}}
+function searchPosts(){const q=(document.getElementById("discoverSearch").value||"").trim();document.getElementById("searchMessage").textContent=q?"Search for “"+q+"” will work when the real post database is connected.":"Enter a creator name or hashtag.";}
+document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter"){showSection("discover");document.getElementById("discoverSearch").value=e.target.value;searchPosts();}});
+document.getElementById("postFile").addEventListener("change",e=>{const file=e.target.files?.[0],preview=document.getElementById("postPreview");if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;}preview.innerHTML="";if(!file){preview.textContent="Your selected media will appear here.";return;}previewUrl=URL.createObjectURL(file);if(file.type.startsWith("image/")){const img=document.createElement("img");img.src=previewUrl;img.alt="Selected post preview";img.style.cssText="width:100%;height:100%;object-fit:contain";preview.appendChild(img);}else if(file.type.startsWith("video/")){const video=document.createElement("video");video.src=previewUrl;video.controls=true;video.playsInline=true;video.style.cssText="width:100%;height:100%;object-fit:contain";preview.appendChild(video);}else preview.textContent="Please select an image or video.";});
+document.getElementById("postForm").addEventListener("submit",async e=>{e.preventDefault();if(!requireSignIn())return;const file=document.getElementById("postFile").files[0],caption=document.getElementById("postCaption").value.trim(),visibility=document.getElementById("postVisibility").value,status=document.getElementById("postStatus"),button=document.querySelector('#postForm button[type="submit"]');if(!supabaseClient||!currentUser){status.textContent="Please log in again and try.";return;}if(!file){status.textContent="Please choose a photo or video.";return;}const allowedTypes=["image/jpeg","image/png","image/webp","video/mp4","video/webm"];if(!allowedTypes.includes(file.type)){status.textContent="Choose a JPG, PNG, WEBP, MP4, or WEBM file.";return;}const maxSize=file.type.startsWith("image/")?5*1024*1024:50*1024*1024;if(file.size>maxSize){status.textContent=file.type.startsWith("image/")?"Images must be 5 MB or smaller.":"Videos must be 50 MB or smaller.";return;}button.disabled=true;status.textContent="Uploading your media... Please wait.";let filePath=null;try{const mediaType=file.type.startsWith("image/")?"image":"video",safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");if(!crypto.randomUUID)throw new Error("Your browser does not support secure upload IDs. Please update your browser.");filePath=currentUser.id+"/"+crypto.randomUUID()+"-"+safeName;const {error:uploadError}=await supabaseClient.storage.from("ffinexx-posts").upload(filePath,file,{cacheControl:"3600",upsert:false,contentType:file.type});if(uploadError)throw uploadError;const {data:urlData}=supabaseClient.storage.from("ffinexx-posts").getPublicUrl(filePath);const {data:post,error:postError}=await supabaseClient.from("ffinexx_posts").insert({user_id:currentUser.id,media_url:urlData.publicUrl,media_type:mediaType,caption,visibility}).select().single();if(postError)throw postError;status.textContent="Post published successfully! Your post ID is "+post.id;document.getElementById("postForm").reset();document.getElementById("postPreview").textContent="Your selected media will appear here.";if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;}}catch(err){console.error("FFineXX post upload failed:",err);if(filePath){try{await supabaseClient.storage.from("ffinexx-posts").remove([filePath]);}catch(cleanupError){console.warn("Could not remove failed upload",cleanupError);}}status.textContent="Upload failed: "+(err.message||"Please try again.");}finally{button.disabled=false;}});
+async function startCamera(){if(!requireSignIn())return;const preview=document.getElementById("livePreview");try{stopCamera();const cameraId=document.getElementById("cameraSelect").value,micId=document.getElementById("micSelect").value,videoConstraints=cameraId?{deviceId:{exact:cameraId}}:true,audioConstraints=micId?{deviceId:{exact:micId}}:true;cameraStream=await navigator.mediaDevices.getUserMedia({video:videoConstraints,audio:audioConstraints});preview.innerHTML="";const video=document.createElement("video");video.autoplay=true;video.muted=true;video.playsInline=true;video.srcObject=cameraStream;preview.appendChild(video);await loadDevices();document.getElementById("liveStatus").textContent="Camera and microphone preview are ready. You are NOT broadcasting publicly.";}catch(err){document.getElementById("liveStatus").textContent="Could not access camera or microphone. Allow browser permission and use HTTPS. "+err.message;}}
+function stopCamera(){if(cameraStream){cameraStream.getTracks().forEach(track=>track.stop());cameraStream=null;}const preview=document.getElementById("livePreview");if(preview)preview.textContent="Camera preview will appear here.";}
+async function loadDevices(){try{const devices=await navigator.mediaDevices.enumerateDevices(),camera=document.getElementById("cameraSelect"),mic=document.getElementById("micSelect"),selectedCamera=camera.value,selectedMic=mic.value;camera.innerHTML='<option value="">Default camera</option>';mic.innerHTML='<option value="">Default microphone</option>';devices.filter(d=>d.kind==="videoinput").forEach((d,i)=>camera.add(new Option(d.label||"Camera "+(i+1),d.deviceId)));devices.filter(d=>d.kind==="audioinput").forEach((d,i)=>mic.add(new Option(d.label||"Microphone "+(i+1),d.deviceId)));camera.value=selectedCamera;mic.value=selectedMic;}catch(e){console.warn("Could not list devices",e);}}
+document.getElementById("liveForm").addEventListener("submit",e=>{e.preventDefault();if(!requireSignIn())return;const title=document.getElementById("liveTitle").value.trim(),audience=document.getElementById("liveAudience").value;document.getElementById("liveStatus").textContent="LIVE setup saved for preview: “"+title+"”, audience: "+audience+". No public broadcast has started. Connect a streaming provider to broadcast to viewers.";console.log("Live configuration:",{title,audience});});
+const countries=["Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belgium","Belize","Benin","Bhutan","Bolivia","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Chad","Chile","China","Colombia","Comoros","Costa Rica","Croatia","Cuba","Cyprus","Czechia","Denmark","Djibouti","Dominica","Dominican Republic","DR Congo","Ecuador","Egypt","El Salvador","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kuwait","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Republic of the Congo","Romania","Russia","Rwanda","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Türkiye","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+document.getElementById("authCountry").innerHTML='<option value="">Select country</option>'+countries.map(c=>'<option value="'+c.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'">'+c+'</option>').join("");
 document.querySelectorAll(".modal").forEach(modal=>modal.addEventListener("click",e=>{if(e.target===modal)closeModal(modal.id);}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal.open").forEach(m=>closeModal(m.id));});
-if(supabaseClient){
- supabaseClient.auth.onAuthStateChange((_event,session)=>{
-  currentUser=session?.user||null;updateAuthUI();
- });
- refreshSession();
-}
-updateAuthUI();
+if(supabaseClient){supabaseClient.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAuthUI();});refreshSession();}
+setAuthMode("signup");updateAuthUI();
 </script>
 </body>
 </html>
