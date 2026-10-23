@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#100d18">
   <title>FFineXX — Create. Share. Shine.</title>
   <meta name="description" content="Discover short videos, connect with creators, and share your world on FFineXX.">
@@ -13,14 +14,13 @@
     <a class="brand" href="#" aria-label="FFineXX home">
       <span class="brand-icon">F</span>Fine<span class="pink">XX</span>
     </a>
-
     <label class="search">
       <span>⌕</span>
       <input id="searchInput" type="search" placeholder="Search creators and videos">
     </label>
-
     <button class="login-btn" id="loginBtn">Log in</button>
     <button class="join-btn" id="joinBtn">Sign up</button>
+    <button class="login-btn" id="profileBtn" hidden>Profile</button>
   </header>
 
   <div class="layout">
@@ -33,15 +33,12 @@
         <button class="nav-item" data-view="Messages">✉ <span>Messages</span></button>
         <button class="nav-item" data-view="Notifications">♧ <span>Notifications</span></button>
       </nav>
-
       <div class="side-divider"></div>
       <p class="side-label">CREATE</p>
-
       <button class="nav-item" data-view="Upload">＋ <span>Upload video</span></button>
       <button class="nav-item" data-view="Studio">▣ <span>Creator Studio</span></button>
       <button class="nav-item" data-view="Templates">✧ <span>Templates</span></button>
       <button class="nav-item" data-view="Status">◷ <span>Status &amp; Highlights</span></button>
-
       <div class="sidebar-note">
         <span class="pink">FFineXX</span>
         <p>Your world. Your creativity. Your community.</p>
@@ -74,10 +71,7 @@
           </div>
           <div class="video-info">
             <div class="avatar">F</div>
-            <div class="creator-info">
-              <strong>FFineXX Creators</strong>
-              <span>@finexxcreators</span>
-            </div>
+            <div class="creator-info"><strong>FFineXX Creators</strong><span>@finexxcreators</span></div>
             <button class="follow-btn">Follow</button>
           </div>
           <div class="video-actions">
@@ -95,10 +89,7 @@
           </div>
           <div class="video-info">
             <div class="avatar avatar-purple">M</div>
-            <div class="creator-info">
-              <strong>Music Moments</strong>
-              <span>@musicmoments</span>
-            </div>
+            <div class="creator-info"><strong>Music Moments</strong><span>@musicmoments</span></div>
             <button class="follow-btn">Follow</button>
           </div>
           <div class="video-actions">
@@ -116,10 +107,7 @@
           </div>
           <div class="video-info">
             <div class="avatar avatar-orange">C</div>
-            <div class="creator-info">
-              <strong>Creative Daily</strong>
-              <span>@creativedaily</span>
-            </div>
+            <div class="creator-info"><strong>Creative Daily</strong><span>@creativedaily</span></div>
             <button class="follow-btn">Follow</button>
           </div>
           <div class="video-actions">
@@ -138,61 +126,19 @@
         </div>
         <button class="join-btn" id="bannerJoinBtn">Join FFineXX ↗</button>
       </section>
-
       <footer>© 2026 FFineXX · Create. Share. Shine.</footer>
     </main>
 
     <aside class="right-panel">
-      <div class="panel-heading">
-        <h2>Creators to discover</h2>
-        <span>✧</span>
-      </div>
-
-      <div class="suggested-creator">
-        <div class="avatar">A</div>
-        <div class="creator-info">
-          <strong>Artist Corner</strong>
-          <span>Music &amp; performance</span>
-        </div>
-      </div>
-
-      <div class="suggested-creator">
-        <div class="avatar avatar-purple">T</div>
-        <div class="creator-info">
-          <strong>Trend Makers</strong>
-          <span>Dance &amp; trends</span>
-        </div>
-      </div>
-
-      <div class="suggested-creator">
-        <div class="avatar avatar-orange">V</div>
-        <div class="creator-info">
-          <strong>Visual Stories</strong>
-          <span>Art &amp; lifestyle</span>
-        </div>
-      </div>
-
+      <div class="panel-heading"><h2>Creators to discover</h2><span>✧</span></div>
+      <div class="suggested-creator"><div class="avatar">A</div><div class="creator-info"><strong>Artist Corner</strong><span>Music &amp; performance</span></div></div>
+      <div class="suggested-creator"><div class="avatar avatar-purple">T</div><div class="creator-info"><strong>Trend Makers</strong><span>Dance &amp; trends</span></div></div>
+      <div class="suggested-creator"><div class="avatar avatar-orange">V</div><div class="creator-info"><strong>Visual Stories</strong><span>Art &amp; lifestyle</span></div></div>
       <div class="panel-divider"></div>
       <div class="panel-heading"><h2>Creator tools</h2></div>
-
-      <button class="tool-card" data-view="Studio">
-        <span>▣</span>
-        <div><strong>Creator Studio</strong><small>Plan your next post</small></div>
-        <b>›</b>
-      </button>
-
-      <button class="tool-card" data-view="Templates">
-        <span>✧</span>
-        <div><strong>Video templates</strong><small>Start creating</small></div>
-        <b>›</b>
-      </button>
-
-      <button class="tool-card" data-view="LIVE">
-        <span>◉</span>
-        <div><strong>Go LIVE</strong><small>Connect with fans</small></div>
-        <b>›</b>
-      </button>
-
+      <button class="tool-card" data-view="Studio"><span>▣</span><div><strong>Creator Studio</strong><small>Plan your next post</small></div><b>›</b></button>
+      <button class="tool-card" data-view="Templates"><span>✧</span><div><strong>Video templates</strong><small>Start creating</small></div><b>›</b></button>
+      <button class="tool-card" data-view="LIVE"><span>◉</span><div><strong>Go LIVE</strong><small>Connect with fans</small></div><b>›</b></button>
       <div class="support-card">
         <strong>Have a question?</strong>
         <p>Help and support for the FFineXX community.</p>
@@ -212,23 +158,17 @@
   <dialog id="noticeDialog">
     <div class="dialog-content">
       <button class="dialog-close" id="closeDialog" aria-label="Close">×</button>
-      <div class="brand dialog-brand">
-        <span class="brand-icon">F</span>Fine<span class="pink">XX</span>
-      </div>
+      <div class="brand dialog-brand"><span class="brand-icon">F</span>Fine<span class="pink">XX</span></div>
       <h2 id="dialogTitle">Welcome to FFineXX</h2>
       <p id="dialogMessage">This feature will be connected as we build your platform.</p>
       <button class="join-btn" id="dialogOkay">Got it</button>
     </div>
   </dialog>
 
-  <!-- Account dialog: app.js will connect these forms to Supabase -->
   <dialog id="accountDialog">
     <div class="dialog-content">
       <button class="dialog-close" id="closeAccountDialog" aria-label="Close">×</button>
-
-      <div class="brand dialog-brand">
-        <span class="brand-icon">F</span>Fine<span class="pink">XX</span>
-      </div>
+      <div class="brand dialog-brand"><span class="brand-icon">F</span>Fine<span class="pink">XX</span></div>
 
       <h2 id="accountTitle">Join FFineXX</h2>
       <p id="accountDescription">Create your account and join the community.</p>
@@ -240,6 +180,66 @@
         <label for="signupUsername">Username</label>
         <input id="signupUsername" name="username" type="text" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required>
 
+        <label for="signupBirthday">Birthday</label>
+        <input id="signupBirthday" name="birthday" type="date" autocomplete="bday" required>
+
+        <label for="signupCountry">Country</label>
+        <select id="signupCountry" name="country" autocomplete="country-name" required>
+          <option value="">Choose your country</option>
+          <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option>
+          <option>Angola</option><option>Antigua and Barbuda</option><option>Argentina</option><option>Armenia</option>
+          <option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahamas</option>
+          <option>Bahrain</option><option>Bangladesh</option><option>Barbados</option><option>Belarus</option>
+          <option>Belgium</option><option>Belize</option><option>Benin</option><option>Bhutan</option>
+          <option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Botswana</option><option>Brazil</option>
+          <option>Brunei</option><option>Bulgaria</option><option>Burkina Faso</option><option>Burundi</option>
+          <option>Cabo Verde</option><option>Cambodia</option><option>Cameroon</option><option>Canada</option>
+          <option>Central African Republic</option><option>Chad</option><option>Chile</option><option>China</option>
+          <option>Colombia</option><option>Comoros</option><option>Congo</option><option>Costa Rica</option>
+          <option>Côte d’Ivoire</option><option>Croatia</option><option>Cuba</option><option>Cyprus</option>
+          <option>Czechia</option><option>Democratic Republic of the Congo</option><option>Denmark</option><option>Djibouti</option>
+          <option>Dominica</option><option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option>
+          <option>El Salvador</option><option>Equatorial Guinea</option><option>Eritrea</option><option>Estonia</option>
+          <option>Eswatini</option><option>Ethiopia</option><option>Fiji</option><option>Finland</option>
+          <option>France</option><option>Gabon</option><option>Gambia</option><option>Georgia</option>
+          <option>Germany</option><option>Ghana</option><option>Greece</option><option>Grenada</option>
+          <option>Guatemala</option><option>Guinea</option><option>Guinea-Bissau</option><option>Guyana</option>
+          <option>Haiti</option><option>Honduras</option><option>Hungary</option><option>Iceland</option>
+          <option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option>
+          <option>Ireland</option><option>Israel</option><option>Italy</option><option>Jamaica</option>
+          <option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option>
+          <option>Kiribati</option><option>Kuwait</option><option>Kyrgyzstan</option><option>Laos</option>
+          <option>Latvia</option><option>Lebanon</option><option>Lesotho</option><option>Liberia</option>
+          <option>Libya</option><option>Liechtenstein</option><option>Lithuania</option><option>Luxembourg</option>
+          <option>Madagascar</option><option>Malawi</option><option>Malaysia</option><option>Maldives</option>
+          <option>Mali</option><option>Malta</option><option>Marshall Islands</option><option>Mauritania</option>
+          <option>Mauritius</option><option>Mexico</option><option>Micronesia</option><option>Moldova</option>
+          <option>Monaco</option><option>Mongolia</option><option>Montenegro</option><option>Morocco</option>
+          <option>Mozambique</option><option>Myanmar</option><option>Namibia</option><option>Nauru</option>
+          <option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nicaragua</option>
+          <option>Niger</option><option>Nigeria</option><option>North Korea</option><option>North Macedonia</option>
+          <option>Norway</option><option>Oman</option><option>Pakistan</option><option>Palau</option>
+          <option>Palestine</option><option>Panama</option><option>Papua New Guinea</option><option>Paraguay</option>
+          <option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option>
+          <option>Qatar</option><option>Romania</option><option>Russia</option><option>Rwanda</option>
+          <option>Saint Kitts and Nevis</option><option>Saint Lucia</option><option>Saint Vincent and the Grenadines</option>
+          <option>Samoa</option><option>San Marino</option><option>São Tomé and Príncipe</option><option>Saudi Arabia</option>
+          <option>Senegal</option><option>Serbia</option><option>Seychelles</option><option>Sierra Leone</option>
+          <option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>Solomon Islands</option>
+          <option>Somalia</option><option>South Africa</option><option>South Korea</option><option>South Sudan</option>
+          <option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Suriname</option>
+          <option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option>
+          <option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Timor-Leste</option>
+          <option>Togo</option><option>Tonga</option><option>Trinidad and Tobago</option><option>Tunisia</option>
+          <option>Türkiye</option><option>Turkmenistan</option><option>Tuvalu</option><option>Uganda</option>
+          <option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option>
+          <option>Uruguay</option><option>Uzbekistan</option><option>Vanuatu</option><option>Vatican City</option>
+          <option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
+        </select>
+
+        <label for="signupPhone">Phone number (optional)</label>
+        <input id="signupPhone" name="phone" type="tel" autocomplete="tel" placeholder="+256...">
+
         <label for="signupEmail">Email</label>
         <input id="signupEmail" name="email" type="email" autocomplete="email" required>
 
@@ -249,27 +249,40 @@
         <button class="join-btn" type="submit" id="signupSubmit">Create account</button>
       </form>
 
+      <button type="button" id="googleSignInBtn" class="login-btn">Continue with Google</button>
+
+      <form id="phoneLoginForm" hidden>
+        <label for="phoneLoginNumber">Phone number</label>
+        <input id="phoneLoginNumber" name="phone" type="tel" autocomplete="tel" placeholder="+256..." required>
+        <button class="join-btn" type="submit" id="sendPhoneCodeBtn">Send verification code</button>
+        <label for="phoneLoginCode">Verification code</label>
+        <input id="phoneLoginCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter SMS code">
+        <button class="join-btn" type="button" id="verifyPhoneCodeBtn">Verify code</button>
+      </form>
+
       <form id="loginForm" hidden>
         <label for="loginEmail">Email</label>
         <input id="loginEmail" name="email" type="email" autocomplete="email" required>
-
         <label for="loginPassword">Password</label>
         <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
-
         <button class="join-btn" type="submit" id="loginSubmit">Log in</button>
       </form>
 
-      <p id="accountStatus" role="status" aria-live="polite"></p>
+      <div id="profileSettings" hidden>
+        <h3 id="profileDisplayName">Your profile</h3>
+        <p id="profileUsername"></p>
+        <button type="button" class="login-btn" id="profileSettingsBtn">Profile settings</button>
+        <button type="button" class="login-btn" id="addAccountBtn">Add account</button>
+        <button type="button" class="login-btn" id="logoutBtn">Log out</button>
+      </div>
 
-      <button type="button" id="switchAccountMode" class="login-btn">
-        Already have an account? Log in
-      </button>
+      <p id="accountStatus" role="status" aria-live="polite"></p>
+      <button type="button" id="switchAccountMode" class="login-btn">Already have an account? Log in</button>
+      <button type="button" id="switchPhoneMode" class="login-btn">Log in with phone</button>
     </div>
   </dialog>
 
-  <!-- Load Supabase before app.js -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
 </body>
 </html>
-
