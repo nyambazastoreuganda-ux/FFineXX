@@ -37,6 +37,24 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;
 .real-post .video-art{height:auto;max-height:none;display:flex!important;justify-content:center;background:#050507}.real-post .post-media{display:block;width:100%;height:auto;max-height:78vh;aspect-ratio:9/16;object-fit:contain;background:#050507}.real-post .post-media.image{aspect-ratio:auto;max-height:78vh;object-fit:contain}.real-post .engagement{display:flex;gap:8px;flex-wrap:wrap}.real-post .engagement button{min-height:40px}
 .real-post .video-bottom{pointer-events:none}
 @media(max-width:700px){.feed{gap:18px}.real-post .post-media{max-height:72vh}.real-post .postmeta{padding:10px 8px}.real-post .engagement{gap:5px}.real-post .engagement button{font-size:12px;padding:8px}}
+
+/* FFineXX vertical video feed — phone and desktop */
+.feed{display:flex;flex-direction:column;align-items:center;gap:24px;max-width:100%;width:100%;margin:0 auto}
+.feed>.video-card{width:min(100%,560px);min-width:0;border-radius:18px;overflow:hidden}
+.feed>.video-card.real-post{background:#09090d;border-color:#292933}
+.feed .video-art{height:auto;min-height:0;display:block;position:relative;background:#050508}
+.feed .post-media{display:block;width:100%;height:min(76vh,780px);min-height:420px;aspect-ratio:9/16;object-fit:cover;background:#050508}
+.feed .post-media.image{object-fit:contain;background:#050508}
+.feed .postmeta{padding:12px 14px}
+.feed .engagement{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px 12px}
+.feed .engagement button{font-size:13px;padding:8px 4px}
+#publicPosts.feed{display:flex;flex-direction:column;align-items:center}
+#publicPosts.feed>.video-card{width:min(100%,560px)}
+#publicPosts .post-media{height:min(76vh,780px);min-height:420px;aspect-ratio:9/16;object-fit:cover}
+@media(min-width:1101px){.layout{grid-template-columns:220px minmax(0,1fr) 270px}.feed{max-width:100%}.feed>.video-card{width:min(100%,560px)}}
+@media(max-width:700px){.layout{padding:10px 8px 82px}.feed{gap:15px}.feed>.video-card{width:100%;border-radius:14px}.feed .post-media,#publicPosts .post-media{height:min(72vh,720px);min-height:360px;width:100%;aspect-ratio:9/16;object-fit:cover}.feed .post-media.image,#publicPosts .post-media.image{object-fit:contain}.feed .postmeta{padding:10px}.feed .engagement{gap:4px 9px}.feed .engagement button{font-size:12px}.feed .video-bottom{padding-top:8px}}
+@media(max-height:600px) and (orientation:landscape){.feed .post-media,#publicPosts .post-media{height:72vh;min-height:260px}}
+
 </style>
 </head>
 <body>
