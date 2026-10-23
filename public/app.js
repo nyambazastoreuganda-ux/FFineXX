@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const accountDialog = $("accountDialog");
   const noticeDialog = $("noticeDialog");
 
-  let currentUser = null;
+  let currentUser = null;window.ffineXXUserSignedIn = false;
   let mode = "signup";
   let previousAccountMode = "profile";
 
