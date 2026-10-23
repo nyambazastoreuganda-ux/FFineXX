@@ -1,213 +1,183 @@
 
 "use strict";
 
-// FFineXX — Supabase connection
 const SUPABASE_URL = "https://ogzkrakaypfhowkgvvzp.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uzizmRLBZehb_4MkQcgqEg_DPQ0pyKl";
 
 if (!window.supabase) {
-  alert("FFineXX could not load its account service. Refresh the page and try again.");
-  throw new Error("Supabase library did not load.");
+  alert("FFineXX account service failed to load. Refresh the page.");
+  throw new Error("Supabase library unavailable.");
 }
 
-const supabaseClient = window.supabase.createClient(
+const client = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
 document.addEventListener("DOMContentLoaded", () => {
   const $ = (id) => document.getElementById(id);
-
   const accountDialog = $("accountDialog");
   const noticeDialog = $("noticeDialog");
-  const accountStatus = $("accountStatus");
-  const signupForm = $("signupForm");
-  const loginForm = $("loginForm");
-  const phoneLoginForm = $("phoneLoginForm");
-  const profileSettings = $("profileSettings");
-  const switchAccountMode = $("switchAccountMode");
-  const switchPhoneMode = $("switchPhoneMode");
 
-  let accountMode = "signup";
-  let phoneVerificationSent = false;
+  let currentUser = null;
+  let mode = "signup";
+  let previousAccountMode = "profile";
 
-  function showNotice(title, message) {
-    if ($("dialogTitle")) $("dialogTitle").textContent = title;
-    if ($("dialogMessage")) $("dialogMessage").textContent = message;
-
-    if (noticeDialog && !noticeDialog.open) {
-      noticeDialog.showModal();
-    } else if (!noticeDialog) {
-      alert(title + "\n\n" + message);
+  function status(message, error = false) {
+    const el = $("accountStatus");
+    if (el) {
+      el.textContent = message;
+      el.style.color = error ? "#ff819b" : "#d6b8ff";
     }
   }
 
-  function closeNotice() {
-    if (noticeDialog?.open) noticeDialog.close();
-  }
-
-  $("closeDialog")?.addEventListener("click", closeNotice);
-  $("dialogOkay")?.addEventListener("click", closeNotice);
-
-  noticeDialog?.addEventListener("click", (event) => {
-    if (event.target === noticeDialog) closeNotice();
-  });
-
-  function setStatus(message, isError = false) {
-    if (!accountStatus) return;
-    accountStatus.textContent = message;
-    accountStatus.style.color = isError ? "#ff7b91" : "#d7b5ff";
-  }
-
-  function setAccountMode(mode) {
-    accountMode = mode;
-
-    if (signupForm) signupForm.hidden = mode !== "signup";
-    if (loginForm) loginForm.hidden = mode !== "login";
-    if (phoneLoginForm) phoneLoginForm.hidden = mode !== "phone";
-    if (profileSettings) profileSettings.hidden = true;
-
-    if ($("accountTitle")) {
-      $("accountTitle").textContent = {
-        signup: "Join FFineXX",
-        login: "Welcome back",
-        phone: "Log in with phone",
-        profile: "Your profile"
-      }[mode] || "Your FFineXX account";
-    }
-
-    if ($("accountDescription")) {
-      $("accountDescription").textContent = {
-        signup: "Create your account and join the community.",
-        login: "Log in to continue to FFineXX.",
-        phone: "We'll send a verification code by SMS.",
-        profile: "Manage your FFineXX account."
-      }[mode] || "";
-    }
-
-    if (switchAccountMode) {
-      switchAccountMode.hidden = mode === "phone" || mode === "profile";
-      switchAccountMode.textContent =
-        mode === "signup"
-          ? "Already have an account? Log in"
-          : "New to FFineXX? Create an account";
-    }
-
-    if (switchPhoneMode) {
-      switchPhoneMode.hidden = mode === "phone" || mode === "profile";
-    }
-
-    const googleButton = $("googleSignInBtn");
-    if (googleButton) googleButton.hidden = mode === "profile";
-
-    setStatus("");
-  }
-
-  function openAccount(mode = "signup") {
-    setAccountMode(mode);
-    if (accountDialog && !accountDialog.open) accountDialog.showModal();
+  function notice(title, message) {
+    $("dialogTitle").textContent = title;
+    $("dialogMessage").textContent = message;
+    if (!noticeDialog.open) noticeDialog.showModal();
   }
 
   function closeAccount() {
-    if (accountDialog?.open) accountDialog.close();
+    if (accountDialog.open) accountDialog.close();
   }
 
-  $("closeAccountDialog")?.addEventListener("click", closeAccount);
-
-  accountDialog?.addEventListener("click", (event) => {
-    if (event.target === accountDialog) closeAccount();
-  });
-
-  switchAccountMode?.addEventListener("click", () => {
-    setAccountMode(accountMode === "signup" ? "login" : "signup");
-  });
-
-  switchPhoneMode?.addEventListener("click", () => {
-    setAccountMode("phone");
-  });
-
-  // Update the visible page when authentication changes.
-  function updateSignedInUI(user) {
-    const loggedIn = Boolean(user);
-
-    if ($("loginBtn")) $("loginBtn").hidden = loggedIn;
-    if ($("joinBtn")) $("joinBtn").hidden = loggedIn;
-    if ($("bannerJoinBtn")) $("bannerJoinBtn").hidden = loggedIn;
-    if ($("profileBtn")) $("profileBtn").hidden = !loggedIn;
-
-    const displayName =
-      user?.user_metadata?.display_name ||
-      user?.user_metadata?.full_name ||
-      user?.email ||
-      "FFineXX member";
-
-    const username = user?.user_metadata?.username || "";
-
-    if ($("profileDisplayName")) {
-      $("profileDisplayName").textContent = displayName;
-    }
-
-    if ($("profileUsername")) {
-      $("profileUsername").textContent = username ? "@" + username : "";
-    }
-
-    const mobileAccount = $("mobileLoginBtn");
-    if (mobileAccount) {
-      mobileAccount.innerHTML = loggedIn
-        ? "♙<span>Profile</span>"
-        : "♙<span>Account</span>";
-    }
+  function hidePanels() {
+    [
+      "signupForm", "loginForm", "profileSettings",
+      "settingsPanel", "dashboardPanel", "studioPanel"
+    ].forEach(id => {
+      if ($(id)) $(id).hidden = true;
+    });
   }
 
-  // EMAIL SIGN-UP
-  signupForm?.addEventListener("submit", async (event) => {
+  function setMode(next) {
+    mode = next;
+    hidePanels();
+
+    if (next === "signup") $("signupForm").hidden = false;
+    if (next === "login") $("loginForm").hidden = false;
+    if (next === "profile") $("profileSettings").hidden = false;
+    if (next === "settings") $("settingsPanel").hidden = false;
+    if (next === "dashboard") $("dashboardPanel").hidden = false;
+    if (next === "studio") $("studioPanel").hidden = false;
+
+    $("accountTitle").textContent = ({
+      signup: "Create your account",
+      login: "Welcome back",
+      profile: "Your profile",
+      settings: "Account settings",
+      dashboard: "Creator dashboard",
+      studio: "Creator Studio"
+    })[next] || "FFineXX";
+
+    $("accountDescription").textContent = ({
+      signup: "Join creators and communities on FFineXX.",
+      login: "Log in to continue to FFineXX.",
+      profile: "Manage your FFineXX account.",
+      settings: "Manage your personal profile details.",
+      dashboard: "Your creator overview.",
+      studio: "Your creative workspace."
+    })[next] || "";
+
+    $("authTabs").hidden = !["signup", "login"].includes(next);
+    $("googleSignInBtn").hidden = !["signup", "login"].includes(next);
+    status("");
+  }
+
+  function openAccount(next = "signup") {
+    setMode(next);
+    if (!accountDialog.open) accountDialog.showModal();
+  }
+
+  function showProfile() {
+    if (!currentUser) {
+      openAccount("signup");
+      return;
+    }
+    previousAccountMode = "profile";
+    fillProfile();
+    openAccount("profile");
+  }
+
+  function fillProfile() {
+    if (!currentUser) return;
+    const meta = currentUser.user_metadata || {};
+    $("profileDisplayName").textContent =
+      meta.display_name || meta.full_name || currentUser.email || "FFineXX member";
+    $("profileUsername").textContent =
+      meta.username ? "@" + meta.username : currentUser.email || "";
+    $("editDisplayName").value =
+      meta.display_name || meta.full_name || "";
+    $("editUsername").value = meta.username || "";
+  }
+
+  function updateUI(user) {
+    currentUser = user || null;
+    const signedIn = Boolean(currentUser);
+
+    ["loginBtn", "joinBtn", "bannerJoinBtn"].forEach(id => {
+      if ($(id)) $(id).hidden = signedIn;
+    });
+
+    $("profileBtn").hidden = !signedIn;
+    $("mobileLoginBtn").innerHTML = signedIn
+      ? "♙<span>Profile</span>"
+      : "♙<span>Account</span>";
+
+    if (signedIn) fillProfile();
+  }
+
+  function requireLogin(action) {
+    if (!currentUser) {
+      notice("Join FFineXX", `Log in or create an account to ${action}.`);
+      openAccount("signup");
+      return false;
+    }
+    return true;
+  }
+
+  $("closeAccountDialog").addEventListener("click", closeAccount);
+  $("closeNoticeDialog").addEventListener("click", () => noticeDialog.close());
+  $("dialogOkay").addEventListener("click", () => noticeDialog.close());
+
+  $("showSignup").addEventListener("click", () => setMode("signup"));
+  $("showLogin").addEventListener("click", () => setMode("login"));
+  $("loginBtn").addEventListener("click", () => openAccount("login"));
+  $("joinBtn").addEventListener("click", () => openAccount("signup"));
+  $("bannerJoinBtn").addEventListener("click", () => openAccount("signup"));
+  $("profileBtn").addEventListener("click", showProfile);
+  $("mobileLoginBtn").addEventListener("click", showProfile);
+  $("createBtn").addEventListener("click", () => {
+    if (requireLogin("post videos")) openAccount("studio");
+  });
+
+  $("signupForm").addEventListener("submit", async event => {
     event.preventDefault();
 
-    const name = $("signupName")?.value.trim() || "";
-    const username = $("signupUsername")?.value.trim().toLowerCase() || "";
-    const birthday = $("signupBirthday")?.value || "";
-    const country = $("signupCountry")?.value || "";
-    const phone = $("signupPhone")?.value.trim() || "";
-    const email = $("signupEmail")?.value.trim() || "";
-    const password = $("signupPassword")?.value || "";
-
-    if (!name || !username || !birthday || !country || !email || !password) {
-      setStatus("Please complete all required fields.", true);
-      return;
-    }
+    const displayName = $("signupName").value.trim();
+    const username = $("signupUsername").value.trim().toLowerCase();
+    const country = $("signupCountry").value;
+    const phone = $("signupPhone").value.trim();
+    const email = $("signupEmail").value.trim();
+    const password = $("signupPassword").value;
 
     if (!/^[a-z0-9_]{3,24}$/.test(username)) {
-      setStatus("Username must be 3–24 characters: letters, numbers or underscores.", true);
-      return;
-    }
-
-    if (password.length < 8) {
-      setStatus("Password must contain at least 8 characters.", true);
-      return;
-    }
-
-    const birthDate = new Date(birthday + "T00:00:00");
-    const today = new Date();
-    if (Number.isNaN(birthDate.getTime()) || birthDate >= today) {
-      setStatus("Please enter a valid birthday in the past.", true);
+      status("Username must be 3–24 characters: letters, numbers and underscores.", true);
       return;
     }
 
     const button = $("signupSubmit");
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Creating account...";
-    }
+    button.disabled = true;
+    button.textContent = "Creating account...";
 
     try {
-      const { data, error } = await supabaseClient.auth.signUp({
+      const { data, error } = await client.auth.signUp({
         email,
         password,
         options: {
           data: {
-            display_name: name,
+            display_name: displayName,
             username,
-            birthday,
             country,
             phone: phone || null
           }
@@ -216,347 +186,211 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (error) throw error;
 
-      signupForm.reset();
-
       if (data.session && data.user) {
-        updateSignedInUI(data.user);
-        setStatus("Your account was created successfully!");
-        setTimeout(closeAccount, 1000);
+        updateUI(data.user);
+        status("Welcome to FFineXX!");
+        setTimeout(closeAccount, 900);
       } else {
-        setStatus("Account request received. Check your email for a confirmation link before logging in.");
+        status("Check your email for the confirmation link, then log in.");
       }
-    } catch (error) {
-      setStatus(error.message || "Could not create your account.", true);
+    } catch (err) {
+      status(err.message || "Signup failed.", true);
     } finally {
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Create account";
-      }
+      button.disabled = false;
+      button.textContent = "Create account";
     }
   });
 
-  // EMAIL LOGIN
-  loginForm?.addEventListener("submit", async (event) => {
+  $("loginForm").addEventListener("submit", async event => {
     event.preventDefault();
-
-    const email = $("loginEmail")?.value.trim() || "";
-    const password = $("loginPassword")?.value || "";
     const button = $("loginSubmit");
-
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Logging in...";
-    }
+    button.disabled = true;
+    button.textContent = "Logging in...";
 
     try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
+      const { data, error } = await client.auth.signInWithPassword({
+        email: $("loginEmail").value.trim(),
+        password: $("loginPassword").value
       });
-
       if (error) throw error;
 
-      updateSignedInUI(data.user);
-      setStatus("You're logged in successfully!");
-      loginForm.reset();
-      setTimeout(closeAccount, 800);
-    } catch (error) {
-      setStatus(error.message || "Login failed. Check your details.", true);
+      updateUI(data.user);
+      status("Logged in successfully!");
+      setTimeout(closeAccount, 700);
+    } catch (err) {
+      status(err.message || "Login failed.", true);
     } finally {
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Log in";
-      }
+      button.disabled = false;
+      button.textContent = "Log in";
     }
   });
 
-  // GOOGLE SIGN-IN — Google must first be enabled in Supabase.
-  $("googleSignInBtn")?.addEventListener("click", async () => {
-    try {
-      const { error } = await supabaseClient.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: window.location.origin
-        }
-      });
-
-      if (error) throw error;
-    } catch (error) {
-      setStatus(error.message || "Google sign-in could not start.", true);
-    }
+  $("googleSignInBtn").addEventListener("click", async () => {
+    const { error } = await client.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin }
+    });
+    if (error) status(error.message, true);
   });
 
-  // PHONE SIGN-IN — SMS phone authentication must be enabled in Supabase.
-  phoneLoginForm?.addEventListener("submit", async (event) => {
+  $("profileSettingsBtn").addEventListener("click", () => setMode("settings"));
+  $("dashboardBtn").addEventListener("click", () => setMode("dashboard"));
+  $("studioBtn").addEventListener("click", () => setMode("studio"));
+  $("backToProfileBtn").addEventListener("click", () => setMode("profile"));
+  $("backFromDashboardBtn").addEventListener("click", () => setMode("profile"));
+  $("backFromStudioBtn").addEventListener("click", () => setMode("profile"));
+
+  $("profileEditForm").addEventListener("submit", async event => {
     event.preventDefault();
+    if (!currentUser) return;
 
-    const phone = $("phoneLoginNumber")?.value.trim() || "";
-    const button = $("sendPhoneCodeBtn");
+    const display_name = $("editDisplayName").value.trim();
+    const username = $("editUsername").value.trim().toLowerCase();
 
-    if (!phone.startsWith("+") || phone.length < 8) {
-      setStatus("Enter your full phone number with country code, e.g. +256...", true);
+    if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+      notice("Invalid username", "Use 3–24 letters, numbers or underscores.");
       return;
     }
 
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Sending code...";
-    }
-
     try {
-      const { error } = await supabaseClient.auth.signInWithOtp({
-        phone
+      const { data, error } = await client.auth.updateUser({
+        data: { ...currentUser.user_metadata, display_name, username }
       });
-
       if (error) throw error;
-
-      phoneVerificationSent = true;
-      setStatus("If SMS sign-in is configured, your verification code is on its way.");
-    } catch (error) {
-      setStatus(error.message || "Could not send the verification code.", true);
-    } finally {
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Send verification code";
-      }
+      updateUI(data.user);
+      notice("Profile updated", "Your profile information was saved.");
+      setMode("profile");
+    } catch (err) {
+      notice("Could not save", err.message);
     }
   });
 
-  $("verifyPhoneCodeBtn")?.addEventListener("click", async () => {
-    const phone = $("phoneLoginNumber")?.value.trim() || "";
-    const token = $("phoneLoginCode")?.value.trim() || "";
-
-    if (!phoneVerificationSent || !token) {
-      setStatus("Request a verification code and enter it first.", true);
-      return;
-    }
-
-    const button = $("verifyPhoneCodeBtn");
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Verifying...";
-    }
-
-    try {
-      const { data, error } = await supabaseClient.auth.verifyOtp({
-        phone,
-        token,
-        type: "sms"
-      });
-
-      if (error) throw error;
-
-      updateSignedInUI(data.user);
-      setStatus("Phone verified. You're logged in!");
-      phoneLoginForm.reset();
-      phoneVerificationSent = false;
-      setTimeout(closeAccount, 800);
-    } catch (error) {
-      setStatus(error.message || "The code could not be verified.", true);
-    } finally {
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Verify code";
-      }
-    }
-  });
-
-  // PROFILE / SETTINGS / ADD ACCOUNT
-  function showProfile() {
-    setAccountMode("profile");
-    if (signupForm) signupForm.hidden = true;
-    if (loginForm) loginForm.hidden = true;
-    if (phoneLoginForm) phoneLoginForm.hidden = true;
-    if (profileSettings) profileSettings.hidden = false;
-
-    if ($("accountTitle")) $("accountTitle").textContent = "Your profile";
-    if ($("accountDescription")) {
-      $("accountDescription").textContent = "Manage your FFineXX account.";
-    }
-    if (switchAccountMode) switchAccountMode.hidden = true;
-    if (switchPhoneMode) switchPhoneMode.hidden = true;
-    if ($("googleSignInBtn")) $("googleSignInBtn").hidden = true;
-    openAccount("profile");
-  }
-
-  $("profileBtn")?.addEventListener("click", showProfile);
-  $("mobileLoginBtn")?.addEventListener("click", () => {
-    supabaseClient.auth.getUser().then(({ data }) => {
-      if (data.user) showProfile();
-      else openAccount("signup");
-    });
-  });
-
-  $("profileSettingsBtn")?.addEventListener("click", () => {
-    showNotice(
-      "Profile settings",
-      "Your display name, username, birthday and country are currently stored in your account metadata. Editable profile settings will be added in a later step."
-    );
-  });
-
-  $("addAccountBtn")?.addEventListener("click", async () => {
+  $("addAccountBtn").addEventListener("click", async () => {
     const confirmed = confirm(
-      "Adding another account may replace the active login in this browser. Continue to the sign-up screen?"
+      "Switching accounts will sign out this account first. Continue?"
     );
-    if (confirmed) setAccountMode("signup");
-  });
+    if (!confirmed) return;
 
-  $("logoutBtn")?.addEventListener("click", async () => {
-    try {
-      const { error } = await supabaseClient.auth.signOut();
-      if (error) throw error;
-
-      updateSignedInUI(null);
-      closeAccount();
-      showNotice("Logged out", "You have logged out of FFineXX.");
-    } catch (error) {
-      setStatus(error.message || "Could not log out.", true);
-    }
-  });
-
-  $("loginBtn")?.addEventListener("click", () => openAccount("login"));
-  $("joinBtn")?.addEventListener("click", () => openAccount("signup"));
-  $("bannerJoinBtn")?.addEventListener("click", () => openAccount("signup"));
-  $("createBtn")?.addEventListener("click", () => setActiveView("Upload"));
-
-  $("supportBtn")?.addEventListener("click", () => {
-    showNotice("FFineXX Support", "Community help and support will be connected in a later step.");
-  });
-
-  // NAVIGATION
-  const featureMessages = {
-    "For You": ["For You", "Fresh videos, new creators, endless inspiration."],
-    "Following": ["Following", "Your followed creators will appear here when the video feed is connected."],
-    "Explore": ["Explore FFineXX", "Discover creators, music, trends, and communities."],
-    "LIVE": ["FFineXX LIVE", "Live streaming needs a streaming service and server integration."],
-    "Messages": ["Messages", "Private messaging will be added with secure accounts."],
-    "Notifications": ["Notifications", "Your creator and account notifications will appear here."],
-    "Upload": ["Create a video", "Video uploads need secure storage and video-feed integration."],
-    "Studio": ["Creator Studio", "Creator analytics and video management will be built here."],
-    "Templates": ["Video templates", "Editing tools and templates will be connected in a later step."],
-    "Status": ["Status & Highlights", "Temporary posts and profile highlights will be added later."],
-    "Trending": ["Trending", "Trending videos will appear when real video data is connected."],
-    "Music": ["Music", "Music discovery will be connected in a later step."]
-  };
-
-  function setActiveView(view) {
-    const details = featureMessages[view] || [
-      view,
-      "This FFineXX feature will be connected in a future step."
-    ];
-
-    document.querySelectorAll(".nav-item").forEach((button) => {
-      button.classList.toggle("active", button.dataset.view === view);
-    });
-
-    document.querySelectorAll(".tab").forEach((button) => {
-      button.classList.toggle("active", button.dataset.feed === view);
-    });
-
-    const heading = $("pageTitle");
-    const subtitle = $("pageSubtitle");
-
-    if (heading && subtitle) {
-      if (view === "For You") {
-        heading.innerHTML = 'Discover your next <span class="pink">favourite.</span>';
-        subtitle.textContent = "Fresh videos, new creators, endless inspiration.";
-      } else {
-        heading.textContent = details[0];
-        subtitle.textContent = details[1];
-      }
+    const { error } = await client.auth.signOut();
+    if (error) {
+      status(error.message, true);
+      return;
     }
 
-    if (!["For You", "Following", "Trending", "Music"].includes(view)) {
-      showNotice(details[0], details[1]);
+    updateUI(null);
+    setMode("signup");
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    const { error } = await client.auth.signOut();
+    if (error) {
+      status(error.message, true);
+      return;
     }
-  }
-
-  document.querySelectorAll("[data-view]").forEach((button) => {
-    button.addEventListener("click", () => {
-      if (button.id === "mobileLoginBtn") return;
-      setActiveView(button.dataset.view);
-    });
+    updateUI(null);
+    closeAccount();
+    notice("Logged out", "You have safely logged out of FFineXX.");
   });
 
-  document.querySelectorAll("[data-feed]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const feed = button.dataset.feed;
-      setActiveView(feed);
-      if (feed !== "For You") {
-        showNotice(feed, "This feed will show personalized videos after video data is connected.");
-      }
-    });
+  $("studioUploadBtn").addEventListener("click", () => {
+    notice(
+      "Video publishing",
+      "The upload screen will be enabled after secure video storage and the publishing database are connected."
+    );
   });
 
-  document.querySelectorAll('[data-action="like"]').forEach((button) => {
+  document.querySelectorAll("[data-view]").forEach(button => {
     button.addEventListener("click", () => {
-      const liked = button.classList.toggle("liked");
-      button.innerHTML = liked ? "♥ <span>Liked</span>" : "♡ <span>Like</span>";
-      button.setAttribute("aria-pressed", String(liked));
-    });
-  });
+      const view = button.dataset.view;
 
-  document.querySelectorAll(".follow-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      const following = button.classList.toggle("following");
-      button.textContent = following ? "Following" : "Follow";
-      button.setAttribute("aria-pressed", String(following));
-    });
-  });
+      if (["Upload", "Studio", "Dashboard", "Settings"].includes(view) &&
+          !requireLogin("use creator tools")) return;
 
-  document.querySelectorAll('[data-action="comment"]').forEach((button) => {
-    button.addEventListener("click", () => {
-      showNotice("Comments", "Comments will be connected to the database in a later step.");
-    });
-  });
-
-  document.querySelectorAll('[data-action="share"]').forEach((button) => {
-    button.addEventListener("click", async () => {
-      const shareData = {
-        title: "FFineXX",
-        text: "Discover creators on FFineXX.",
-        url: window.location.href
+      const titles = {
+        "For You": ["Discover your next favourite.", "Watch public videos without an account."],
+        Following: ["Following", "Sign in to follow creators."],
+        Explore: ["Explore FFineXX", "Discover creators, music and stories."],
+        Upload: ["Create a video", "Video publishing needs connected storage."],
+        Dashboard: ["Creator dashboard", "Review your creator activity."],
+        Studio: ["Creator Studio", "Manage your creative workflow."],
+        Settings: ["Account settings", "Manage your profile."]
       };
 
-      try {
-        if (navigator.share) {
-          await navigator.share(shareData);
-        } else if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(window.location.href);
-          showNotice("Link copied", "The FFineXX page link was copied.");
-        } else {
-          showNotice("Share FFineXX", window.location.href);
-        }
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          showNotice("Share FFineXX", window.location.href);
-        }
+      const details = titles[view] || [view, "Discover FFineXX."];
+      $("pageTitle").textContent = details[0];
+      $("pageSubtitle").textContent = details[1];
+
+      document.querySelectorAll("[data-view]").forEach(item => {
+        item.classList.toggle("active", item.dataset.view === view);
+      });
+
+      if (view === "Upload") openAccount("studio");
+      if (view === "Studio") openAccount("studio");
+      if (view === "Dashboard") openAccount("dashboard");
+      if (view === "Settings") openAccount("settings");
+    });
+  });
+
+  document.querySelectorAll("[data-feed]").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("[data-feed]").forEach(item =>
+        item.classList.toggle("active", item === button)
+      );
+      if (button.dataset.feed !== "For You") {
+        notice(button.dataset.feed, "Personalized video feeds will be connected to real video data.");
       }
     });
   });
 
-  $("searchInput")?.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter") return;
-    const query = $("searchInput").value.trim();
+  document.querySelectorAll('[data-action="like"], [data-action="favorite"], [data-action="share"]').forEach(button => {
+    button.addEventListener("click", async () => {
+      const action = button.dataset.action;
 
-    if (!query) {
-      showNotice("Search FFineXX", "Type a creator or topic to search.");
-      return;
-    }
+      if (!requireLogin(action === "favorite" ? "save favourites" : action + " videos")) {
+        return;
+      }
 
-    showNotice("Search", 'Searching for "' + query + '" will work when creator and video search is connected.');
+      if (action === "share") {
+        try {
+          if (navigator.share) {
+            await navigator.share({
+              title: "FFineXX",
+              url: window.location.href
+            });
+          } else {
+            await navigator.clipboard.writeText(window.location.href);
+            notice("Link copied", "Share this FFineXX link with your friends.");
+          }
+        } catch (err) {
+          if (err.name !== "AbortError") notice("Share FFineXX", window.location.href);
+        }
+      } else {
+        notice(
+          action === "like" ? "Like" : "Favourite",
+          "Your account is ready. Persistent likes and favourites will work after video database tables are connected."
+        );
+      }
+    });
   });
 
-  // Restore existing login and keep the buttons synchronized.
-  supabaseClient.auth.getSession().then(({ data, error }) => {
+  $("searchInput").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      const q = $("searchInput").value.trim();
+      notice("Search FFineXX", q
+        ? `Search for "${q}" will be connected to creator and video data.`
+        : "Type a creator or topic to search.");
+    }
+  });
+
+  client.auth.getSession().then(({ data, error }) => {
     if (error) {
-      console.error("Could not restore FFineXX session:", error.message);
+      console.error(error.message);
       return;
     }
-    updateSignedInUI(data.session?.user || null);
+    updateUI(data.session?.user || null);
   });
 
-  supabaseClient.auth.onAuthStateChange((_event, session) => {
-    updateSignedInUI(session?.user || null);
+  client.auth.onAuthStateChange((_event, session) => {
+    updateUI(session?.user || null);
   });
 });
