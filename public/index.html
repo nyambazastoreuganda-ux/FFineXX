@@ -286,6 +286,84 @@
 </style>
 
 <section class="fx-tools" id="fxCreatorTools">
+<dialog id="fxCreateDialog">
+  <div class="dialog-content">
+    <div class="dialog-header">
+      <h2>Create on FFineXX</h2>
+      <button class="close" id="fxCloseCreate" type="button">×</button>
+    </div>
+
+    <p class="muted">Choose what you want to share.</p>
+
+    <button class="primary full" id="fxChooseVideo" type="button">
+      🎬 Post a short video
+    </button>
+    <button class="secondary full" id="fxChoosePhoto" type="button">
+      🖼️ Post a photo
+    </button>
+    <button class="secondary full" id="fxChooseLive" type="button">
+      🔴 Set up LIVE
+    </button>
+
+    <section id="fxPostForm" hidden>
+      <h3 id="fxPostHeading">Create a post</h3>
+      <label for="fxMediaFile">Choose a video or photo</label>
+      <input class="fx-field" id="fxMediaFile" type="file"
+        accept="video/*,image/*">
+
+      <label for="fxDescription">Description</label>
+      <textarea class="fx-field" id="fxDescription" rows="4"
+        maxlength="2200" placeholder="Tell your story..."></textarea>
+
+      <label for="fxTagInput">Hashtags</label>
+      <input class="fx-field" id="fxTagInput"
+        placeholder="#music #dance #FFineXX">
+
+      <label for="fxAudience">Who can see this post?</label>
+      <select class="fx-field" id="fxAudience">
+        <option value="public">🌍 Public</option>
+        <option value="private">🔒 Private — only me</option>
+        <option value="friends">👥 Friends only</option>
+        <option value="following">♡ Following only</option>
+      </select>
+
+      <div id="fxMediaPreview"></div>
+      <p class="fx-hint" id="fxCreateStatus" aria-live="polite"></p>
+
+      <button class="primary full" id="fxPreviewButton" type="button">
+        Preview post
+      </button>
+      <button class="primary full" id="fxPublishButton" type="button">
+        Publish post
+      </button>
+    </section>
+
+    <section id="fxLiveForm" hidden>
+      <h3>Professional LIVE setup</h3>
+      <label for="fxLiveTitle">Live title</label>
+      <input class="fx-field" id="fxLiveTitle"
+        maxlength="100" placeholder="Give your LIVE a title">
+
+      <label for="fxLiveAudience">LIVE audience</label>
+      <select class="fx-field" id="fxLiveAudience">
+        <option value="public">Public</option>
+        <option value="followers">Followers only</option>
+      </select>
+
+      <p class="fx-hint">
+        Your camera and microphone settings will appear here.
+        A real public LIVE requires a streaming service.
+      </p>
+      <p id="fxLiveStatus" class="fx-hint" aria-live="polite">
+        Not live.
+      </p>
+      <button class="primary full" id="fxPrepareLive" type="button">
+        Prepare LIVE
+      </button>
+    </section>
+  </div>
+</dialog>
+
   <div class="fx-panel">
     <h2>＋ Create a short video</h2>
     <p class="fx-hint">Add your video, caption and hashtags before publishing.</p>
@@ -507,7 +585,102 @@
 </body>
 </html>
 
-  <script src="app.js"></script>
+ 
+const createDialog = document.getElementById("fxCreateDialog");
+
+document.getElementById("createBtn")?.addEventListener("click", () => {
+  if (createDialog && !createDialog.open) createDialog.showModal();
+});
+
+document.getElementById("fxCloseCreate")?.addEventListener("click", () => {
+  createDialog?.close();
+});
+
+function showCreateForm(type) {
+  document.getElementById("fxPostForm").hidden = type === "live";
+  document.getElementById("fxLiveForm").hidden = type !== "live";
+
+  document.getElementById("fxPostHeading").textContent =
+    type === "photo" ? "Create a photo post" : "Create a video post";
+
+  if (type !== "live") {
+    document.getElementById("fxMediaFile").accept =
+      type === "photo" ? "image/*" : "video/*";
+  }
+}
+
+document.getElementById("fxChooseVideo")?.addEventListener("click", () => {
+  showCreateForm("video");
+});
+
+document.getElementById("fxChoosePhoto")?.addEventListener("click", () => {
+  showCreateForm("photo");
+});
+
+document.getElementById("fxChooseLive")?.addEventListener("click", () => {
+  showCreateForm("live");
+});
+
+document.getElementById("fxMediaFile")?.addEventListener("change", event => {
+  const file = event.target.files[0];
+  const preview = document.getElementById("fxMediaPreview");
+  const status = document.getElementById("fxCreateStatus");
+
+  preview.replaceChildren();
+  if (!file) return;
+
+  if (!file.type.startsWith("video/") &&
+      !file.type.startsWith("image/")) {
+    status.textContent = "Choose a valid image or video.";
+    event.target.value = "";
+    return;
+  }
+
+  const url = URL.createObjectURL(file);
+  const media = document.createElement(
+    file.type.startsWith("image/") ? "img" : "video"
+  );
+
+  media.src = url;
+  media.controls = file.type.startsWith("video/");
+  media.style.cssText =
+    "width:100%;max-height:360px;object-fit:contain;border-radius:12px";
+
+  preview.appendChild(media);
+  status.textContent = "Preview ready. This has not been published.";
+});
+
+document.getElementById("fxPreviewButton")?.addEventListener("click", () => {
+  const description = document.getElementById("fxDescription").value.trim();
+  const audience = document.getElementById("fxAudience").selectedOptions[0].text;
+  document.getElementById("fxCreateStatus").textContent =
+    `Preview: ${description || "No description"} · Audience: ${audience}`;
+});
+
+document.getElementById("fxPublishButton")?.addEventListener("click", () => {
+  if (!window.ffineXXUserSignedIn) {
+    document.getElementById("fxCreateStatus").textContent =
+      "Please log in before publishing.";
+    createDialog.close();
+    document.getElementById("loginBtn")?.click();
+    return;
+  }
+
+  document.getElementById("fxCreateStatus").textContent =
+    "Your post form is ready. Secure media storage, database saving, and server-side privacy checks must be connected before publishing works.";
+});
+
+document.getElementById("fxPrepareLive")?.addEventListener("click", () => {
+  if (!window.ffineXXUserSignedIn) {
+    document.getElementById("fxLiveStatus").textContent =
+      "Please log in before setting up LIVE.";
+    return;
+  }
+
+  document.getElementById("fxLiveStatus").textContent =
+    "Setup saved in this screen only. Connect a real streaming service to broadcast to viewers.";
+});
+ <script src="app.js"></script>
 </body>
 </html>
 
