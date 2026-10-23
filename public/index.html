@@ -272,6 +272,241 @@
   </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- FFineXX Creator tools upgrade -->
+<style>
+  .fx-tools { margin: 22px auto; max-width: 760px; color: #f8f7ff; }
+  .fx-panel { background: #171421; border: 1px solid #383047; border-radius: 18px; padding: 20px; margin: 16px 0; }
+  .fx-panel h2 { margin-top: 0; }
+  .fx-field { display: block; width: 100%; box-sizing: border-box; margin: 9px 0 14px; padding: 12px; border: 1px solid #50465e; border-radius: 10px; background: #0e0c15; color: white; }
+  .fx-button { padding: 11px 16px; border: 0; border-radius: 10px; margin: 4px; cursor: pointer; font-weight: 700; background: #a855f7; color: white; }
+  .fx-secondary { background: #30283d; }
+  .fx-live-preview { background: #09080e; border-radius: 14px; aspect-ratio: 9 / 16; max-height: 340px; display: grid; place-items: center; overflow: hidden; }
+  .fx-live-preview video { width: 100%; height: 100%; object-fit: cover; }
+  .fx-hint { color: #c0b6d0; font-size: 13px; line-height: 1.5; }
+</style>
+
+<section class="fx-tools" id="fxCreatorTools">
+  <div class="fx-panel">
+    <h2>＋ Create a short video</h2>
+    <p class="fx-hint">Add your video, caption and hashtags before publishing.</p>
+    <label for="fxVideoFile">Choose video</label>
+    <input class="fx-field" id="fxVideoFile" type="file" accept="video/*">
+    <label for="fxCaption">Description / caption</label>
+    <textarea class="fx-field" id="fxCaption" rows="3" maxlength="2200"
+      placeholder="Tell viewers about your video..."></textarea>
+    <label for="fxHashtags">Hashtags</label>
+    <input class="fx-field" id="fxHashtags" placeholder="#music #dance #FFineXX">
+    <video id="fxVideoPreview" controls playsinline
+      style="display:none;width:100%;max-height:420px;border-radius:14px;background:#000"></video>
+    <button class="fx-button" id="fxPreviewPost" type="button">Preview post</button>
+    <button class="fx-button" id="fxPublishPost" type="button">Publish video</button>
+    <div id="fxPostStatus" class="fx-hint" aria-live="polite"></div>
+    <div id="fxPostPreview"></div>
+  </div>
+
+  <div class="fx-panel">
+    <h2>🔴 Go LIVE</h2>
+    <p class="fx-hint">Configure your live session. Camera preview works on a secure HTTPS page with browser permission.</p>
+    <label for="fxLiveTitle">Live title</label>
+    <input class="fx-field" id="fxLiveTitle" maxlength="100"
+      placeholder="What are you going live about?">
+    <label for="fxLiveAudience">Audience</label>
+    <select class="fx-field" id="fxLiveAudience">
+      <option value="public">Public — everyone</option>
+      <option value="followers">Followers only (requires follower access controls)</option>
+    </select>
+    <label for="fxCamera">Camera</label>
+    <select class="fx-field" id="fxCamera">
+      <option value="">Default camera</option>
+    </select>
+    <label for="fxMicrophone">Microphone</label>
+    <select class="fx-field" id="fxMicrophone">
+      <option value="">Default microphone</option>
+    </select>
+    <div class="fx-live-preview">
+      <video id="fxLivePreview" autoplay muted playsinline></video>
+      <span id="fxLivePlaceholder">Your camera preview appears here</span>
+    </div>
+    <p id="fxLiveStatus" class="fx-hint" aria-live="polite">Not live.</p>
+    <button class="fx-button" id="fxStartPreview" type="button">Enable camera & mic</button>
+    <button class="fx-button fx-secondary" id="fxMuteMic" type="button">Mute mic</button>
+    <button class="fx-button fx-secondary" id="fxToggleCamera" type="button">Turn camera off</button>
+    <button class="fx-button" id="fxStartLive" type="button">Start LIVE</button>
+    <button class="fx-button fx-secondary" id="fxEndLive" type="button">End LIVE</button>
+    <p class="fx-hint">
+      Important: camera preview is not a public broadcast. Real LIVE streaming,
+      viewers, chat moderation and audience restrictions require a streaming
+      server/provider and server-side access controls.
+    </p>
+  </div>
+
+  <div class="fx-panel">
+    <h2>💬 Comments</h2>
+    <p class="fx-hint">Comments will be connected to each published video.</p>
+    <textarea class="fx-field" id="fxCommentText" rows="2"
+      maxlength="1000" placeholder="Write a comment..."></textarea>
+    <button class="fx-button" id="fxSubmitComment" type="button">Post comment</button>
+    <div id="fxCommentsStatus" class="fx-hint" aria-live="polite"></div>
+    <div id="fxCommentsList"></div>
+  </div>
+</section>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  let selectedVideoUrl = "";
+  let liveStream = null;
+  let micMuted = false;
+  let cameraOff = false;
+
+  function signedIn() {
+    return Boolean(window.ffineXXUserSignedIn);
+  }
+
+  function tellLogin(action) {
+    $("fxPostStatus").textContent = `Please log in to ${action}.`;
+    const login = document.getElementById("loginBtn");
+    if (login) login.click();
+  }
+
+  $("fxVideoFile").addEventListener("change", () => {
+    if (selectedVideoUrl) URL.revokeObjectURL(selectedVideoUrl);
+    const file = $("fxVideoFile").files[0];
+    if (!file) return;
+    if (!file.type.startsWith("video/")) {
+      $("fxPostStatus").textContent = "Choose a video file.";
+      return;
+    }
+    selectedVideoUrl = URL.createObjectURL(file);
+    $("fxVideoPreview").src = selectedVideoUrl;
+    $("fxVideoPreview").style.display = "block";
+  });
+
+  $("fxPreviewPost").addEventListener("click", () => {
+    const caption = $("fxCaption").value.trim();
+    const tags = $("fxHashtags").value.trim();
+    $("fxPostPreview").replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Post preview";
+    const description = document.createElement("p");
+    description.textContent = caption || "No caption added yet.";
+    const hashtags = document.createElement("p");
+    hashtags.textContent = tags.split(/\s+/).filter(t => t.startsWith("#")).join(" ");
+    $("fxPostPreview").append(heading, description, hashtags);
+  });
+
+  $("fxPublishPost").addEventListener("click", () => {
+    if (!signedIn()) return tellLogin("publish videos");
+    if (!$("fxVideoFile").files[0]) {
+      $("fxPostStatus").textContent = "Choose a video first.";
+      return;
+    }
+    $("fxPostStatus").textContent =
+      "Your post is ready for integration. Secure video storage and the publishing database must be connected before it can be published for everyone.";
+  });
+
+  $("fxSubmitComment").addEventListener("click", () => {
+    if (!signedIn()) return tellLogin("comment");
+    if (!$("fxCommentText").value.trim()) {
+      $("fxCommentsStatus").textContent = "Write a comment first.";
+      return;
+    }
+    $("fxCommentsStatus").textContent =
+      "Comment form ready. Connect the comments database to save and display comments for everyone.";
+  });
+
+  async function populateDevices() {
+    if (!navigator.mediaDevices?.enumerateDevices) return;
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    [
+      { type: "videoinput", id: "fxCamera", label: "Camera" },
+      { type: "audioinput", id: "fxMicrophone", label: "Microphone" }
+    ].forEach(({ type, id, label }) => {
+      const select = $(id);
+      select.replaceChildren(new Option("Default " + label.toLowerCase(), ""));
+      devices.filter(d => d.kind === type).forEach((device, i) => {
+        select.add(new Option(device.label || `${label} ${i + 1}`, device.deviceId));
+      });
+    });
+  }
+
+  async function startPreview() {
+    stopPreview();
+    const constraints = {
+      video: $("fxCamera").value
+        ? { deviceId: { exact: $("fxCamera").value } } : true,
+      audio: $("fxMicrophone").value
+        ? { deviceId: { exact: $("fxMicrophone").value } } : true
+    };
+    liveStream = await navigator.mediaDevices.getUserMedia(constraints);
+    $("fxLivePreview").srcObject = liveStream;
+    $("fxLivePlaceholder").style.display = "none";
+    await populateDevices();
+    $("fxLiveStatus").textContent = "Camera preview active. You are not broadcasting.";
+  }
+
+  function stopPreview() {
+    if (liveStream) liveStream.getTracks().forEach(track => track.stop());
+    liveStream = null;
+    $("fxLivePreview").srcObject = null;
+    $("fxLivePlaceholder").style.display = "grid";
+  }
+
+  $("fxStartPreview").addEventListener("click", async () => {
+    if (!signedIn()) return tellLogin("use LIVE");
+    try {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        throw new Error("Camera access requires HTTPS and a supported browser.");
+      }
+      await startPreview();
+    } catch (error) {
+      $("fxLiveStatus").textContent = error.message;
+    }
+  });
+
+  $("fxMuteMic").addEventListener("click", () => {
+    if (!liveStream) return;
+    micMuted = !micMuted;
+    liveStream.getAudioTracks().forEach(track => track.enabled = !micMuted);
+    $("fxMuteMic").textContent = micMuted ? "Unmute mic" : "Mute mic";
+  });
+
+  $("fxToggleCamera").addEventListener("click", () => {
+    if (!liveStream) return;
+    cameraOff = !cameraOff;
+    liveStream.getVideoTracks().forEach(track => track.enabled = !cameraOff);
+    $("fxToggleCamera").textContent = cameraOff ? "Turn camera on" : "Turn camera off";
+  });
+
+  $("fxStartLive").addEventListener("click", () => {
+    if (!signedIn()) return tellLogin("go live");
+    if (!liveStream) {
+      $("fxLiveStatus").textContent = "Enable your camera and microphone first.";
+      return;
+    }
+    $("fxLiveStatus").textContent =
+      "Preview is active, but no public broadcast has started. Connect a real streaming service to go live to viewers.";
+  });
+
+  $("fxEndLive").addEventListener("click", () => {
+    if (confirm("Stop your camera and microphone?")) {
+      stopPreview();
+      $("fxLiveStatus").textContent = "Camera and microphone stopped.";
+      micMuted = false;
+      cameraOff = false;
+      $("fxMuteMic").textContent = "Mute mic";
+      $("fxToggleCamera").textContent = "Turn camera off";
+    }
+  });
+
+  populateDevices().catch(() => {});
+  window.addEventListener("beforeunload", stopPreview);
+})();
+</script>
+</body>
+</html>
+
   <script src="app.js"></script>
 </body>
 </html>
