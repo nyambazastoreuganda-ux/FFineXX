@@ -440,7 +440,118 @@ document.getElementById("postFile").addEventListener("change",e=>{
   const video=document.createElement("video");video.src=previewUrl;video.controls=true;video.playsInline=true;video.style.cssText="width:100%;height:100%;object-fit:contain";preview.appendChild(video);
  }else preview.textContent="Please select an image or video.";
 });
-document.getElementById("postForm").addEventListener("submit",e=>{
+
+document.getElementById("postForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  if (!requireSignIn()) return;
+
+  const file = document.getElementById("postFile").files[0];
+  const caption = document.getElementById("postCaption").value.trim();
+  const visibility = document.getElementById("postVisibility").value;
+  const status = document.getElementById("postStatus");
+  const button = document.querySelector('#postForm button[type="submit"]');
+
+  if (!supabaseClient || !currentUser) {
+    status.textContent = "Please log in again and try.";
+    return;
+  }
+
+  if (!file) {
+    status.textContent = "Please choose a photo or video.";
+    return;
+  }
+
+  if (!file.type.startsWith("image/") &&
+      !file.type.startsWith("video/")) {
+    status.textContent = "Choose a valid image or video.";
+    return;
+  }
+
+  // Keep uploads within reasonable limits.
+  const maxSize = file.type.startsWith("image/")
+    ? 5 * 1024 * 1024
+    : 100 * 1024 * 1024;
+
+  if (file.size > maxSize) {
+    status.textContent = file.type.startsWith("image/")
+      ? "Images must be 5 MB or smaller."
+      : "Videos must be 100 MB or smaller.";
+    return;
+  }
+
+  button.disabled = true;
+  status.textContent = "Uploading your media... Please wait.";
+
+  try {
+    const mediaType = file.type.startsWith("image/")
+      ? "image"
+      : "video";
+
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const filePath =
+      currentUser.id + "/" + crypto.randomUUID() + "-" + safeName;
+
+    // Upload to a dedicated post-media bucket.
+    const { error: uploadError } = await supabaseClient.storage
+      .from("ffinexx-posts")
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: file.type
+      });
+
+    if (uploadError) throw uploadError;
+
+    const { data: urlData } = supabaseClient.storage
+      .from("ffinexx-posts")
+      .getPublicUrl(filePath);
+
+    const mediaUrl = urlData.publicUrl;
+
+    status.textContent = "Media uploaded. Saving your post...";
+
+    const { data: post, error: postError } = await supabaseClient
+      .from("ffinexx_posts")
+      .insert({
+        user_id: currentUser.id,
+        media_url: mediaUrl,
+        media_type: mediaType,
+        caption: caption,
+        visibility: visibility
+      })
+      .select()
+      .single();
+
+    if (postError) {
+      // Remove the uploaded file if saving the post fails.
+      await supabaseClient.storage
+        .from("ffinexx-posts")
+        .remove([filePath]);
+      throw postError;
+    }
+
+    status.textContent =
+      "Post published successfully! Your post ID is " + post.id;
+
+    document.getElementById("postForm").reset();
+    document.getElementById("postPreview").textContent =
+      "Your selected media will appear here.";
+
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      previewUrl = null;
+    }
+
+  } catch (err) {
+    console.error("FFineXX post upload failed:", err);
+    status.textContent =
+      "Upload failed: " + (err.message || "Please try again.");
+  } finally {
+    button.disabled = false;
+  }
+});
+
  e.preventDefault();
  if(!requireSignIn())return;
  const file=document.getElementById("postFile").files[0];
