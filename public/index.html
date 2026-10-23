@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d18">
+  <title>FFineXX — Create. Share. Shine.</title>
+  <meta name="description" content="Discover short videos, connect with creators, and share your world on FFineXX.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="FFineXX home">
+      <span class="brand-icon">F</span>Fine<span class="pink">XX</span>
+    </a>
+    <label class="search">
+      <span>⌕</span>
+      <input id="searchInput" type="search" placeholder="Search creators and videos">
+    </label>
+    <button class="login-btn" id="loginBtn">Log in</button>
+    <button class="join-btn" id="joinBtn">Sign up</button>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav aria-label="Main navigation">
+        <button class="nav-item active" data-view="For You">⌂ <span>For You</span></button>
+        <button class="nav-item" data-view="Following">♡ <span>Following</span></button>
+        <button class="nav-item" data-view="Explore">⌕ <span>Explore</span></button>
+        <button class="nav-item" data-view="LIVE">◉ <span>LIVE</span></button>
+        <button class="nav-item" data-view="Messages">✉ <span>Messages</span></button>
+        <button class="nav-item" data-view="Notifications">♧ <span>Notifications</span></button>
+      </nav>
+      <div class="side-divider"></div>
+      <p class="side-label">CREATE</p>
+      <button class="nav-item" data-view="Upload">＋ <span>Upload video</span></button>
+      <button class="nav-item" data-view="Studio">▣ <span>Creator Studio</span></button>
+      <button class="nav-item" data-view="Templates">✧ <span>Templates</span></button>
+      <button class="nav-item" data-view="Status">◷ <span>Status & Highlights</span></button>
+      <div class="sidebar-note">
+        <span class="pink">FFineXX</span>
+        <p>Your world. Your creativity. Your community.</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">WELCOME TO YOUR WORLD</p>
+          <h1 id="pageTitle">Discover your next <span class="pink">favourite.</span></h1>
+          <p class="subtext" id="pageSubtitle">Fresh videos, new creators, endless inspiration.</p>
+        </div>
+        <button class="create-btn" id="createBtn">＋ Create</button>
+      </section>
+
+      <div class="tabs" aria-label="Video feed">
+        <button class="tab active" data-feed="For You">For You</button>
+        <button class="tab" data-feed="Following">Following</button>
+        <button class="tab" data-feed="Trending">Trending</button>
+        <button class="tab" data-feed="Music">Music</button>
+      </div>
+
+      <section class="video-grid" id="videoGrid">
+        <article class="video-card">
+          <div class="video-placeholder gradient-one">
+            <span class="demo-label">CREATOR SPOTLIGHT</span>
+            <div class="play-symbol">▶</div>
+            <span class="video-caption">Your next big moment starts here.</span>
+          </div>
+          <div class="video-info">
+            <div class="avatar">F</div>
+            <div class="creator-info"><strong>FFineXX Creators</strong><span>@finexxcreators</span></div>
+            <button class="follow-btn">Follow</button>
+          </div>
+          <div class="video-actions">
+            <button class="action-btn" data-action="like">♡ <span>Like</span></button>
+            <button class="action-btn" data-action="comment">♧ <span>Comment</span></button>
+            <button class="action-btn" data-action="share">↗ <span>Share</span></button>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-placeholder gradient-two">
+            <span class="demo-label">MUSIC & CULTURE</span>
+            <div class="play-symbol">▶</div>
+            <span class="video-caption">Let the rhythm tell your story.</span>
+          </div>
+          <div class="video-info">
+            <div class="avatar avatar-purple">M</div>
+            <div class="creator-info"><strong>Music Moments</strong><span>@musicmoments</span></div>
+            <button class="follow-btn">Follow</button>
+          </div>
+          <div class="video-actions">
+            <button class="action-btn" data-action="like">♡ <span>Like</span></button>
+            <button class="action-btn" data-action="comment">♧ <span>Comment</span></button>
+            <button class="action-btn" data-action="share">↗ <span>Share</span></button>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="video-placeholder gradient-three">
+            <span class="demo-label">CREATIVE LIFE</span>
+            <div class="play-symbol">▶</div>
+            <span class="video-caption">Make something only you can make.</span>
+          </div>
+          <div class="video-info">
+            <div class="avatar avatar-orange">C</div>
+            <div class="creator-info"><strong>Creative Daily</strong><span>@creativedaily</span></div>
+            <button class="follow-btn">Follow</button>
+          </div>
+          <div class="video-actions">
+            <button class="action-btn" data-action="like">♡ <span>Like</span></button>
+            <button class="action-btn" data-action="comment">♧ <span>Comment</span></button>
+            <button class="action-btn" data-action="share">↗ <span>Share</span></button>
+          </div>
+        </article>
+      </section>
+
+      <section class="creator-banner">
+        <div>
+          <p class="eyebrow">YOUR CREATIVE JOURNEY</p>
+          <h2>Every creator starts somewhere.</h2>
+          <p>Build your profile, share your talent and find your people.</p>
+        </div>
+        <button class="join-btn" id="bannerJoinBtn">Join FFineXX ↗</button>
+      </section>
+
+      <footer>© 2026 FFineXX · Create. Share. Shine.</footer>
+    </main>
+
+    <aside class="right-panel">
+      <div class="panel-heading"><h2>Creators to discover</h2><span>✧</span></div>
+      <div class="suggested-creator"><div class="avatar">A</div><div class="creator-info"><strong>Artist Corner</strong><span>Music & performance</span></div></div>
+      <div class="suggested-creator"><div class="avatar avatar-purple">T</div><div class="creator-info"><strong>Trend Makers</strong><span>Dance & trends</span></div></div>
+      <div class="suggested-creator"><div class="avatar avatar-orange">V</div><div class="creator-info"><strong>Visual Stories</strong><span>Art & lifestyle</span></div></div>
+      <div class="panel-divider"></div>
+      <div class="panel-heading"><h2>Creator tools</h2></div>
+      <button class="tool-card" data-view="Studio"><span>▣</span><div><strong>Creator Studio</strong><small>Plan your next post</small></div><b>›</b></button>
+      <button class="tool-card" data-view="Templates"><span>✧</span><div><strong>Video templates</strong><small>Start creating</small></div><b>›</b></button>
+      <button class="tool-card" data-view="LIVE"><span>◉</span><div><strong>Go LIVE</strong><small>Connect with fans</small></div><b>›</b></button>
+      <div class="support-card"><strong>Have a question?</strong><p>Help and support for the FFineXX community.</p><button id="supportBtn">Get help ↗</button></div>
+    </aside>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <button data-view="For You">⌂<span>Home</span></button>
+    <button data-view="Explore">⌕<span>Explore</span></button>
+    <button data-view="Upload">＋<span>Create</span></button>
+    <button data-view="LIVE">◉<span>LIVE</span></button>
+    <button id="mobileLoginBtn">♙<span>Account</span></button>
+  </nav>
+
+  <dialog id="noticeDialog">
+    <div class="dialog-content">
+      <button class="dialog-close" id="closeDialog" aria-label="Close">×</button>
+      <div class="brand dialog-brand"><span class="brand-icon">F</span>Fine<span class="pink">XX</span></div>
+      <h2 id="dialogTitle">Welcome to FFineXX</h2>
+      <p id="dialogMessage">This feature will be connected as we build your platform.</p>
+      <button class="join-btn" id="dialogOkay">Got it</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
