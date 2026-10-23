@@ -830,3 +830,55 @@ dialog::backdrop {
   }
 }
 
+/* FFineXX vertical video feed fix */
+.video-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px;
+}
+
+.video-card {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: calc(100dvh - 76px);
+  min-height: 500px;
+  aspect-ratio: auto !important;
+  border-radius: 0;
+}
+
+.video-placeholder video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+@media (max-width: 760px) {
+  .video-grid {
+    gap: 0;
+    padding-top: 0;
+  }
+
+  .video-card {
+    min-height: calc(100dvh - 62px);
+    border: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .video-placeholder {
+    height: calc(100dvh - 62px - 60px);
+    min-height: 400px;
+  }
+
+  .video-placeholder video {
+    object-fit: contain;
+  }
+}
+
