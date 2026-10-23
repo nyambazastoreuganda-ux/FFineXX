@@ -1,4 +1,10 @@
+const SUPABASE_URL = "https://ogzkrakaypfhowkgvvzp.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uzizmRLBZehb_4MkQcgqEg_DPQ0pyKl";
 
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
