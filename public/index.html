@@ -1,48 +1,117 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#100d18">
+  <meta name="theme-color" content="#09090f">
   <title>FFineXX — Create. Share. Shine.</title>
-  <meta name="description" content="Discover short videos, connect with creators, and share your world on FFineXX.">
+  <meta name="description" content="Watch short videos, discover creators, and share your world on FFineXX.">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #09090f;
+      --panel: #13131d;
+      --border: #29293a;
+      --text: #f7f5ff;
+      --muted: #a3a0b8;
+      --pink: #ff4fa3;
+      --purple: #9471ff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
+    .topbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 18px; padding: 14px 5%; background: #0c0b13ee; backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .brand { color: var(--text); text-decoration: none; font-weight: 900; font-size: 24px; letter-spacing: -1px; white-space: nowrap; }
+    .pink { color: var(--pink); }
+    .search { flex: 1; max-width: 520px; margin: auto; }
+    .search input, input, select { width: 100%; background: #0c0c14; color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+    .primary, .secondary { border: 0; border-radius: 12px; padding: 11px 16px; font-weight: 750; }
+    .primary { background: linear-gradient(110deg, var(--pink), #a56cff); color: white; }
+    .secondary { background: #202031; border: 1px solid var(--border); color: white; }
+    .layout { display: grid; grid-template-columns: 205px minmax(0, 1fr) 255px; gap: 24px; max-width: 1450px; margin: auto; padding: 24px; }
+    .sidebar, .right-panel { position: sticky; top: 88px; height: fit-content; }
+    .nav-item { display: block; width: 100%; text-align: left; padding: 13px; margin: 4px 0; border: 0; border-radius: 12px; color: var(--muted); background: transparent; }
+    .nav-item.active, .nav-item:hover { color: white; background: #252034; }
+    .main-content { min-width: 0; }
+    .welcome, .panel, .creator-banner { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 22px; }
+    .welcome { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    h1 { font-size: clamp(25px, 4vw, 38px); margin: 8px 0; }
+    h2 { font-size: 19px; }
+    .muted, small, .subtext { color: var(--muted); }
+    .eyebrow { color: var(--pink); font-size: 11px; font-weight: 800; letter-spacing: 1.7px; }
+    .tabs { display: flex; gap: 8px; overflow: auto; margin: 20px 0; }
+    .tab { border: 1px solid var(--border); border-radius: 999px; padding: 10px 17px; background: #15141e; color: var(--muted); white-space: nowrap; }
+    .tab.active { background: #342344; border-color: #8755a5; color: white; }
+    .video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .video-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); background: var(--panel); border-radius: 18px; }
+    .video-screen { min-height: 280px; aspect-ratio: 9/12; display: flex; flex-direction: column; justify-content: space-between; padding: 18px; background: radial-gradient(circle at 30% 20%, #743d86, transparent 45%), linear-gradient(145deg, #17152b, #39203d, #11111a); }
+    .video-screen.two { background: radial-gradient(circle at 65% 25%, #a33e75, transparent 40%), linear-gradient(145deg, #161526, #55243e, #11111a); }
+    .video-screen.three { background: radial-gradient(circle at 50% 20%, #6751ad, transparent 45%), linear-gradient(145deg, #141525, #253b58, #11111a); }
+    .video-caption { font-weight: 750; font-size: 18px; }
+    .play { font-size: 38px; text-align: center; margin: auto; opacity: .85; }
+    .video-meta { padding: 14px; }
+    .creator-row { display: flex; align-items: center; gap: 10px; }
+    .avatar { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); font-weight: 900; }
+    .creator-name { flex: 1; min-width: 0; }
+    .creator-name strong, .creator-name small { display: block; overflow-wrap: anywhere; }
+    .stats, .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .stat { color: var(--muted); font-size: 12px; background: #1d1c2a; border-radius: 8px; padding: 7px; }
+    .actions button { flex: 1; min-width: 65px; padding: 9px 5px; color: white; background: #222031; border: 1px solid var(--border); border-radius: 10px; }
+    .right-panel .panel { margin-bottom: 14px; }
+    .right-panel p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    footer { padding: 26px 0; color: var(--muted); font-size: 12px; }
+    dialog { width: min(490px, calc(100% - 24px)); max-height: 88vh; overflow: auto; padding: 0; border: 1px solid #383348; border-radius: 22px; background: #12111b; color: white; box-shadow: 0 25px 100px #000a; }
+    dialog::backdrop { background: #05040bc9; backdrop-filter: blur(5px); }
+    .dialog-content { padding: 24px; }
+    .dialog-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .close { background: #252333; border: 0; border-radius: 10px; color: white; font-size: 22px; width: 38px; height: 38px; }
+    .field { margin: 13px 0; }
+    .field label { display: block; margin-bottom: 7px; font-size: 13px; color: #d7d2e8; }
+    .full { width: 100%; margin-top: 10px; }
+    .auth-switch { display: flex; gap: 8px; margin: 15px 0; }
+    .auth-switch button { flex: 1; }
+    .section-card { padding: 15px; border: 1px solid var(--border); border-radius: 14px; margin: 12px 0; background: #181722; }
+    .section-card h3 { margin-top: 0; }
+    .status { min-height: 20px; color: #d6b8ff; font-size: 13px; }
+    [hidden] { display: none !important; }
+    .mobile-nav { display: none; }
+    @media (max-width: 1050px) { .layout { grid-template-columns: 175px minmax(0, 1fr); } .right-panel { display: none; } }
+    @media (max-width: 700px) {
+      .topbar { padding: 12px; gap: 10px; flex-wrap: wrap; }
+      .brand { font-size: 21px; }
+      .search { order: 3; flex-basis: 100%; max-width: none; }
+      .layout { display: block; padding: 12px; }
+      .sidebar { display: none; }
+      .welcome { padding: 17px; }
+      .video-grid { grid-template-columns: 1fr; }
+      .video-screen { aspect-ratio: 9/11; min-height: 320px; }
+      .mobile-nav { position: sticky; bottom: 0; z-index: 9; display: flex; justify-content: space-around; background: #11101aee; border-top: 1px solid var(--border); padding: 9px 2px calc(9px + env(safe-area-inset-bottom)); }
+      .mobile-nav button { background: none; border: 0; color: var(--muted); font-size: 12px; }
+      .mobile-nav span { display: block; margin-top: 3px; }
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#" aria-label="FFineXX home">
-      <span class="brand-icon">F</span>Fine<span class="pink">XX</span>
-    </a>
-    <label class="search">
-      <span>⌕</span>
-      <input id="searchInput" type="search" placeholder="Search creators and videos">
-    </label>
-    <button class="login-btn" id="loginBtn">Log in</button>
-    <button class="join-btn" id="joinBtn">Sign up</button>
-    <button class="login-btn" id="profileBtn" hidden>Profile</button>
+    <a class="brand" href="#" aria-label="FFineXX home">F<span class="pink">FineXX</span></a>
+    <label class="search"><input id="searchInput" type="search" placeholder="Search creators and videos" aria-label="Search creators and videos"></label>
+    <button class="secondary" id="loginBtn">Log in</button>
+    <button class="primary" id="joinBtn">Sign up</button>
+    <button class="secondary" id="profileBtn" hidden>My profile</button>
   </header>
 
   <div class="layout">
     <aside class="sidebar">
-      <nav aria-label="Main navigation">
-        <button class="nav-item active" data-view="For You">⌂ <span>For You</span></button>
-        <button class="nav-item" data-view="Following">♡ <span>Following</span></button>
-        <button class="nav-item" data-view="Explore">⌕ <span>Explore</span></button>
-        <button class="nav-item" data-view="LIVE">◉ <span>LIVE</span></button>
-        <button class="nav-item" data-view="Messages">✉ <span>Messages</span></button>
-        <button class="nav-item" data-view="Notifications">♧ <span>Notifications</span></button>
-      </nav>
-      <div class="side-divider"></div>
-      <p class="side-label">CREATE</p>
-      <button class="nav-item" data-view="Upload">＋ <span>Upload video</span></button>
-      <button class="nav-item" data-view="Studio">▣ <span>Creator Studio</span></button>
-      <button class="nav-item" data-view="Templates">✧ <span>Templates</span></button>
-      <button class="nav-item" data-view="Status">◷ <span>Status &amp; Highlights</span></button>
-      <div class="sidebar-note">
-        <span class="pink">FFineXX</span>
-        <p>Your world. Your creativity. Your community.</p>
-      </div>
+      <button class="nav-item active" data-view="For You">⌂ &nbsp; For You</button>
+      <button class="nav-item" data-view="Following">♡ &nbsp; Following</button>
+      <button class="nav-item" data-view="Explore">⌕ &nbsp; Explore</button>
+      <button class="nav-item" data-view="Upload">＋ &nbsp; Post a video</button>
+      <button class="nav-item" data-view="Dashboard">▦ &nbsp; Dashboard</button>
+      <button class="nav-item" data-view="Studio">▣ &nbsp; Creator Studio</button>
+      <button class="nav-item" data-view="Settings">⚙ &nbsp; Settings</button>
     </aside>
 
     <main class="main-content">
@@ -50,12 +119,12 @@
         <div>
           <p class="eyebrow">WELCOME TO YOUR WORLD</p>
           <h1 id="pageTitle">Discover your next <span class="pink">favourite.</span></h1>
-          <p class="subtext" id="pageSubtitle">Fresh videos, new creators, endless inspiration.</p>
+          <p class="subtext" id="pageSubtitle">Watch public videos without an account. Join to participate.</p>
         </div>
-        <button class="create-btn" id="createBtn">＋ Create</button>
+        <button class="primary" id="createBtn">＋ Create</button>
       </section>
 
-      <div class="tabs" aria-label="Video feed">
+      <div class="tabs">
         <button class="tab active" data-feed="For You">For You</button>
         <button class="tab" data-feed="Following">Following</button>
         <button class="tab" data-feed="Trending">Trending</button>
@@ -64,221 +133,141 @@
 
       <section class="video-grid" id="videoGrid">
         <article class="video-card">
-          <div class="video-placeholder gradient-one">
-            <span class="demo-label">CREATOR SPOTLIGHT</span>
-            <div class="play-symbol">▶</div>
-            <span class="video-caption">Your next big moment starts here.</span>
+          <div class="video-screen">
+            <span class="eyebrow">CREATOR SPOTLIGHT</span>
+            <div class="play">▶</div>
+            <div class="video-caption">Your next big moment starts here.</div>
           </div>
-          <div class="video-info">
-            <div class="avatar">F</div>
-            <div class="creator-info"><strong>FFineXX Creators</strong><span>@finexxcreators</span></div>
-            <button class="follow-btn">Follow</button>
-          </div>
-          <div class="video-actions">
-            <button class="action-btn" data-action="like">♡ <span>Like</span></button>
-            <button class="action-btn" data-action="comment">♧ <span>Comment</span></button>
-            <button class="action-btn" data-action="share">↗ <span>Share</span></button>
+          <div class="video-meta">
+            <div class="creator-row"><div class="avatar">F</div><div class="creator-name"><strong>FFineXX Creators</strong><small>@finexxcreators</small></div></div>
+            <div class="stats"><span class="stat">◉ Views: <b>Demo</b></span><span class="stat">♡ Likes: <b>Demo</b></span><span class="stat">★ Favourites: <b>Demo</b></span><span class="stat">↗ Shares: <b>Demo</b></span></div>
+            <div class="actions"><button data-action="like">♡ Like</button><button data-action="favorite">★ Save</button><button data-action="share">↗ Share</button></div>
           </div>
         </article>
-
         <article class="video-card">
-          <div class="video-placeholder gradient-two">
-            <span class="demo-label">MUSIC &amp; CULTURE</span>
-            <div class="play-symbol">▶</div>
-            <span class="video-caption">Let the rhythm tell your story.</span>
+          <div class="video-screen two">
+            <span class="eyebrow">MUSIC &amp; CULTURE</span>
+            <div class="play">▶</div>
+            <div class="video-caption">Let the rhythm tell your story.</div>
           </div>
-          <div class="video-info">
-            <div class="avatar avatar-purple">M</div>
-            <div class="creator-info"><strong>Music Moments</strong><span>@musicmoments</span></div>
-            <button class="follow-btn">Follow</button>
-          </div>
-          <div class="video-actions">
-            <button class="action-btn" data-action="like">♡ <span>Like</span></button>
-            <button class="action-btn" data-action="comment">♧ <span>Comment</span></button>
-            <button class="action-btn" data-action="share">↗ <span>Share</span></button>
+          <div class="video-meta">
+            <div class="creator-row"><div class="avatar">M</div><div class="creator-name"><strong>Music Moments</strong><small>@musicmoments</small></div></div>
+            <div class="stats"><span class="stat">◉ Views: <b>Demo</b></span><span class="stat">♡ Likes: <b>Demo</b></span><span class="stat">★ Favourites: <b>Demo</b></span><span class="stat">↗ Shares: <b>Demo</b></span></div>
+            <div class="actions"><button data-action="like">♡ Like</button><button data-action="favorite">★ Save</button><button data-action="share">↗ Share</button></div>
           </div>
         </article>
-
         <article class="video-card">
-          <div class="video-placeholder gradient-three">
-            <span class="demo-label">CREATIVE LIFE</span>
-            <div class="play-symbol">▶</div>
-            <span class="video-caption">Make something only you can make.</span>
+          <div class="video-screen three">
+            <span class="eyebrow">CREATIVE LIFE</span>
+            <div class="play">▶</div>
+            <div class="video-caption">Make something only you can make.</div>
           </div>
-          <div class="video-info">
-            <div class="avatar avatar-orange">C</div>
-            <div class="creator-info"><strong>Creative Daily</strong><span>@creativedaily</span></div>
-            <button class="follow-btn">Follow</button>
-          </div>
-          <div class="video-actions">
-            <button class="action-btn" data-action="like">♡ <span>Like</span></button>
-            <button class="action-btn" data-action="comment">♧ <span>Comment</span></button>
-            <button class="action-btn" data-action="share">↗ <span>Share</span></button>
+          <div class="video-meta">
+            <div class="creator-row"><div class="avatar">C</div><div class="creator-name"><strong>Creative Daily</strong><small>@creativedaily</small></div></div>
+            <div class="stats"><span class="stat">◉ Views: <b>Demo</b></span><span class="stat">♡ Likes: <b>Demo</b></span><span class="stat">★ Favourites: <b>Demo</b></span><span class="stat">↗ Shares: <b>Demo</b></span></div>
+            <div class="actions"><button data-action="like">♡ Like</button><button data-action="favorite">★ Save</button><button data-action="share">↗ Share</button></div>
           </div>
         </article>
       </section>
 
-      <section class="creator-banner">
-        <div>
-          <p class="eyebrow">YOUR CREATIVE JOURNEY</p>
-          <h2>Every creator starts somewhere.</h2>
-          <p>Build your profile, share your talent and find your people.</p>
-        </div>
-        <button class="join-btn" id="bannerJoinBtn">Join FFineXX ↗</button>
+      <section class="creator-banner section-card">
+        <p class="eyebrow">YOUR CREATIVE JOURNEY</p>
+        <h2>Every creator starts somewhere.</h2>
+        <p class="muted">Build your profile, share your talent and find your people.</p>
+        <button class="primary" id="bannerJoinBtn">Join FFineXX ↗</button>
       </section>
       <footer>© 2026 FFineXX · Create. Share. Shine.</footer>
     </main>
 
     <aside class="right-panel">
-      <div class="panel-heading"><h2>Creators to discover</h2><span>✧</span></div>
-      <div class="suggested-creator"><div class="avatar">A</div><div class="creator-info"><strong>Artist Corner</strong><span>Music &amp; performance</span></div></div>
-      <div class="suggested-creator"><div class="avatar avatar-purple">T</div><div class="creator-info"><strong>Trend Makers</strong><span>Dance &amp; trends</span></div></div>
-      <div class="suggested-creator"><div class="avatar avatar-orange">V</div><div class="creator-info"><strong>Visual Stories</strong><span>Art &amp; lifestyle</span></div></div>
-      <div class="panel-divider"></div>
-      <div class="panel-heading"><h2>Creator tools</h2></div>
-      <button class="tool-card" data-view="Studio"><span>▣</span><div><strong>Creator Studio</strong><small>Plan your next post</small></div><b>›</b></button>
-      <button class="tool-card" data-view="Templates"><span>✧</span><div><strong>Video templates</strong><small>Start creating</small></div><b>›</b></button>
-      <button class="tool-card" data-view="LIVE"><span>◉</span><div><strong>Go LIVE</strong><small>Connect with fans</small></div><b>›</b></button>
-      <div class="support-card">
-        <strong>Have a question?</strong>
-        <p>Help and support for the FFineXX community.</p>
-        <button id="supportBtn">Get help ↗</button>
-      </div>
+      <div class="panel"><h2>Creators to discover</h2><p>Find new music, art and stories from the community.</p></div>
+      <div class="panel"><h2>Creator tools</h2><button class="secondary full" data-view="Dashboard">Open dashboard</button><button class="secondary full" data-view="Studio">Open Creator Studio</button></div>
+      <div class="panel"><h2>Community</h2><p>Watching is open to everyone. Sign in to interact or publish.</p></div>
     </aside>
   </div>
 
-  <nav class="mobile-nav" aria-label="Mobile navigation">
+  <nav class="mobile-nav">
     <button data-view="For You">⌂<span>Home</span></button>
     <button data-view="Explore">⌕<span>Explore</span></button>
     <button data-view="Upload">＋<span>Create</span></button>
-    <button data-view="LIVE">◉<span>LIVE</span></button>
+    <button data-view="Dashboard">▦<span>Dashboard</span></button>
     <button id="mobileLoginBtn">♙<span>Account</span></button>
   </nav>
 
-  <dialog id="noticeDialog">
-    <div class="dialog-content">
-      <button class="dialog-close" id="closeDialog" aria-label="Close">×</button>
-      <div class="brand dialog-brand"><span class="brand-icon">F</span>Fine<span class="pink">XX</span></div>
-      <h2 id="dialogTitle">Welcome to FFineXX</h2>
-      <p id="dialogMessage">This feature will be connected as we build your platform.</p>
-      <button class="join-btn" id="dialogOkay">Got it</button>
-    </div>
-  </dialog>
-
   <dialog id="accountDialog">
     <div class="dialog-content">
-      <button class="dialog-close" id="closeAccountDialog" aria-label="Close">×</button>
-      <div class="brand dialog-brand"><span class="brand-icon">F</span>Fine<span class="pink">XX</span></div>
+      <div class="dialog-header"><div class="brand">F<span class="pink">FineXX</span></div><button class="close" id="closeAccountDialog" aria-label="Close">×</button></div>
+      <h2 id="accountTitle">Create your account</h2>
+      <p class="muted" id="accountDescription">Join creators and communities on FFineXX.</p>
 
-      <h2 id="accountTitle">Join FFineXX</h2>
-      <p id="accountDescription">Create your account and join the community.</p>
+      <div class="auth-switch" id="authTabs">
+        <button class="primary" id="showSignup">Sign up</button>
+        <button class="secondary" id="showLogin">Log in</button>
+      </div>
 
       <form id="signupForm">
-        <label for="signupName">Display name</label>
-        <input id="signupName" name="name" type="text" autocomplete="name" maxlength="60" required>
-
-        <label for="signupUsername">Username</label>
-        <input id="signupUsername" name="username" type="text" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required>
-
-        <label for="signupBirthday">Birthday</label>
-        <input id="signupBirthday" name="birthday" type="date" autocomplete="bday" required>
-
-        <label for="signupCountry">Country</label>
-        <select id="signupCountry" name="country" autocomplete="country-name" required>
+        <div class="field"><label for="signupName">Display name</label><input id="signupName" name="name" autocomplete="name" maxlength="60" required placeholder="Your name"></div>
+        <div class="field"><label for="signupUsername">Username</label><input id="signupUsername" name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required placeholder="your_username"></div>
+        <div class="field"><label for="signupCountry">Country</label><select id="signupCountry" name="country" autocomplete="country-name" required>
           <option value="">Choose your country</option>
-          <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Andorra</option>
-          <option>Angola</option><option>Antigua and Barbuda</option><option>Argentina</option><option>Armenia</option>
-          <option>Australia</option><option>Austria</option><option>Azerbaijan</option><option>Bahamas</option>
-          <option>Bahrain</option><option>Bangladesh</option><option>Barbados</option><option>Belarus</option>
-          <option>Belgium</option><option>Belize</option><option>Benin</option><option>Bhutan</option>
-          <option>Bolivia</option><option>Bosnia and Herzegovina</option><option>Botswana</option><option>Brazil</option>
-          <option>Brunei</option><option>Bulgaria</option><option>Burkina Faso</option><option>Burundi</option>
-          <option>Cabo Verde</option><option>Cambodia</option><option>Cameroon</option><option>Canada</option>
-          <option>Central African Republic</option><option>Chad</option><option>Chile</option><option>China</option>
-          <option>Colombia</option><option>Comoros</option><option>Congo</option><option>Costa Rica</option>
-          <option>Côte d’Ivoire</option><option>Croatia</option><option>Cuba</option><option>Cyprus</option>
-          <option>Czechia</option><option>Democratic Republic of the Congo</option><option>Denmark</option><option>Djibouti</option>
-          <option>Dominica</option><option>Dominican Republic</option><option>Ecuador</option><option>Egypt</option>
-          <option>El Salvador</option><option>Equatorial Guinea</option><option>Eritrea</option><option>Estonia</option>
-          <option>Eswatini</option><option>Ethiopia</option><option>Fiji</option><option>Finland</option>
-          <option>France</option><option>Gabon</option><option>Gambia</option><option>Georgia</option>
-          <option>Germany</option><option>Ghana</option><option>Greece</option><option>Grenada</option>
-          <option>Guatemala</option><option>Guinea</option><option>Guinea-Bissau</option><option>Guyana</option>
-          <option>Haiti</option><option>Honduras</option><option>Hungary</option><option>Iceland</option>
-          <option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option>
-          <option>Ireland</option><option>Israel</option><option>Italy</option><option>Jamaica</option>
-          <option>Japan</option><option>Jordan</option><option>Kazakhstan</option><option>Kenya</option>
-          <option>Kiribati</option><option>Kuwait</option><option>Kyrgyzstan</option><option>Laos</option>
-          <option>Latvia</option><option>Lebanon</option><option>Lesotho</option><option>Liberia</option>
-          <option>Libya</option><option>Liechtenstein</option><option>Lithuania</option><option>Luxembourg</option>
-          <option>Madagascar</option><option>Malawi</option><option>Malaysia</option><option>Maldives</option>
-          <option>Mali</option><option>Malta</option><option>Marshall Islands</option><option>Mauritania</option>
-          <option>Mauritius</option><option>Mexico</option><option>Micronesia</option><option>Moldova</option>
-          <option>Monaco</option><option>Mongolia</option><option>Montenegro</option><option>Morocco</option>
-          <option>Mozambique</option><option>Myanmar</option><option>Namibia</option><option>Nauru</option>
-          <option>Nepal</option><option>Netherlands</option><option>New Zealand</option><option>Nicaragua</option>
-          <option>Niger</option><option>Nigeria</option><option>North Korea</option><option>North Macedonia</option>
-          <option>Norway</option><option>Oman</option><option>Pakistan</option><option>Palau</option>
-          <option>Palestine</option><option>Panama</option><option>Papua New Guinea</option><option>Paraguay</option>
-          <option>Peru</option><option>Philippines</option><option>Poland</option><option>Portugal</option>
-          <option>Qatar</option><option>Romania</option><option>Russia</option><option>Rwanda</option>
-          <option>Saint Kitts and Nevis</option><option>Saint Lucia</option><option>Saint Vincent and the Grenadines</option>
-          <option>Samoa</option><option>San Marino</option><option>São Tomé and Príncipe</option><option>Saudi Arabia</option>
-          <option>Senegal</option><option>Serbia</option><option>Seychelles</option><option>Sierra Leone</option>
-          <option>Singapore</option><option>Slovakia</option><option>Slovenia</option><option>Solomon Islands</option>
-          <option>Somalia</option><option>South Africa</option><option>South Korea</option><option>South Sudan</option>
-          <option>Spain</option><option>Sri Lanka</option><option>Sudan</option><option>Suriname</option>
-          <option>Sweden</option><option>Switzerland</option><option>Syria</option><option>Taiwan</option>
-          <option>Tajikistan</option><option>Tanzania</option><option>Thailand</option><option>Timor-Leste</option>
-          <option>Togo</option><option>Tonga</option><option>Trinidad and Tobago</option><option>Tunisia</option>
-          <option>Türkiye</option><option>Turkmenistan</option><option>Tuvalu</option><option>Uganda</option>
-          <option>Ukraine</option><option>United Arab Emirates</option><option>United Kingdom</option><option>United States</option>
-          <option>Uruguay</option><option>Uzbekistan</option><option>Vanuatu</option><option>Vatican City</option>
-          <option>Venezuela</option><option>Vietnam</option><option>Yemen</option><option>Zambia</option><option>Zimbabwe</option>
-        </select>
-
-        <label for="signupPhone">Phone number (optional)</label>
-        <input id="signupPhone" name="phone" type="tel" autocomplete="tel" placeholder="+256...">
-
-        <label for="signupEmail">Email</label>
-        <input id="signupEmail" name="email" type="email" autocomplete="email" required>
-
-        <label for="signupPassword">Password</label>
-        <input id="signupPassword" name="password" type="password" autocomplete="new-password" minlength="8" required>
-
-        <button class="join-btn" type="submit" id="signupSubmit">Create account</button>
-      </form>
-
-      <button type="button" id="googleSignInBtn" class="login-btn">Continue with Google</button>
-
-      <form id="phoneLoginForm" hidden>
-        <label for="phoneLoginNumber">Phone number</label>
-        <input id="phoneLoginNumber" name="phone" type="tel" autocomplete="tel" placeholder="+256..." required>
-        <button class="join-btn" type="submit" id="sendPhoneCodeBtn">Send verification code</button>
-        <label for="phoneLoginCode">Verification code</label>
-        <input id="phoneLoginCode" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter SMS code">
-        <button class="join-btn" type="button" id="verifyPhoneCodeBtn">Verify code</button>
+          <option>Uganda</option><option>Rwanda</option><option>Kenya</option><option>Tanzania</option><option>Nigeria</option><option>Ghana</option><option>South Africa</option><option>United States</option><option>United Kingdom</option><option>Canada</option><option>France</option><option>Germany</option><option>India</option><option>Australia</option><option>Other</option>
+        </select></div>
+        <div class="field"><label for="signupPhone">Phone number (optional)</label><input id="signupPhone" name="phone" type="tel" autocomplete="tel" placeholder="+256..."></div>
+        <div class="field"><label for="signupEmail">Email</label><input id="signupEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+        <div class="field"><label for="signupPassword">Password</label><input id="signupPassword" name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters"></div>
+        <button class="primary full" type="submit" id="signupSubmit">Create account</button>
       </form>
 
       <form id="loginForm" hidden>
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" name="email" type="email" autocomplete="email" required>
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
-        <button class="join-btn" type="submit" id="loginSubmit">Log in</button>
+        <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" name="password" type="password" autocomplete="current-password" required></div>
+        <button class="primary full" type="submit" id="loginSubmit">Log in</button>
       </form>
 
-      <div id="profileSettings" hidden>
-        <h3 id="profileDisplayName">Your profile</h3>
-        <p id="profileUsername"></p>
-        <button type="button" class="login-btn" id="profileSettingsBtn">Profile settings</button>
-        <button type="button" class="login-btn" id="addAccountBtn">Add account</button>
-        <button type="button" class="login-btn" id="logoutBtn">Log out</button>
-      </div>
+      <button class="secondary full" id="googleSignInBtn" type="button">Continue with Google</button>
+      <p class="status" id="accountStatus" role="status" aria-live="polite"></p>
 
-      <p id="accountStatus" role="status" aria-live="polite"></p>
-      <button type="button" id="switchAccountMode" class="login-btn">Already have an account? Log in</button>
-      <button type="button" id="switchPhoneMode" class="login-btn">Log in with phone</button>
+      <section id="profileSettings" hidden>
+        <div class="section-card"><h3 id="profileDisplayName">Your profile</h3><p id="profileUsername" class="muted"></p></div>
+        <button class="secondary full" id="profileSettingsBtn">⚙ Account settings</button>
+        <button class="secondary full" id="dashboardBtn">▦ Creator dashboard</button>
+        <button class="secondary full" id="studioBtn">▣ Creator Studio</button>
+        <button class="secondary full" id="addAccountBtn">＋ Switch / add account</button>
+        <button class="primary full" id="logoutBtn">Log out</button>
+      </section>
+
+      <section id="settingsPanel" hidden>
+        <h3>Account settings</h3>
+        <form id="profileEditForm">
+          <div class="field"><label for="editDisplayName">Display name</label><input id="editDisplayName" maxlength="60" required></div>
+          <div class="field"><label for="editUsername">Username</label><input id="editUsername" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required></div>
+          <button class="primary full" type="submit">Save profile</button>
+        </form>
+        <button class="secondary full" id="backToProfileBtn">Back to profile</button>
+      </section>
+
+      <section id="dashboardPanel" hidden>
+        <h3>Creator dashboard</h3>
+        <p class="muted">Your account overview and creator tools will appear here. Real analytics require connected video and event data.</p>
+        <div class="section-card">Video views: <strong>—</strong></div>
+        <div class="section-card">Likes and favourites: <strong>—</strong></div>
+        <button class="secondary full" id="backFromDashboardBtn">Back to profile</button>
+      </section>
+
+      <section id="studioPanel" hidden>
+        <h3>Creator Studio</h3>
+        <p class="muted">Manage your creative workflow. Video publishing will be enabled after secure storage and video processing are connected.</p>
+        <button class="primary full" id="studioUploadBtn">Create a post</button>
+        <button class="secondary full" id="backFromStudioBtn">Back to profile</button>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="noticeDialog">
+    <div class="dialog-content">
+      <div class="dialog-header"><h2 id="dialogTitle">FFineXX</h2><button class="close" id="closeNoticeDialog">×</button></div>
+      <p id="dialogMessage" class="muted"></p>
+      <button class="primary full" id="dialogOkay">Got it</button>
     </div>
   </dialog>
 
@@ -286,3 +275,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
