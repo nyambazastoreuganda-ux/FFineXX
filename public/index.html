@@ -1,686 +1,821 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#09090f">
-  <title>FFineXX — Create. Share. Shine.</title>
-  <meta name="description" content="Watch short videos, discover creators, and share your world on FFineXX.">
+  <meta name="theme-color" content="#09090d">
+  <meta name="description" content="FFineXX — discover, create and share short videos.">
+  <title>FFineXX — Create Your Moment</title>
+
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       color-scheme: dark;
-      --bg: #09090f;
-      --panel: #13131d;
-      --border: #29293a;
-      --text: #f7f5ff;
-      --muted: #a3a0b8;
-      --pink: #ff4fa3;
-      --purple: #9471ff;
+      --bg: #09090d;
+      --panel: #14141c;
+      --muted: #a3a3b5;
+      --pink: #ff286d;
+      --cyan: #25e5d2;
+      --border: #292936;
     }
+
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; }
-    button, input, select { font: inherit; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: white;
+      font-family: Inter, Arial, sans-serif;
+    }
+    button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
-    button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
-    .topbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 18px; padding: 14px 5%; background: #0c0b13ee; backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .brand { color: var(--text); text-decoration: none; font-weight: 900; font-size: 24px; letter-spacing: -1px; white-space: nowrap; }
-    .pink { color: var(--pink); }
-    .search { flex: 1; max-width: 520px; margin: auto; }
-    .search input, input, select { width: 100%; background: #0c0c14; color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
-    .primary, .secondary { border: 0; border-radius: 12px; padding: 11px 16px; font-weight: 750; }
-    .primary { background: linear-gradient(110deg, var(--pink), #a56cff); color: white; }
-    .secondary { background: #202031; border: 1px solid var(--border); color: white; }
-    .layout { display: grid; grid-template-columns: 205px minmax(0, 1fr) 255px; gap: 24px; max-width: 1450px; margin: auto; padding: 24px; }
-    .sidebar, .right-panel { position: sticky; top: 88px; height: fit-content; }
-    .nav-item { display: block; width: 100%; text-align: left; padding: 13px; margin: 4px 0; border: 0; border-radius: 12px; color: var(--muted); background: transparent; }
-    .nav-item.active, .nav-item:hover { color: white; background: #252034; }
-    .main-content { min-width: 0; }
-    .welcome, .panel, .creator-banner { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 22px; }
-    .welcome { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    h1 { font-size: clamp(25px, 4vw, 38px); margin: 8px 0; }
-    h2 { font-size: 19px; }
-    .muted, small, .subtext { color: var(--muted); }
-    .eyebrow { color: var(--pink); font-size: 11px; font-weight: 800; letter-spacing: 1.7px; }
-    .tabs { display: flex; gap: 8px; overflow: auto; margin: 20px 0; }
-    .tab { border: 1px solid var(--border); border-radius: 999px; padding: 10px 17px; background: #15141e; color: var(--muted); white-space: nowrap; }
-    .tab.active { background: #342344; border-color: #8755a5; color: white; }
-    .video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .video-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); background: var(--panel); border-radius: 18px; }
-    .video-screen { min-height: 280px; aspect-ratio: 9/12; display: flex; flex-direction: column; justify-content: space-between; padding: 18px; background: radial-gradient(circle at 30% 20%, #743d86, transparent 45%), linear-gradient(145deg, #17152b, #39203d, #11111a); }
-    .video-screen.two { background: radial-gradient(circle at 65% 25%, #a33e75, transparent 40%), linear-gradient(145deg, #161526, #55243e, #11111a); }
-    .video-screen.three { background: radial-gradient(circle at 50% 20%, #6751ad, transparent 45%), linear-gradient(145deg, #141525, #253b58, #11111a); }
-    .video-caption { font-weight: 750; font-size: 18px; }
-    .play { font-size: 38px; text-align: center; margin: auto; opacity: .85; }
-    .video-meta { padding: 14px; }
-    .creator-row { display: flex; align-items: center; gap: 10px; }
-    .avatar { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); font-weight: 900; }
-    .creator-name { flex: 1; min-width: 0; }
-    .creator-name strong, .creator-name small { display: block; overflow-wrap: anywhere; }
-    .stats, .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .stat { color: var(--muted); font-size: 12px; background: #1d1c2a; border-radius: 8px; padding: 7px; }
-    .actions button { flex: 1; min-width: 65px; padding: 9px 5px; color: white; background: #222031; border: 1px solid var(--border); border-radius: 10px; }
-    .right-panel .panel { margin-bottom: 14px; }
-    .right-panel p { color: var(--muted); font-size: 13px; line-height: 1.5; }
-    footer { padding: 26px 0; color: var(--muted); font-size: 12px; }
-    dialog { width: min(490px, calc(100% - 24px)); max-height: 88vh; overflow: auto; padding: 0; border: 1px solid #383348; border-radius: 22px; background: #12111b; color: white; box-shadow: 0 25px 100px #000a; }
-    dialog::backdrop { background: #05040bc9; backdrop-filter: blur(5px); }
-    .dialog-content { padding: 24px; }
-    .dialog-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .close { background: #252333; border: 0; border-radius: 10px; color: white; font-size: 22px; width: 38px; height: 38px; }
-    .field { margin: 13px 0; }
-    .field label { display: block; margin-bottom: 7px; font-size: 13px; color: #d7d2e8; }
-    .full { width: 100%; margin-top: 10px; }
-    .auth-switch { display: flex; gap: 8px; margin: 15px 0; }
-    .auth-switch button { flex: 1; }
-    .section-card { padding: 15px; border: 1px solid var(--border); border-radius: 14px; margin: 12px 0; background: #181722; }
-    .section-card h3 { margin-top: 0; }
-    .status { min-height: 20px; color: #d6b8ff; font-size: 13px; }
-    [hidden] { display: none !important; }
-    .mobile-nav { display: none; }
-    @media (max-width: 1050px) { .layout { grid-template-columns: 175px minmax(0, 1fr); } .right-panel { display: none; } }
-    @media (max-width: 700px) {
-      .topbar { padding: 12px; gap: 10px; flex-wrap: wrap; }
-      .brand { font-size: 21px; }
-      .search { order: 3; flex-basis: 100%; max-width: none; }
-      .layout { display: block; padding: 12px; }
+    a { color: inherit; text-decoration: none; }
+    .topbar {
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 5%;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #09090df2;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .brand {
+      font-size: 25px;
+      font-weight: 950;
+      letter-spacing: -1.5px;
+    }
+    .brand span { color: var(--pink); }
+    .top-actions, .tabs, .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .button {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 15px;
+      color: white;
+      background: #1b1b26;
+      font-weight: 700;
+    }
+    .button.primary {
+      background: linear-gradient(110deg, var(--pink), #ff5b91);
+      border-color: transparent;
+    }
+    .button:disabled { opacity: .5; cursor: not-allowed; }
+    .layout {
+      width: min(1250px, 100%);
+      margin: auto;
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: 28px;
+      padding: 24px;
+    }
+    .sidebar {
+      position: sticky;
+      top: 90px;
+      align-self: start;
+      display: grid;
+      gap: 9px;
+    }
+    .nav-item {
+      padding: 13px 15px;
+      border-radius: 12px;
+      color: #c7c7d3;
+      background: transparent;
+      border: 0;
+      text-align: left;
+      font-weight: 700;
+    }
+    .nav-item:hover, .nav-item.active { background: #20202c; color: white; }
+    .main { min-width: 0; }
+    .welcome {
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid #393044;
+      background:
+        radial-gradient(ellipse at top right, #69204477, transparent 55%),
+        linear-gradient(135deg, #171722, #101017);
+      margin-bottom: 20px;
+    }
+    .welcome h1 { margin: 0 0 9px; font-size: clamp(25px, 4vw, 38px); }
+    .welcome p { color: var(--muted); line-height: 1.6; }
+    .tabs {
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+    .tab {
+      flex-shrink: 0;
+      background: transparent;
+      color: var(--muted);
+      border: 0;
+      padding: 14px 16px;
+      font-weight: 800;
+    }
+    .tab.active { color: white; border-bottom: 3px solid var(--pink); }
+    .feed { display: grid; gap: 20px; }
+    .post {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 18px;
+    }
+    .post-head {
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .avatar {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--pink), #6d4aff);
+    }
+    .muted { color: var(--muted); font-size: 13px; }
+    .post-media {
+      width: 100%;
+      max-height: 660px;
+      aspect-ratio: 9 / 12;
+      display: block;
+      object-fit: cover;
+      background: #07070a;
+    }
+    video.post-media { object-fit: contain; }
+    .post-info { padding: 15px; }
+    .post-info p { line-height: 1.5; overflow-wrap: anywhere; }
+    .hashtags { color: #65e9df; }
+    .post-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .post-actions button { background: #22222d; }
+    .status {
+      padding: 11px 13px;
+      border-radius: 10px;
+      background: #20202c;
+      color: #dedee9;
+      margin: 12px 0;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+    .status.error { color: #ffb7c9; }
+    .status.success { color: #8df4d5; }
+    .empty {
+      border: 1px dashed #3a3a49;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      color: var(--muted);
+    }
+    dialog {
+      width: min(520px, calc(100% - 24px));
+      max-height: 90vh;
+      overflow: auto;
+      color: white;
+      background: #14141c;
+      border: 1px solid #393948;
+      border-radius: 20px;
+      padding: 23px;
+    }
+    dialog::backdrop { background: #000b; backdrop-filter: blur(5px); }
+    dialog h2 { margin-top: 0; }
+    .field { display: grid; gap: 7px; margin: 15px 0; }
+    .field label { font-size: 13px; color: #c9c9d7; }
+    .field input, .field textarea, .field select {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid #393948;
+      background: #0d0d14;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+    }
+    .field textarea { min-height: 85px; resize: vertical; }
+    .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+    .choice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .choice-grid .button { min-height: 82px; }
+    .preview {
+      width: 100%;
+      max-height: 340px;
+      background: #08080b;
+      border-radius: 12px;
+      margin-top: 12px;
+      object-fit: contain;
+    }
+    .profile-panel {
+      padding: 20px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 18px;
+      margin-bottom: 18px;
+    }
+    .hidden { display: none !important; }
+    .bottom-nav { display: none; }
+    @media (max-width: 760px) {
+      .topbar { padding: 0 14px; }
+      .brand { font-size: 22px; }
+      .top-actions { gap: 6px; }
+      .top-actions .button { padding: 9px 10px; font-size: 12px; }
+      .layout { display: block; padding: 14px 12px 90px; }
       .sidebar { display: none; }
-      .welcome { padding: 17px; }
-      .video-grid { grid-template-columns: 1fr; }
-      .video-screen { aspect-ratio: 9/11; min-height: 320px; }
-      .mobile-nav { position: sticky; bottom: 0; z-index: 9; display: flex; justify-content: space-around; background: #11101aee; border-top: 1px solid var(--border); padding: 9px 2px calc(9px + env(safe-area-inset-bottom)); }
-      .mobile-nav button { background: none; border: 0; color: var(--muted); font-size: 12px; }
-      .mobile-nav span { display: block; margin-top: 3px; }
+      .welcome { padding: 19px; }
+      .bottom-nav {
+        display: flex;
+        position: fixed;
+        z-index: 6;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        justify-content: space-around;
+        background: #101017f5;
+        border-top: 1px solid var(--border);
+        padding: 10px 3px calc(10px + env(safe-area-inset-bottom));
+      }
+      .bottom-nav button {
+        background: none;
+        border: 0;
+        color: white;
+        font-size: 12px;
+      }
+      .bottom-nav button span { display: block; font-size: 20px; margin-bottom: 3px; }
+      .post-media { max-height: 72vh; }
     }
   </style>
 </head>
+
 <body>
   <header class="topbar">
-    <a class="brand" href="#" aria-label="FFineXX home">F<span class="pink">FineXX</span></a>
-    <label class="search"><input id="searchInput" type="search" placeholder="Search creators and videos" aria-label="Search creators and videos"></label>
-    <button class="secondary" id="loginBtn">Log in</button>
-    <button class="primary" id="joinBtn">Sign up</button>
-    <button class="secondary" id="profileBtn" hidden>My profile</button>
+    <a href="#" class="brand" aria-label="FFineXX home">FFine<span>XX</span></a>
+    <div class="top-actions">
+      <button class="button" id="searchBtn" type="button">⌕ Search</button>
+      <button class="button" id="signInBtn" type="button">Sign in</button>
+      <button class="button primary" id="createBtn" type="button">＋ Create</button>
+    </div>
   </header>
 
   <div class="layout">
     <aside class="sidebar">
-      <button class="nav-item active" data-view="For You">⌂ &nbsp; For You</button>
-      <button class="nav-item" data-view="Following">♡ &nbsp; Following</button>
-      <button class="nav-item" data-view="Explore">⌕ &nbsp; Explore</button>
-      <button class="nav-item" data-view="Upload">＋ &nbsp; Post a video</button>
-      <button class="nav-item" data-view="Dashboard">▦ &nbsp; Dashboard</button>
-      <button class="nav-item" data-view="Studio">▣ &nbsp; Creator Studio</button>
-      <button class="nav-item" data-view="Settings">⚙ &nbsp; Settings</button>
+      <button class="nav-item active" data-view="home">⌂ &nbsp; For You</button>
+      <button class="nav-item" data-view="following">♡ &nbsp; Following</button>
+      <button class="nav-item" data-view="discover">✦ &nbsp; Discover</button>
+      <button class="nav-item" data-view="profile">◉ &nbsp; My Profile</button>
+      <button class="nav-item" id="sidebarCreate" type="button">＋ &nbsp; Create post</button>
+      <div class="status">Make your moment. Share your world.</div>
     </aside>
 
-    <main class="main-content">
+    <main class="main">
       <section class="welcome">
-        <div>
-          <p class="eyebrow">WELCOME TO YOUR WORLD</p>
-          <h1 id="pageTitle">Discover your next <span class="pink">favourite.</span></h1>
-          <p class="subtext" id="pageSubtitle">Watch public videos without an account. Join to participate.</p>
+        <p class="muted">YOUR WORLD. YOUR MOMENT.</p>
+        <h1>Welcome to FFineXX ✨</h1>
+        <p>Create, discover and share short videos with your community.</p>
+        <div class="row">
+          <button class="button primary" id="heroCreate" type="button">＋ Create your post</button>
+          <button class="button" id="heroSignIn" type="button">Join FFineXX</button>
         </div>
-        <button class="primary" id="createBtn">＋ Create</button>
       </section>
 
-      <div class="tabs">
-        <button class="tab active" data-feed="For You">For You</button>
-        <button class="tab" data-feed="Following">Following</button>
-        <button class="tab" data-feed="Trending">Trending</button>
-        <button class="tab" data-feed="Music">Music</button>
+      <section id="profilePanel" class="profile-panel hidden">
+        <h2 id="profileHeading">My profile</h2>
+        <p id="profileEmail" class="muted"></p>
+        <p>Welcome to your FFineXX account.</p>
+        <button id="signOutBtn" class="button" type="button">Sign out</button>
+      </section>
+
+      <div class="tabs" aria-label="Feed filters">
+        <button class="tab active" data-feed="foryou" type="button">For You</button>
+        <button class="tab" data-feed="latest" type="button">Latest</button>
+        <button class="tab" data-feed="following" type="button">Following</button>
       </div>
 
-      <section class="video-grid" id="videoGrid">
-        <article class="video-card">
-          <div class="video-screen">
-            <span class="eyebrow">CREATOR SPOTLIGHT</span>
-            <div class="play">▶</div>
-            <div class="video-caption">Your next big moment starts here.</div>
-          </div>
-          <div class="video-meta">
-            <div class="creator-row"><div class="avatar">F</div><div class="creator-name"><strong>FFineXX Creators</strong><small>@finexxcreators</small></div></div>
-            <div class="stats"><span class="stat">◉ Views: <b>Demo</b></span><span class="stat">♡ Likes: <b>Demo</b></span><span class="stat">★ Favourites: <b>Demo</b></span><span class="stat">↗ Shares: <b>Demo</b></span></div>
-            <div class="actions"><button data-action="like">♡ Like</button><button data-action="favorite">★ Save</button><button data-action="share">↗ Share</button></div>
-          </div>
-        </article>
-        <article class="video-card">
-          <div class="video-screen two">
-            <span class="eyebrow">MUSIC &amp; CULTURE</span>
-            <div class="play">▶</div>
-            <div class="video-caption">Let the rhythm tell your story.</div>
-          </div>
-          <div class="video-meta">
-            <div class="creator-row"><div class="avatar">M</div><div class="creator-name"><strong>Music Moments</strong><small>@musicmoments</small></div></div>
-            <div class="stats"><span class="stat">◉ Views: <b>Demo</b></span><span class="stat">♡ Likes: <b>Demo</b></span><span class="stat">★ Favourites: <b>Demo</b></span><span class="stat">↗ Shares: <b>Demo</b></span></div>
-            <div class="actions"><button data-action="like">♡ Like</button><button data-action="favorite">★ Save</button><button data-action="share">↗ Share</button></div>
-          </div>
-        </article>
-        <article class="video-card">
-          <div class="video-screen three">
-            <span class="eyebrow">CREATIVE LIFE</span>
-            <div class="play">▶</div>
-            <div class="video-caption">Make something only you can make.</div>
-          </div>
-          <div class="video-meta">
-            <div class="creator-row"><div class="avatar">C</div><div class="creator-name"><strong>Creative Daily</strong><small>@creativedaily</small></div></div>
-            <div class="stats"><span class="stat">◉ Views: <b>Demo</b></span><span class="stat">♡ Likes: <b>Demo</b></span><span class="stat">★ Favourites: <b>Demo</b></span><span class="stat">↗ Shares: <b>Demo</b></span></div>
-            <div class="actions"><button data-action="like">♡ Like</button><button data-action="favorite">★ Save</button><button data-action="share">↗ Share</button></div>
-          </div>
-        </article>
-      </section>
+      <div id="appStatus" class="status" role="status">
+        Welcome! Sign in to connect your account.
+      </div>
 
-      <section class="creator-banner section-card">
-        <p class="eyebrow">YOUR CREATIVE JOURNEY</p>
-        <h2>Every creator starts somewhere.</h2>
-        <p class="muted">Build your profile, share your talent and find your people.</p>
-        <button class="primary" id="bannerJoinBtn">Join FFineXX ↗</button>
+      <section id="feed" class="feed" aria-label="Video feed">
+        <article class="post">
+          <div class="post-head">
+            <div class="avatar">F</div>
+            <div><strong>FFineXX</strong><div class="muted">Sample post · Demo</div></div>
+          </div>
+          <video class="post-media" controls playsinline preload="metadata"
+            poster="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80">
+            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+          </video>
+          <div class="post-info">
+            <p>Welcome to FFineXX! Your next creative moment starts here. 🎬</p>
+            <p class="hashtags">#FFineXX #ForYou #Create</p>
+          </div>
+        </article>
+        <div class="empty">Your community feed will grow as posts are connected to the database.</div>
       </section>
-      <footer>© 2026 FFineXX · Create. Share. Shine.</footer>
     </main>
-
-    <aside class="right-panel">
-      <div class="panel"><h2>Creators to discover</h2><p>Find new music, art and stories from the community.</p></div>
-      <div class="panel"><h2>Creator tools</h2><button class="secondary full" data-view="Dashboard">Open dashboard</button><button class="secondary full" data-view="Studio">Open Creator Studio</button></div>
-      <div class="panel"><h2>Community</h2><p>Watching is open to everyone. Sign in to interact or publish.</p></div>
-    </aside>
   </div>
 
-  <nav class="mobile-nav">
-    <button data-view="For You">⌂<span>Home</span></button>
-    <button data-view="Explore">⌕<span>Explore</span></button>
-    <button data-view="Upload">＋<span>Create</span></button>
-    <button data-view="Dashboard">▦<span>Dashboard</span></button>
-    <button id="mobileLoginBtn">♙<span>Account</span></button>
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <button data-view="home" type="button"><span>⌂</span>Home</button>
+    <button data-view="discover" type="button"><span>⌕</span>Discover</button>
+    <button id="mobileCreate" type="button"><span>＋</span>Create</button>
+    <button data-view="profile" type="button"><span>◉</span>Profile</button>
   </nav>
 
-  <dialog id="accountDialog">
-    <div class="dialog-content">
-      <div class="dialog-header"><div class="brand">F<span class="pink">FineXX</span></div><button class="close" id="closeAccountDialog" aria-label="Close">×</button></div>
-      <h2 id="accountTitle">Create your account</h2>
-      <p class="muted" id="accountDescription">Join creators and communities on FFineXX.</p>
-
-      <div class="auth-switch" id="authTabs">
-        <button class="primary" id="showSignup">Sign up</button>
-        <button class="secondary" id="showLogin">Log in</button>
+  <dialog id="authDialog">
+    <h2 id="authHeading">Welcome back</h2>
+    <p class="muted">Sign in or create your FFineXX account.</p>
+    <form id="authForm">
+      <div class="field" id="nameField">
+        <label for="displayName">Display name</label>
+        <input id="displayName" name="displayName" maxlength="40" autocomplete="nickname">
       </div>
-
-      <form id="signupForm">
-        <div class="field"><label for="signupName">Display name</label><input id="signupName" name="name" autocomplete="name" maxlength="60" required placeholder="Your name"></div>
-        <div class="field"><label for="signupUsername">Username</label><input id="signupUsername" name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required placeholder="your_username"></div>
-        <div class="field"><label for="signupCountry">Country</label><select id="signupCountry" name="country" autocomplete="country-name" required>
-          <option value="">Choose your country</option>
-          <option>Uganda</option><option>Rwanda</option><option>Kenya</option><option>Tanzania</option><option>Nigeria</option><option>Ghana</option><option>South Africa</option><option>United States</option><option>United Kingdom</option><option>Canada</option><option>France</option><option>Germany</option><option>India</option><option>Australia</option><option>Other</option>
-        </select></div>
-        <div class="field"><label for="signupPhone">Phone number (optional)</label><input id="signupPhone" name="phone" type="tel" autocomplete="tel" placeholder="+256..."></div>
-        <div class="field"><label for="signupEmail">Email</label><input id="signupEmail" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div>
-        <div class="field"><label for="signupPassword">Password</label><input id="signupPassword" name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters"></div>
-        <button class="primary full" type="submit" id="signupSubmit">Create account</button>
-      </form>
-
-      <form id="loginForm" hidden>
-        <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" name="email" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" name="password" type="password" autocomplete="current-password" required></div>
-        <button class="primary full" type="submit" id="loginSubmit">Log in</button>
-      </form>
-
-      <button class="secondary full" id="googleSignInBtn" type="button">Continue with Google</button>
-      <p class="status" id="accountStatus" role="status" aria-live="polite"></p>
-
-      <section id="profileSettings" hidden>
-        <div class="section-card"><h3 id="profileDisplayName">Your profile</h3><p id="profileUsername" class="muted"></p></div>
-        <button class="secondary full" id="profileSettingsBtn">⚙ Account settings</button>
-        <button class="secondary full" id="dashboardBtn">▦ Creator dashboard</button>
-        <button class="secondary full" id="studioBtn">▣ Creator Studio</button>
-        <button class="secondary full" id="addAccountBtn">＋ Switch / add account</button>
-        <button class="primary full" id="logoutBtn">Log out</button>
-      </section>
-
-      <section id="settingsPanel" hidden>
-        <h3>Account settings</h3>
-        <form id="profileEditForm">
-          <div class="field"><label for="editDisplayName">Display name</label><input id="editDisplayName" maxlength="60" required></div>
-          <div class="field"><label for="editUsername">Username</label><input id="editUsername" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" required></div>
-          <button class="primary full" type="submit">Save profile</button>
-        </form>
-        <button class="secondary full" id="backToProfileBtn">Back to profile</button>
-      </section>
-
-      <section id="dashboardPanel" hidden>
-        <h3>Creator dashboard</h3>
-        <p class="muted">Your account overview and creator tools will appear here. Real analytics require connected video and event data.</p>
-        <div class="section-card">Video views: <strong>—</strong></div>
-        <div class="section-card">Likes and favourites: <strong>—</strong></div>
-        <button class="secondary full" id="backFromDashboardBtn">Back to profile</button>
-      </section>
-
-      <section id="studioPanel" hidden>
-        <h3>Creator Studio</h3>
-        <p class="muted">Manage your creative workflow. Video publishing will be enabled after secure storage and video processing are connected.</p>
-        <button class="primary full" id="studioUploadBtn">Create a post</button>
-        <button class="secondary full" id="backFromStudioBtn">Back to profile</button>
-      </section>
-    </div>
-  </dialog>
-
-  <dialog id="noticeDialog">
-    <div class="dialog-content">
-      <div class="dialog-header"><h2 id="dialogTitle">FFineXX</h2><button class="close" id="closeNoticeDialog">×</button></div>
-      <p id="dialogMessage" class="muted"></p>
-      <button class="primary full" id="dialogOkay">Got it</button>
-    </div>
-  </dialog>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- FFineXX Creator tools upgrade -->
-<style>
-  .fx-tools { margin: 22px auto; max-width: 760px; color: #f8f7ff; }
-  .fx-panel { background: #171421; border: 1px solid #383047; border-radius: 18px; padding: 20px; margin: 16px 0; }
-  .fx-panel h2 { margin-top: 0; }
-  .fx-field { display: block; width: 100%; box-sizing: border-box; margin: 9px 0 14px; padding: 12px; border: 1px solid #50465e; border-radius: 10px; background: #0e0c15; color: white; }
-  .fx-button { padding: 11px 16px; border: 0; border-radius: 10px; margin: 4px; cursor: pointer; font-weight: 700; background: #a855f7; color: white; }
-  .fx-secondary { background: #30283d; }
-  .fx-live-preview { background: #09080e; border-radius: 14px; aspect-ratio: 9 / 16; max-height: 340px; display: grid; place-items: center; overflow: hidden; }
-  .fx-live-preview video { width: 100%; height: 100%; object-fit: cover; }
-  .fx-hint { color: #c0b6d0; font-size: 13px; line-height: 1.5; }
-</style>
-
-<section class="fx-tools" id="fxCreatorTools">
-<dialog id="fxCreateDialog">
-  <div class="dialog-content">
-    <div class="dialog-header">
-      <h2>Create on FFineXX</h2>
-      <button class="close" id="fxCloseCreate" type="button">×</button>
-    </div>
-
-    <p class="muted">Choose what you want to share.</p>
-
-    <button class="primary full" id="fxChooseVideo" type="button">
-      🎬 Post a short video
-    </button>
-    <button class="secondary full" id="fxChoosePhoto" type="button">
-      🖼️ Post a photo
-    </button>
-    <button class="secondary full" id="fxChooseLive" type="button">
-      🔴 Set up LIVE
-    </button>
-
-    <section id="fxPostForm" hidden>
-      <h3 id="fxPostHeading">Create a post</h3>
-      <label for="fxMediaFile">Choose a video or photo</label>
-      <input class="fx-field" id="fxMediaFile" type="file"
-        accept="video/*,image/*">
-
-      <label for="fxDescription">Description</label>
-      <textarea class="fx-field" id="fxDescription" rows="4"
-        maxlength="2200" placeholder="Tell your story..."></textarea>
-
-      <label for="fxTagInput">Hashtags</label>
-      <input class="fx-field" id="fxTagInput"
-        placeholder="#music #dance #FFineXX">
-
-      <label for="fxAudience">Who can see this post?</label>
-      <select class="fx-field" id="fxAudience">
-        <option value="public">🌍 Public</option>
-        <option value="private">🔒 Private — only me</option>
-        <option value="friends">👥 Friends only</option>
-        <option value="following">♡ Following only</option>
-      </select>
-
-      <div id="fxMediaPreview"></div>
-      <p class="fx-hint" id="fxCreateStatus" aria-live="polite"></p>
-
-      <button class="primary full" id="fxPreviewButton" type="button">
-        Preview post
-      </button>
-      <button class="primary full" id="fxPublishButton" type="button">
-        Publish post
-      </button>
-    </section>
-
-    <section id="fxLiveForm" hidden>
-      <h3>Professional LIVE setup</h3>
-      <label for="fxLiveTitle">Live title</label>
-      <input class="fx-field" id="fxLiveTitle"
-        maxlength="100" placeholder="Give your LIVE a title">
-
-      <label for="fxLiveAudience">LIVE audience</label>
-      <select class="fx-field" id="fxLiveAudience">
-        <option value="public">Public</option>
-        <option value="followers">Followers only</option>
-      </select>
-
-      <p class="fx-hint">
-        Your camera and microphone settings will appear here.
-        A real public LIVE requires a streaming service.
-      </p>
-      <p id="fxLiveStatus" class="fx-hint" aria-live="polite">
-        Not live.
-      </p>
-      <button class="primary full" id="fxPrepareLive" type="button">
-        Prepare LIVE
-      </button>
-    </section>
-  </div>
-</dialog>
-
-  <div class="fx-panel">
-    <h2>＋ Create a short video</h2>
-    <p class="fx-hint">Add your video, caption and hashtags before publishing.</p>
-    <label for="fxVideoFile">Choose video</label>
-    <input class="fx-field" id="fxVideoFile" type="file" accept="video/*">
-    <label for="fxCaption">Description / caption</label>
-    <textarea class="fx-field" id="fxCaption" rows="3" maxlength="2200"
-      placeholder="Tell viewers about your video..."></textarea>
-    <label for="fxHashtags">Hashtags</label>
-    <input class="fx-field" id="fxHashtags" placeholder="#music #dance #FFineXX">
-    <video id="fxVideoPreview" controls playsinline
-      style="display:none;width:100%;max-height:420px;border-radius:14px;background:#000"></video>
-    <button class="fx-button" id="fxPreviewPost" type="button">Preview post</button>
-    <button class="fx-button" id="fxPublishPost" type="button">Publish video</button>
-    <div id="fxPostStatus" class="fx-hint" aria-live="polite"></div>
-    <div id="fxPostPreview"></div>
-  </div>
-
-  <div class="fx-panel">
-    <h2>🔴 Go LIVE</h2>
-    <p class="fx-hint">Configure your live session. Camera preview works on a secure HTTPS page with browser permission.</p>
-    <label for="fxLiveTitle">Live title</label>
-    <input class="fx-field" id="fxLiveTitle" maxlength="100"
-      placeholder="What are you going live about?">
-    <label for="fxLiveAudience">Audience</label>
-    <select class="fx-field" id="fxLiveAudience">
-      <option value="public">Public — everyone</option>
-      <option value="followers">Followers only (requires follower access controls)</option>
-    </select>
-    <label for="fxCamera">Camera</label>
-    <select class="fx-field" id="fxCamera">
-      <option value="">Default camera</option>
-    </select>
-    <label for="fxMicrophone">Microphone</label>
-    <select class="fx-field" id="fxMicrophone">
-      <option value="">Default microphone</option>
-    </select>
-    <div class="fx-live-preview">
-      <video id="fxLivePreview" autoplay muted playsinline></video>
-      <span id="fxLivePlaceholder">Your camera preview appears here</span>
-    </div>
-    <p id="fxLiveStatus" class="fx-hint" aria-live="polite">Not live.</p>
-    <button class="fx-button" id="fxStartPreview" type="button">Enable camera & mic</button>
-    <button class="fx-button fx-secondary" id="fxMuteMic" type="button">Mute mic</button>
-    <button class="fx-button fx-secondary" id="fxToggleCamera" type="button">Turn camera off</button>
-    <button class="fx-button" id="fxStartLive" type="button">Start LIVE</button>
-    <button class="fx-button fx-secondary" id="fxEndLive" type="button">End LIVE</button>
-    <p class="fx-hint">
-      Important: camera preview is not a public broadcast. Real LIVE streaming,
-      viewers, chat moderation and audience restrictions require a streaming
-      server/provider and server-side access controls.
+      <div class="field">
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" minlength="6" autocomplete="current-password" required>
+      </div>
+      <div id="authStatus" class="status hidden" role="status"></div>
+      <button class="button primary" id="authSubmit" type="submit">Sign in</button>
+    </form>
+    <p class="muted" id="authSwitchText">New here?
+      <button class="button" id="switchAuth" type="button">Create account</button>
     </p>
-  </div>
+    <div class="dialog-actions">
+      <button class="button" data-close="authDialog" type="button">Close</button>
+    </div>
+  </dialog>
 
-  <div class="fx-panel">
-    <h2>💬 Comments</h2>
-    <p class="fx-hint">Comments will be connected to each published video.</p>
-    <textarea class="fx-field" id="fxCommentText" rows="2"
-      maxlength="1000" placeholder="Write a comment..."></textarea>
-    <button class="fx-button" id="fxSubmitComment" type="button">Post comment</button>
-    <div id="fxCommentsStatus" class="fx-hint" aria-live="polite"></div>
-    <div id="fxCommentsList"></div>
-  </div>
-</section>
+  <dialog id="createDialog">
+    <h2>Create on FFineXX</h2>
+    <p class="muted">Choose what you want to create.</p>
 
-<script>
-(() => {
-  const $ = id => document.getElementById(id);
-  let selectedVideoUrl = "";
-  let liveStream = null;
-  let micMuted = false;
-  let cameraOff = false;
+    <div class="choice-grid" id="createChoices">
+      <button class="button" data-type="video" type="button">🎬<br>Video</button>
+      <button class="button" data-type="photo" type="button">📷<br>Photo</button>
+      <button class="button" data-type="live" type="button">🔴<br>LIVE preview</button>
+    </div>
 
-  function signedIn() {
-    return Boolean(window.ffineXXUserSignedIn);
-  }
+    <form id="postForm" class="hidden">
+      <div class="field">
+        <label for="mediaFile">Choose a video or photo</label>
+        <input id="mediaFile" type="file" accept="video/*,image/*" required>
+      </div>
+      <div class="field">
+        <label for="caption">Caption</label>
+        <textarea id="caption" maxlength="2000" placeholder="Tell your story..."></textarea>
+      </div>
+      <div class="field">
+        <label for="hashtags">Hashtags (optional)</label>
+        <input id="hashtags" maxlength="300" placeholder="#FFineXX #Music">
+      </div>
+      <video id="videoPreview" class="preview hidden" controls playsinline></video>
+      <img id="photoPreview" class="preview hidden" alt="Photo preview">
+      <div id="postStatus" class="status hidden" role="status"></div>
+      <div class="dialog-actions">
+        <button class="button" id="backChoices" type="button">Back</button>
+        <button class="button primary" type="submit">Preview post</button>
+      </div>
+    </form>
 
-  function tellLogin(action) {
-    $("fxPostStatus").textContent = `Please log in to ${action}.`;
-    const login = document.getElementById("loginBtn");
-    if (login) login.click();
-  }
+    <section id="livePanel" class="hidden">
+      <p>Camera preview only — this does not broadcast to other users.</p>
+      <div class="field">
+        <label for="liveTitle">LIVE title</label>
+        <input id="liveTitle" maxlength="100" placeholder="My LIVE session">
+      </div>
+      <video id="cameraPreview" class="preview" autoplay muted playsinline></video>
+      <div id="liveStatus" class="status" role="status">Camera is not running.</div>
+      <div class="row">
+        <button id="startCamera" class="button primary" type="button">Start camera</button>
+        <button id="stopCamera" class="button" type="button">Stop camera</button>
+      </div>
+      <div class="dialog-actions">
+        <button class="button" id="backLive" type="button">Back</button>
+      </div>
+    </section>
 
-  $("fxVideoFile").addEventListener("change", () => {
-    if (selectedVideoUrl) URL.revokeObjectURL(selectedVideoUrl);
-    const file = $("fxVideoFile").files[0];
-    if (!file) return;
-    if (!file.type.startsWith("video/")) {
-      $("fxPostStatus").textContent = "Choose a video file.";
-      return;
-    }
-    selectedVideoUrl = URL.createObjectURL(file);
-    $("fxVideoPreview").src = selectedVideoUrl;
-    $("fxVideoPreview").style.display = "block";
-  });
+    <section id="postConfirm" class="hidden">
+      <h3>Preview ready</h3>
+      <p class="muted">Your selected media is ready for review. It has not been published or uploaded.</p>
+      <div class="dialog-actions">
+        <button id="editPost" class="button" type="button">Edit</button>
+        <button id="finishPreview" class="button primary" type="button">Done</button>
+      </div>
+    </section>
 
-  $("fxPreviewPost").addEventListener("click", () => {
-    const caption = $("fxCaption").value.trim();
-    const tags = $("fxHashtags").value.trim();
-    $("fxPostPreview").replaceChildren();
+    <div class="dialog-actions">
+      <button class="button" data-close="createDialog" type="button">Close</button>
+    </div>
+  </dialog>
 
-    const heading = document.createElement("h3");
-    heading.textContent = "Post preview";
-    const description = document.createElement("p");
-    description.textContent = caption || "No caption added yet.";
-    const hashtags = document.createElement("p");
-    hashtags.textContent = tags.split(/\s+/).filter(t => t.startsWith("#")).join(" ");
-    $("fxPostPreview").append(heading, description, hashtags);
-  });
+  <dialog id="searchDialog">
+    <h2>Search FFineXX</h2>
+    <div class="field">
+      <label for="searchInput">Search captions and hashtags</label>
+      <input id="searchInput" placeholder="Try #music or dance">
+    </div>
+    <div class="dialog-actions">
+      <button class="button" data-close="searchDialog" type="button">Close</button>
+      <button class="button primary" id="runSearch" type="button">Search</button>
+    </div>
+  </dialog>
 
-  $("fxPublishPost").addEventListener("click", () => {
-    if (!signedIn()) return tellLogin("publish videos");
-    if (!$("fxVideoFile").files[0]) {
-      $("fxPostStatus").textContent = "Choose a video first.";
-      return;
-    }
-    $("fxPostStatus").textContent =
-      "Your post is ready for integration. Secure video storage and the publishing database must be connected before it can be published for everyone.";
-  });
+  <script>
+    (() => {
+      "use strict";
 
-  $("fxSubmitComment").addEventListener("click", () => {
-    if (!signedIn()) return tellLogin("comment");
-    if (!$("fxCommentText").value.trim()) {
-      $("fxCommentsStatus").textContent = "Write a comment first.";
-      return;
-    }
-    $("fxCommentsStatus").textContent =
-      "Comment form ready. Connect the comments database to save and display comments for everyone.";
-  });
+      const SUPABASE_URL = "https://ogzkrakaypfhowkgvvzp.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_uzizmRLBZehb_4MkQcgqEg_DPQ0pyKl";
 
-  async function populateDevices() {
-    if (!navigator.mediaDevices?.enumerateDevices) return;
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    [
-      { type: "videoinput", id: "fxCamera", label: "Camera" },
-      { type: "audioinput", id: "fxMicrophone", label: "Microphone" }
-    ].forEach(({ type, id, label }) => {
-      const select = $(id);
-      select.replaceChildren(new Option("Default " + label.toLowerCase(), ""));
-      devices.filter(d => d.kind === type).forEach((device, i) => {
-        select.add(new Option(device.label || `${label} ${i + 1}`, device.deviceId));
-      });
-    });
-  }
+      const $ = id => document.getElementById(id);
+      let supabase = null;
+      let currentUser = null;
+      let authMode = "signin";
+      let selectedType = "video";
+      let selectedFile = null;
+      let mediaUrl = null;
+      let cameraStream = null;
 
-  async function startPreview() {
-    stopPreview();
-    const constraints = {
-      video: $("fxCamera").value
-        ? { deviceId: { exact: $("fxCamera").value } } : true,
-      audio: $("fxMicrophone").value
-        ? { deviceId: { exact: $("fxMicrophone").value } } : true
-    };
-    liveStream = await navigator.mediaDevices.getUserMedia(constraints);
-    $("fxLivePreview").srcObject = liveStream;
-    $("fxLivePlaceholder").style.display = "none";
-    await populateDevices();
-    $("fxLiveStatus").textContent = "Camera preview active. You are not broadcasting.";
-  }
+      const setStatus = (id, message, kind = "") => {
+        const el = $(id);
+        if (!el) return;
+        el.textContent = message;
+        el.classList.remove("hidden", "error", "success");
+        if (kind) el.classList.add(kind);
+      };
 
-  function stopPreview() {
-    if (liveStream) liveStream.getTracks().forEach(track => track.stop());
-    liveStream = null;
-    $("fxLivePreview").srcObject = null;
-    $("fxLivePlaceholder").style.display = "grid";
-  }
+      const clearStatus = id => {
+        const el = $(id);
+        if (el) {
+          el.textContent = "";
+          el.classList.add("hidden");
+          el.classList.remove("error", "success");
+        }
+      };
 
-  $("fxStartPreview").addEventListener("click", async () => {
-    if (!signedIn()) return tellLogin("use LIVE");
-    try {
-      if (!navigator.mediaDevices?.getUserMedia) {
-        throw new Error("Camera access requires HTTPS and a supported browser.");
+      const showDialog = id => {
+        const el = $(id);
+        if (el && !el.open) el.showModal();
+      };
+
+      const closeDialog = id => {
+        const el = $(id);
+        if (el && el.open) el.close();
+      };
+
+      function setSignedIn(user) {
+        currentUser = user || null;
+        window.ffineXXUserSignedIn = Boolean(currentUser);
+
+        $("signInBtn").textContent = currentUser ? "My account" : "Sign in";
+        $("heroSignIn").textContent = currentUser ? "My account" : "Join FFineXX";
+        $("profilePanel").classList.toggle("hidden", !currentUser);
+
+        if (currentUser) {
+          $("profileHeading").textContent =
+            currentUser.user_metadata?.display_name || "My profile";
+          $("profileEmail").textContent = currentUser.email || "";
+        }
+
+        $("appStatus").textContent = currentUser
+          ? "Signed in. Welcome to FFineXX!"
+          : "Welcome! Sign in to connect your account.";
       }
-      await startPreview();
-    } catch (error) {
-      $("fxLiveStatus").textContent = error.message;
-    }
-  });
 
-  $("fxMuteMic").addEventListener("click", () => {
-    if (!liveStream) return;
-    micMuted = !micMuted;
-    liveStream.getAudioTracks().forEach(track => track.enabled = !micMuted);
-    $("fxMuteMic").textContent = micMuted ? "Unmute mic" : "Mute mic";
-  });
+      function openAuth(mode = "signin") {
+        authMode = mode;
+        $("authHeading").textContent = mode === "signup"
+          ? "Create your account" : "Welcome back";
+        $("authSubmit").textContent = mode === "signup"
+          ? "Create account" : "Sign in";
+        $("nameField").classList.toggle("hidden", mode !== "signup");
+        $("authSwitchText").firstChild.textContent =
+          mode === "signup" ? "Already registered? " : "New here? ";
+        $("switchAuth").textContent =
+          mode === "signup" ? "Sign in" : "Create account";
+        clearStatus("authStatus");
+        showDialog("authDialog");
+      }
 
-  $("fxToggleCamera").addEventListener("click", () => {
-    if (!liveStream) return;
-    cameraOff = !cameraOff;
-    liveStream.getVideoTracks().forEach(track => track.enabled = !cameraOff);
-    $("fxToggleCamera").textContent = cameraOff ? "Turn camera on" : "Turn camera off";
-  });
+      async function initSupabase() {
+        if (!window.supabase?.createClient) {
+          setStatus("appStatus", "Could not load the sign-in service. Refresh the page.", "error");
+          return;
+        }
 
-  $("fxStartLive").addEventListener("click", () => {
-    if (!signedIn()) return tellLogin("go live");
-    if (!liveStream) {
-      $("fxLiveStatus").textContent = "Enable your camera and microphone first.";
-      return;
-    }
-    $("fxLiveStatus").textContent =
-      "Preview is active, but no public broadcast has started. Connect a real streaming service to go live to viewers.";
-  });
+        try {
+          supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+          const { data, error } = await supabase.auth.getSession();
+          if (error) throw error;
+          setSignedIn(data.session?.user || null);
 
-  $("fxEndLive").addEventListener("click", () => {
-    if (confirm("Stop your camera and microphone?")) {
-      stopPreview();
-      $("fxLiveStatus").textContent = "Camera and microphone stopped.";
-      micMuted = false;
-      cameraOff = false;
-      $("fxMuteMic").textContent = "Mute mic";
-      $("fxToggleCamera").textContent = "Turn camera off";
-    }
-  });
+          supabase.auth.onAuthStateChange((_event, session) => {
+            setSignedIn(session?.user || null);
+          });
+        } catch (error) {
+          setStatus("appStatus", "Account connection error: " + error.message, "error");
+        }
+      }
 
-  populateDevices().catch(() => {});
-  window.addEventListener("beforeunload", stopPreview);
-})();
-</script>
+      $("authForm").addEventListener("submit", async event => {
+        event.preventDefault();
+        if (!supabase) {
+          setStatus("authStatus", "Account service is not ready. Refresh and try again.", "error");
+          return;
+        }
+
+        const email = $("authEmail").value.trim();
+        const password = $("authPassword").value;
+        const displayName = $("displayName").value.trim();
+
+        $("authSubmit").disabled = true;
+        setStatus("authStatus", "Please wait...");
+
+        try {
+          if (authMode === "signup") {
+            const { data, error } = await supabase.auth.signUp({
+              email,
+              password,
+              options: { data: { display_name: displayName || "FFineXX creator" } }
+            });
+            if (error) throw error;
+
+            if (data.session) {
+              setStatus("authStatus", "Account created successfully.", "success");
+              setTimeout(() => closeDialog("authDialog"), 700);
+            } else {
+              setStatus("authStatus",
+                "Registration submitted. Check your email for a confirmation link before signing in.",
+                "success");
+            }
+          } else {
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+            setStatus("authStatus", "Signed in successfully.", "success");
+            setTimeout(() => closeDialog("authDialog"), 500);
+          }
+        } catch (error) {
+          setStatus("authStatus", error.message || "Authentication failed.", "error");
+        } finally {
+          $("authSubmit").disabled = false;
+        }
+      });
+
+      $("switchAuth").addEventListener("click", () => {
+        openAuth(authMode === "signup" ? "signin" : "signup");
+      });
+
+      $("signInBtn").addEventListener("click", () => {
+        if (currentUser) {
+          $("profilePanel").classList.remove("hidden");
+          $("profilePanel").scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          openAuth("signin");
+        }
+      });
+
+      $("heroSignIn").addEventListener("click", () => {
+        if (currentUser) {
+          $("profilePanel").classList.remove("hidden");
+          $("profilePanel").scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          openAuth("signup");
+        }
+      });
+
+      $("signOutBtn").addEventListener("click", async () => {
+        if (!supabase) return;
+        const { error } = await supabase.auth.signOut();
+        if (error) setStatus("appStatus", error.message, "error");
+        else setStatus("appStatus", "You have signed out.", "success");
+      });
+
+      function resetCreate() {
+        selectedFile = null;
+        if (mediaUrl) URL.revokeObjectURL(mediaUrl);
+        mediaUrl = null;
+        $("postForm").reset();
+        $("videoPreview").removeAttribute("src");
+        $("photoPreview").removeAttribute("src");
+        $("videoPreview").classList.add("hidden");
+        $("photoPreview").classList.add("hidden");
+        $("createChoices").classList.remove("hidden");
+        $("postForm").classList.add("hidden");
+        $("livePanel").classList.add("hidden");
+        $("postConfirm").classList.add("hidden");
+        clearStatus("postStatus");
+        stopCamera();
+      }
+
+      function openCreate() {
+        if (!currentUser) {
+          openAuth("signup");
+          setStatus("authStatus", "Create a free account or sign in to continue.");
+          return;
+        }
+        resetCreate();
+        showDialog("createDialog");
+      }
+
+      $("createBtn").addEventListener("click", openCreate);
+      $("sidebarCreate").addEventListener("click", openCreate);
+      $("heroCreate").addEventListener("click", openCreate);
+      $("mobileCreate").addEventListener("click", openCreate);
+
+      document.querySelectorAll("[data-close]").forEach(button => {
+        button.addEventListener("click", () => closeDialog(button.dataset.close));
+      });
+
+      $("createChoices").querySelectorAll("[data-type]").forEach(button => {
+        button.addEventListener("click", () => {
+          selectedType = button.dataset.type;
+          $("createChoices").classList.add("hidden");
+
+          if (selectedType === "live") {
+            $("livePanel").classList.remove("hidden");
+            return;
+          }
+
+          $("postForm").classList.remove("hidden");
+          $("mediaFile").accept = selectedType === "photo" ? "image/*" : "video/*";
+          $("mediaFile").value = "";
+          $("postStatus").classList.add("hidden");
+        });
+      });
+
+      $("backChoices").addEventListener("click", () => {
+        $("postForm").classList.add("hidden");
+        $("createChoices").classList.remove("hidden");
+        selectedFile = null;
+      });
+
+      $("backLive").addEventListener("click", () => {
+        stopCamera();
+        $("livePanel").classList.add("hidden");
+        $("createChoices").classList.remove("hidden");
+      });
+
+      $("mediaFile").addEventListener("change", () => {
+        selectedFile = $("mediaFile").files?.[0] || null;
+        $("videoPreview").classList.add("hidden");
+        $("photoPreview").classList.add("hidden");
+
+        if (mediaUrl) URL.revokeObjectURL(mediaUrl);
+        mediaUrl = null;
+        if (!selectedFile) return;
+
+        const valid = selectedType === "photo"
+          ? selectedFile.type.startsWith("image/")
+          : selectedFile.type.startsWith("video/");
+
+        if (!valid) {
+          setStatus("postStatus", "Please select a valid " + selectedType + " file.", "error");
+          selectedFile = null;
+          return;
+        }
+
+        mediaUrl = URL.createObjectURL(selectedFile);
+        if (selectedType === "photo") {
+          $("photoPreview").src = mediaUrl;
+          $("photoPreview").classList.remove("hidden");
+        } else {
+          $("videoPreview").src = mediaUrl;
+          $("videoPreview").classList.remove("hidden");
+        }
+        clearStatus("postStatus");
+      });
+
+      $("postForm").addEventListener("submit", event => {
+        event.preventDefault();
+        if (!selectedFile) {
+          setStatus("postStatus", "Choose a media file first.", "error");
+          return;
+        }
+        $("postForm").classList.add("hidden");
+        $("postConfirm").classList.remove("hidden");
+      });
+
+      $("editPost").addEventListener("click", () => {
+        $("postConfirm").classList.add("hidden");
+        $("postForm").classList.remove("hidden");
+      });
+
+      $("finishPreview").addEventListener("click", () => {
+        setStatus("appStatus",
+          "Preview complete. Publishing is not connected yet, so this media has not been uploaded.",
+          "success");
+        closeDialog("createDialog");
+        resetCreate();
+      });
+
+      async function startCamera() {
+        if (!navigator.mediaDevices?.getUserMedia) {
+          setStatus("liveStatus", "Camera preview is unavailable in this browser or connection.", "error");
+          return;
+        }
+        try {
+          stopCamera();
+          cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: true, audio: true
+          });
+          $("cameraPreview").srcObject = cameraStream;
+          setStatus("liveStatus",
+            "Camera preview is running privately. You are not broadcasting to the public.",
+            "success");
+        } catch (error) {
+          setStatus("liveStatus",
+            "Camera permission or device error: " + error.message, "error");
+        }
+      }
+
+      function stopCamera() {
+        if (cameraStream) {
+          cameraStream.getTracks().forEach(track => track.stop());
+          cameraStream = null;
+        }
+        if ($("cameraPreview")) $("cameraPreview").srcObject = null;
+        if ($("liveStatus")) $("liveStatus").textContent = "Camera is not running.";
+      }
+
+      $("startCamera").addEventListener("click", startCamera);
+      $("stopCamera").addEventListener("click", stopCamera);
+      $("createDialog").addEventListener("close", stopCamera);
+
+      $("searchBtn").addEventListener("click", () => showDialog("searchDialog"));
+      $("runSearch").addEventListener("click", () => {
+        const term = $("searchInput").value.trim().toLowerCase();
+        if (!term) {
+          $("searchInput").focus();
+          return;
+        }
+        let count = 0;
+        document.querySelectorAll(".post").forEach(post => {
+          const matches = post.textContent.toLowerCase().includes(term);
+          post.classList.toggle("hidden", !matches);
+          if (matches) count++;
+        });
+        closeDialog("searchDialog");
+        setStatus("appStatus", count
+          ? `Showing ${count} matching post(s) in the currently loaded feed.`
+          : "No matching posts in the currently loaded feed.");
+      });
+
+      function showView(view) {
+        if (view === "profile") {
+          if (!currentUser) {
+            openAuth("signin");
+            return;
+          }
+          $("profilePanel").classList.remove("hidden");
+          $("profilePanel").scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+        if (view === "discover") {
+          showDialog("searchDialog");
+          return;
+        }
+        setStatus("appStatus", view === "following"
+          ? "Following feed will be available when follows are connected."
+          : "You are viewing the FFineXX feed.");
+        document.querySelectorAll(".post").forEach(post => post.classList.remove("hidden"));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.querySelectorAll("[data-view]").forEach(button => {
+        button.addEventListener("click", () => showView(button.dataset.view));
+      });
+
+      document.querySelectorAll("[data-feed]").forEach(button => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-feed]").forEach(tab => tab.classList.remove("active"));
+          button.classList.add("active");
+          if (button.dataset.feed === "following") {
+            setStatus("appStatus", "Following posts require a connected follow system.");
+          } else {
+            setStatus("appStatus", button.dataset.feed === "latest"
+              ? "Latest feed selected. Database feed is not connected yet."
+              : "For You feed selected.");
+          }
+        });
+      });
+
+      window.addEventListener("beforeunload", () => {
+        stopCamera();
+        if (mediaUrl) URL.revokeObjectURL(mediaUrl);
+      });
+
+      initSupabase();
+    })();
+  </script>
 </body>
 </html>
-
- 
-const createDialog = document.getElementById("fxCreateDialog");
-
-document.getElementById("createBtn")?.addEventListener("click", () => {
-  if (createDialog && !createDialog.open) createDialog.showModal();
-});
-
-document.getElementById("fxCloseCreate")?.addEventListener("click", () => {
-  createDialog?.close();
-});
-
-function showCreateForm(type) {
-  document.getElementById("fxPostForm").hidden = type === "live";
-  document.getElementById("fxLiveForm").hidden = type !== "live";
-
-  document.getElementById("fxPostHeading").textContent =
-    type === "photo" ? "Create a photo post" : "Create a video post";
-
-  if (type !== "live") {
-    document.getElementById("fxMediaFile").accept =
-      type === "photo" ? "image/*" : "video/*";
-  }
-}
-
-document.getElementById("fxChooseVideo")?.addEventListener("click", () => {
-  showCreateForm("video");
-});
-
-document.getElementById("fxChoosePhoto")?.addEventListener("click", () => {
-  showCreateForm("photo");
-});
-
-document.getElementById("fxChooseLive")?.addEventListener("click", () => {
-  showCreateForm("live");
-});
-
-document.getElementById("fxMediaFile")?.addEventListener("change", event => {
-  const file = event.target.files[0];
-  const preview = document.getElementById("fxMediaPreview");
-  const status = document.getElementById("fxCreateStatus");
-
-  preview.replaceChildren();
-  if (!file) return;
-
-  if (!file.type.startsWith("video/") &&
-      !file.type.startsWith("image/")) {
-    status.textContent = "Choose a valid image or video.";
-    event.target.value = "";
-    return;
-  }
-
-  const url = URL.createObjectURL(file);
-  const media = document.createElement(
-    file.type.startsWith("image/") ? "img" : "video"
-  );
-
-  media.src = url;
-  media.controls = file.type.startsWith("video/");
-  media.style.cssText =
-    "width:100%;max-height:360px;object-fit:contain;border-radius:12px";
-
-  preview.appendChild(media);
-  status.textContent = "Preview ready. This has not been published.";
-});
-
-document.getElementById("fxPreviewButton")?.addEventListener("click", () => {
-  const description = document.getElementById("fxDescription").value.trim();
-  const audience = document.getElementById("fxAudience").selectedOptions[0].text;
-  document.getElementById("fxCreateStatus").textContent =
-    `Preview: ${description || "No description"} · Audience: ${audience}`;
-});
-
-document.getElementById("fxPublishButton")?.addEventListener("click", () => {
-  if (!window.ffineXXUserSignedIn) {
-    document.getElementById("fxCreateStatus").textContent =
-      "Please log in before publishing.";
-    createDialog.close();
-    document.getElementById("loginBtn")?.click();
-    return;
-  }
-
-  document.getElementById("fxCreateStatus").textContent =
-    "Your post form is ready. Secure media storage, database saving, and server-side privacy checks must be connected before publishing works.";
-});
-
-document.getElementById("fxPrepareLive")?.addEventListener("click", () => {
-  if (!window.ffineXXUserSignedIn) {
-    document.getElementById("fxLiveStatus").textContent =
-      "Please log in before setting up LIVE.";
-    return;
-  }
-
-  document.getElementById("fxLiveStatus").textContent =
-    "Setup saved in this screen only. Connect a real streaming service to broadcast to viewers.";
-});
- <script src="app.js"></script>
-</body>
-</html>
-
