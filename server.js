@@ -1,151 +1,93 @@
+PK    <Z]]öÐ«Î×   s     package.jsonMËjÃ0E÷þ
+¡u-,“EZh—ù†¬Â§ÓÈ’˜QŒ!äß«GÀYêÜsg=:!¤7È/!ç=l›ü(pb¾p­54	W“ŠèYà‰0¦—|:å!ç³àß@©_ÑB&4NDgÒhi£ƒµÀ@y—úã†Û0ÎÉ#?H†R}° v;§ÏÚ Í+ßE,…Ÿo}Ü5¼?á»[$àäå F­ÆzFN®pÃÔ·=Û[•F¥?wi¹»ô
+†D‡Sû)yÑê?°\Ò=»PK    <Z]]éÎ<ñ…	  ?  
+   ai-routes.cjsÍY]sÛ¸}÷¯ÀÎt–TW¦e'»ÓÊõvœXÞ*‰cMìlÓz<Zˆ„$$$È mÅ«ÿÞs’¢>œdvúÐ<X$\ÞÏsÏe‚Òf¬–±
+Ž÷öâ\Ë²2µB³¦ÅJ©Eø'A[Øa9“Y‘ŠL(Ë­ÌUŸå*]à!Ÿ‰}›ïßÉDäL&Ÿ¤"aRI+yš."’0â2a3¡„v§iãåù9+U*ŒaççÃ·ƒÆ§Ãñètx6~uùâêÄêRÐ>#,„±wB%BG{ÓRÅN„3i ä©|——V˜E‡=î1æ*‹4ç	Œò¶„´Â`z®¡r¿ze"ËõâÊ?
+;]·)•™´¦ÏÙT¦âJ~ÆþÃû3þ=¯~ºn
+›ŽèJ¤	.ØÒK µséÞ;†Sýæ.‹'^Cúçµ„‡ò{AjÒŽÈIR<ìää„™H$ªŒýÝÎã1º¬º+Tëæ^LŠà¶9Óß)Øä8Òìñ’y™Èü «$û»{~·ºyØ_»ÍŠç«ÎãöÆì9oé@ZÜÜW÷rÊÂï*»#©â´L=§e&3a…èt^[j…JÜ³Ö¹ƒ÷Ê”E‘kÑF›#6\ÏÂ¸ÔyŠôäq,
+kØ«Ñ/]6zûË5ûçàÅÈç­q9N­½­LÓ.£ä«ž.ñwI…P‡ìc>1ˆ©uÁ‹Ðmó+…ÐÃb÷Ò?.ß¿ÃÊO”E?ùTêõVË§\ÖGƒwãáÈýTGž¹W7i?öe*aÞk±‘ZuB¡È|‰PÁö°?Íõ=×‰Hèê˜
+
+MµËŒÝ/tþ° Vª™a‡¯R“³‰ …¦rVjÇ	®qÌP3zc$öûï„Ñ\p¼ÑÜ¯niGPªO*¿WA'2E*mtƒÎMï6‚¨Ì;g¹f[œ
+®Fx³t÷aQ—PäEiá"ò—ÇKïuJ¾Güü
+ååG>mÎºÔw†µSm‰"DÒáS­ù"’Æý†~Kg³€§RÛH€uu.µÅWjT{[Z ðüÃ>ýÅ÷ß¯íŽJ@'j/5gh)ìà$™\'ëJûÊæ•<ÿ`‡À]®ðÂÛPÛ-“>b “nuoÐJCÏüUwÓõAE¼ÚWiÁQÇ	U«ˆÜÆM?Õû,¸žv:dYžˆ”y»ÖÈa•Û9JÀ•7;ò<+,J¼rS­J†Rpm`]S0Dâõ	~uhÒêZqN=àìi;¶ÏU*Ò¡à_y©	B¨µA»ŠÀÀÈƒñ²©	4³¥¼\ ÔR;ÆV
+ÅÜa'?WQÁ]ô >²üSßÁWå­ïd#ƒós©Ä‡ä´	z9¤hÈ¯ dß®ûµ.‘PwÑ®~ì­$Á8Ý ðB€ÐWm	e¿ôeíñ’Œ(rÓ²‚°ç}oöMÉ„7Œ:S¿îw]àÑÃË¼T-•5ë®mm,ßvºŒ›…ŠY¸Ã1YÑ$.5ž¶ï£7Ã—§×ƒñéh8¾¾|=x»*ï&ïÉ·>Òá½gÚÏU6äSöRH‘€-ea#vš$lÇ«V¬†
+ÔÔ¹"vÕ€2ÒeÙ4¦eË„¯Fê»&R_¶æyïhËGÔ`Ò:W3|*ÐNi\¶DÐ€s+ª"Ô¥ò]$Î‰OæJ,hÓD'DEV»
+ÐNä%(Gë¾Àû×8šyO'yI¥ó;áÒ—ôÙ§ÝDýi’'‹ˆÞí}â“ôk!>ÜrÊõ> Âi"½¢U)OB˜Í™/G-ªk¡æ\ÅŽ<ƒrms&ê½“<Ì!q
+tÚ§üF2‘Mˆ½hQç“±­Òi—½§êñ,>rä”À¿¹‰üòö£VÏrâvvæKoË5ï=ËæÌ ×bQ!¯ïOmMäof¯+Zè”ióÂ/'ôÑùð¾ôÎlñ—MÕÑðš“i6|«ÿÎ„‰µí¢*ñô•òüž«mÿUÍ,jfçìgv
+ù­ïyµ3?"yG]œeñœkŽÄÒ†ü2÷ˆ‚¼W¾ ‡ƒ#ÎPí.WæúÕObÕ-Zº¾I‹˜°íFGv­
+;äÇ›Û¥#ÍJ–€›^·Ï,û›#Íkðbœ<É›¿’'GÝr›q	çìÂÏ8Àã9µF´™•{ÖFE•	ˆô³áÈýÌQ;sªÒ»(Í<„yÍºw†ñÎèVÛVî§Ã?/ö]‰]½F‘¹<˜|‘•¸1c3‘Àâ˜W­LS6Éð<!©Š% ¡†‰ `«9~¦GìžrLÆýÂ/6~Ïá™Ô…®×‚­0×‡üÔ£yiçë4cWO\nHôãä‰s¿Ï—ã‹Ë³ÁW‘™T(ì‡WHû½Ã`]˜±‹Tì¨iÿœ(ä‡æ)M,P\„½.ûK¯³CÊ¨Æ¨ê/\Ÿ©¥€þ†`JÄÈ-÷ÙŸÝÅ2úÈ`£Ÿ›Þj§b^½Â,$¨ÛË‹r:EŠ¹©W*kãÚ†gR†Ò"c˜¼\~Ím€Zý¼	i±hµh¢¹OAkjÈ…¡ÛÜ:ú­c`ökàü¡í¦nkŸk
+ã©¡;îû¾MœÝ-‘ã¼°¨ÇÏB{^Ûl¨‹k•2Ä.]5µ€9ií
+JN¡ ê¯ËdÑwÀµ:»G+z´2Ü1å¶ðf	/>½ÚI«åõi©5“ß3hZð_2ÜœCdÄ—Z"b—‚*xûõá9Ò…²§8fˆo’OJg%°^Yì]ÏxÁ†—@ÏYP\ŸsóTøñ+lÏ¤˜ÇO4p\Pà'ª,Aú·ïút·ç­#1‘47b¼^¯ÇçÃ7ƒñÕðßƒ`g‡;ÜæážÕ
+î°Ç.^PW3áœ&Fik·†Ñ»(à/·­s½+À’&ÎÁ8Ç[?šÂ3{9ñ'÷¤â²i>óU»WÄ•&™–F­ïM[C %øA_&Á·Ž<Í+¼«G¸W 2ƒ]'/Ø³›Q<ßò7¦Gg÷ú'{iætß 1Ûˆ
+§µñG	j°ÜõbñÎ_Áøÿÿµ£oFÐ§ý\«f`„l}ój.×"sÓú6Ñm¾6à*¦É‚®[¤ydÀ›]ôÖïV¬vj¯â„†êÓÈE‡ÿUQÆ®+¨ò’v”Úro€Z’!¾Ûž ÷6ÿƒ¾ÎüPK    <Z]]ç´yW.  r  	   server.js•Wës7ÿî¿B¾ñ¤w|à&™iq“„ØmcgòhŠÅ …CºH:Œùß»+‰ãÀÖã/çÕ¾¿]¶)´!ìg®˜Öä€(ö£àŠ…'Ñþ–ãÉ©UðÿÕk¢f¹‘ÕwGYqÌI+I@ã¹3AUÖŒOÙ˜›]ÍÔ”©]ŽQÌËÑ<^ïNXª;}vô\IT31-éæ†<k4¥x÷â´uØê¶{g'ä`‹¬I¬=ÞÜÀk02&×Íz]¯ÇŠŽé,ŒäÕx8^ç±.rÚ§šÅ‰n[8½8<étß¶OÚ½ãöçû­m2:ËºßË‹~Æõˆö3Ö+®ùõäìäðõ{ÏÿH†?ÚÃÞÑé‡F>;ÎÐ>¤&ÖÌ„QVHÉŸ³ Fö¢}R¯“3&R¦ˆæF“>q‘J,'Kol5š…>½ñw-E8'ŸpÓ$Á¯q? ‹²¾É©
+5<	±âï’‹°×K¹tÂj$°q$A„‚[àJ«C†L0"R%Ã4¡Š‘”k6%© ÃxJT!4)D†í¶@
+7ÙŒ0áø¸ðqÅe[)6ä“jñ3§x­·â:å»Îbœ|·ý¼)BlÞÑCªyBFŒfÐìÉˆ%cø“\§9¯»'Hrj`FGäà%™CáÛçþ!D¶Ý›˜rV³$PI}ýšöéSàhà¡C¶¢7„kÌ…àb ã\x'?2Å3bFŒ$4Ë˜úE“®ïLB­UbpÊ ¾z&2(Db3qtùP°´#.ÀÆYßý¨f$¿ve²It¡¯=Y 
+¸”›P“ 6¬±Å–Öÿ9dPiõ·~ÆO£:Ç(án[–ì˜B	"Š,³oN+ä3‡†Š¯(7dÀPáåÎ¼:¶‹:Z­O÷êÐê²Fæ>­àJ
+Y}Ó>÷™†ÒAß@A–ƒÙ¬yï ×<_«V“\º€ÈÎÜºÿuïÛâÒr.|–Ñ-ˆåø¾Ñç2¾’ßvQE‘å‚œ›YÎäÀ
+Å0*Û€Fa‹àó¶ˆ|„k&Ñ½­’†œÐP¶^)F
+49>?lïØ‰¤ÂÖ”	uŠ°1åì
+|Á§ d
+¤‘ÔÆI_~LÑëVŒŠkÂÛcÔÌ{êGÙçû¤ó±}Ü9ÇêÖ6H­ÓNµ2Ur·ýê¬}¾ùòö}uÛg½ÎQ×Ui}kØ,û<WÛ|nX½Es&£ÒqŸ\„ÇB‡/Ï¢*(¬Ã€fšÕJ:SJ*èØe  „4˜›
+R
+C‰Cï "¼$¶œk¿J.×ë®±¯ÆÌEñ¼±÷è(N3†p¤Á.‚6ÜK|pó ÷}™Î<þØOHü|±_mX"rò—Ý69UÐž<§Â8‚’³eFÙJœÞ¢Ÿ¢¥‚Í1ò\Ûõ¾ÒÝëÖî—Æîï½Ýoó½ÚoÅN=†…aÂ¥p´ðj7¼¹GûWï“0Š3&†°xþ {ÿ—õ%yÑ¨8ý5Àq„™Ü¤ßb.’¬HaËaZ"Ëøp­¯5 OB¦4ÃÙ!b³8žBEj+t_ "½°ñ;Gk@eún÷ÁaÃˆ¼‚³ÐÌãÐªE– õèoÛðNPpË,òÎÄ,ŠÕV”	ÍC
+@‹§>ûåÛ€gpH„‡¢¢:T¶	°ø¶"äÉ²½áÒª4Kà~¸0‡’Ï²PxÈB”xR7Œ$¨V‘CúJÒ4¡ÿ5›PhXçV1†¹èíÌÝµ+¨®œ\\tŽÂhq¹_•s[å€vUý%°œÊG#ü*KVñc§5ï™œ—1ähoT†ë†Ã{í.(š¦o (S&{ûÜ»Õ»ÎQ›+LòÔ„ŠSwÑ7ÉF?TXºE_'Š÷ÙºÊ•ð5ô–‚­eª«~ã½ó%¤P÷KÖFÜô;Ã…oä»+³ÊÙf¦Ñ§Ò\­‰½CÛQe¹ã¼[b¬_®S°ìGì¯á;Â*ê&<Ý=Ë	x%‹,u{ôÎ3'ªþ»o™!ˆR˜6bû‡gy½,ÃÊä0¼\î¶ÕÑŽË:—0];sT²¸ôü¿PK    <Z]]'JÁ9?  
+  	   README.mduVËr7¼ïWLÉ©Š]%®ì$öA*d‹Ši=¨’dG©TJw‡$,,°°¤˜S>"_˜/I°”èØ¾è0====xBÇÇÚòÍ
+ŽèªîØÖô†£¢ÿþ‡´<÷*rM3çií:O|¯CÔvNý’}Q\/t GÕœ©õœÖÅ?îÞË‡ÐŸÙ¥«®US˜T´`ÓÊªBìS½äÉ».r^RuHõgA×L—Ü]˜Àþä¦tx1*‹âÉ5­óQÙH•1¯‚i£ãšŒntE1À>ÀD7Xâ>GÎšuIÓßlÊVÜ°»”>Ë¾JùèœÍf1ƒàY>®BàfjÖ¤<“uÜZ®„¸5Çñ®AGÍ3Õ™H«ÙX›4ÚêFÝïå(Ï_Lv1È1g·’T‘>\ýð¼|ùœ@š¶‹}èÕ‚-UFéê’.¼®„ðJÉ¢²s>,3í¹RŠ’£·R­)£¬¸Þ®ñ¿®ÉwV°NŽGçÃ››ÛÃÑíÅáèèöýøÍÕD ‹ lÔÎ*ƒd%Q¶jj€wºÆåB(¥0ž?wbÀ±óVj¨fP…÷S‡{ŒH
+*‘<uúÚÖ»%g4QÎn¸Ë¨çlYô%-PfªŒn=íZŠ(4ƒÚ¼‚Rrž¥RÕ»)nn4$÷ÓIO \ýÚ…T7È°F†½Ð¨áÆùõP_¢)° G%AÁ­q¸É¸Jütw €o‘7hµ­LW-*èJŠ6]dõ	dtStG„ÎSw©ªþ8¾¨ésç¢
+)h×¤š:½3!ýWßuSDB`c”¥(^”©‰	xR³V÷( ·.èˆ|h¦
+ ø©¤QVÅÖï„£*¦I¦£ü&´ÒèÖí2ÿ¶¿—ÅÏeRm:·QÂ'ôÉwŽ~¹åéƒ]ÔÜ
+å¶Òœ)è‰wM“Á?M}€.BS±Ÿ¤¿éšIÚóàúYYüEÖø¬ô YK(+É²ùFöeñr;‘nŠ÷4Ý—‹Ø˜ïeóõ>±Ò³$ó•˜RÜZä*vµv¹eÊiÇÂ5,Keñª¤·ÈZç“¹£3%+…EÑM¯NœmÆ­³<úU¶Kí/+ŠDÀåðâtôöðzxÏ¼½ŸÏû|’bZ¯—b9Ña”tÂÜåDìæÚáãµh—(EdYúF¬IdnéÝõÙ)a–*pÛì}7/•×âûâ9¸>ŽŽ†ãÛ³ñÑðôõWY§¬àßñ¨ÎŽÄ”_ d2S&@
+B”u«’~Ë•S¸w±¾ñ€KÝ=MTû9jË¼/vRNæ÷#{=[÷”gzÇí~1YÄØ†ý½½ßÇ.=ÊÁÑøìpt¾§Z½§ôÞ‚•‰ä‚¹˜§Äû«ñyjp…†Æ%;îngŸ¢ï#a²#~«
+Ãì¶ø”óÊÓh²ºVÆ×g 6àó;ZÜÎŸhÊâ0ûéV’b­b¡©si‘qí,Úe†NJrõ¼Ô¼zp~jôãE¢nÙvÍ•Leñ`cÜj£U/sàÚ¥!ï¼þÒ‡±He¾Y½×)Ý-•IÏ½ªéÈ%ß¬].ß]åèN„ŠèÔé¥™ç¾PWŒdöã0÷¯ˆ*jÈp*ÄjÛã¤ÀÈN³K‹<¾U‚žÛÐ¥ÖHŠÚšq½ÿãX§7Ï#¶ÖáaNöÏ Xuþ–F¨°šª„×LÈó€²¡ÐŠ§ð&y¡…KÁâpõ ©Ç±}ó^Á¨	ò‚@>2uÒ†<KúÇÔK[£ä?PK    <Z]]‹/üÓG  ·T     public/index.htmlÍ<MsãÈuwýŠ^È»Ez@$EŠ,k¾¼òîÌ¨FšÝuM¦R Ð$1 %Ñ\Uù”£sq%Wåæø«Ë9ääü“ýÉOÈ{¯»R3»©Jvmè×¯ß÷{ÝØÓÏž½~zõë‹çlž/ÂñÞ)þ°Ðf#ƒG6p×‡ŸÏ]æÍÝ4ãùÈx{õ¢sl¨æÈ]ð‘qðÛ$Nsƒyq”ó†Ý~>ùü&ðx‡^LDA¸a'óÜº5 ùœ/xÇ‹Ã8ÕàìÛ®ív{86ò_¼"þÝwììœýð»?°§)wsÎžðUùì|áÎ‚ÈÍƒ8:=ã÷N³|…¿NÇùºÓ™Ìœ}ûÄ>év‡NâF<tö»ýn¿W¼÷ Áíº½	4„°š³ßózÞa^s~—;ûÓÇðï^ËœûÎ¾{äM|œD×Ð=íŸ<Æ×› 9Œ?éõh¼·r#gÿ¨ËÓ¼Îâfñ¾;¸ßûùzßu²à·A4s&qêó´-÷“Ø_­n
+;sìáÄõ®gi¼Œ|'u}$çX-†A’qææìØþœuºƒÏÍý¾Ý³f›yêFYâ¦0’õ>o›7nÚBr´‡DtG¼ãÛÃ)Ðßé’»ƒ®5`çÀŒÔ¼ä³˜³·çæY
+Ëš€ëd<
+¦÷“ežÇ‘DÉ273r/7,æ®	TÍad.G®½ešÁŠI dÙêøAæNBî¯ãÄõ‚|åXƒ¡ÅyÇ
+Ãø–û÷V'ë9fóÜyÜKî†0/	Ý•3
+ùÝÐ
+ƒYÔ	r¾È#øá‡e–ÓUG
+•T ¡œðü–óh˜¸¾·™º‹¤Õ=JîÌÃ›[óð8¹kF Š§›Ü±,Ÿ—ñŸnOçÈ¾=±'ÝCß£F?“Î4g.ÓV— &q „:€•w½Âv€¯¿í‘Ïïœ®}oM€U>Å;=`±¤s+¶}2°‡ Y ¸ƒ›Aô;€šœÉ 
+h¬1å²}o%A®Å†6wÒë©½¢<-3çää–Uäyã»Hmwß÷ü“iX"‰÷Ömê& ¬wBç¡ñØ†9RzÝe ûÐ¡H~$ïÉû £ÍÛ	&^oe-6txä?ÀÜ™›8½ÅÆÞ®ÀW|’Æ·J¡†¶k»ªþØÞ =AqïŠMãtá,“„§ž›q±6ïjì›Æ½šØô 7=DCÓ‘RÝµìÁ&­ã’’ðÈl&HNèD?ØŸÄ®ÈNµÕd0 i¼ÌòÎÒÀâPÿ´ädˆ—‹(ÙC>-‚à·l³;MÛ‚ª´vø|â¦¦µpAûÑxšý¬u­èâ?žï7dO ‡{o×¤¯gkð×Jhº}Ø™¤nXr½Q§NÂ"y´]’¤‘À=³¥àÚöçC}U!üÚ®4{ZèüÃùæ.õ¡Õ]Ò~Hv%'äÓ\±	µ‹
+8óø†#¡Å«åzypÃu2#Ý´tÝ®íó™)ÝQwbJ?Ô³ZK¼Ýî‘7r·s ŒX8 W¥ž@¿*¤ë—¬¡çÚN»UòI«cO4eëéc“báI{×ºRöõqÙ<CmlƒðkÓ»¥A@A)$¹n†¯kÊß ª‹ÊêÇ!!¤t WÍ£ yë‘ý]’Š*¹‹qÖ–._šíoZ3ÚÀ$˜·4r>.ÄypX2‡žkÌ9ª2gC”úM”z…(õíáCÒ!ðŸ§ifóžŽj¹+pÄ¶¤§š¬w³
+¹@DzcÚÀ–1ø¿ +y„iÀC]¥®ÖÑñ„×EMwí::5V—°HlM°ÞaãöêŽUL¢ë]¾Jø­Æ{S¶«hK½‹ l­Ù²Ý¦w#„iˆ	k"ÓÓ‚z‡BÑrGü¾†×…^y7ÝSÊis`ÓÀb»aeƒÎ4ö–Y}oÕV±CÑ¶®˜3³ˆ½!èÁ(Lz|7›sˆzŽ¼{â}ŒÔw'ÝAß†_þlâH#D¯WµçRôÝ“s®h;iˆ¤°taB<7	j‹ëBU/œ`ÊAÎÁ;ˆÍšêAÊÃƒVNN¶–IÃNk¦…™dyG3Ýj–}dš›`')Ç¬±Ð%Ý&o»)qè§8ó |mT•Üüëî–t¤‚rR$‡Ì*p³²y|[Uö¢‹™Y¼Ü€ïˆëÖVêa(2Œ'€Ã /Xà,î-wéqG£P'¢`œ 3³õ¦¬`íàb=±Â›Éfh¿=¼Á}…z¾íw×B…Ñ±
+€êf	×µ„.BâÖ ‡”zÔ?Å#.3 –¯Ì”Ý'íRU›TU[Ò¬˜Íg
+i§8§Ü*ö{@2ˆÞËõAäláë)qÙ?æ‡KõŠ]ˆ m­ò½F<ËZÍƒÄƒÏ—Ùvèö´ß,ý5ßB ; C$j¡Fé•]A4+zï¸×í{›š³?ðÝc¯˜ÈÓ4N+3ûn×ë5èÜþ±Û?—Ø,=ˆQMzýÃÞã†¹½É±{”ýÍ3_=»?œ"ãš¤ý4†(®3¨Ào›	,º…3®lý¸{Ü{\‘ÃOQ^
+Òþ,çIö1!OÊîæ­~™Çuµì˜‚ážø)æ¤Jœ^ØÜæÝcuWXßÛˆ—ú
+QÓ¨ÅðMŽEL¤@^×®ãæH¾°š„?†Ü,{Ee?Xét£;³<NWú:"ƒ‘lÞ_W­IÑ…â[ë"ÿloIkÚH#3*	‰]¬’Ï—‹‰´®v¨ÀÞ4/uéu»nÿäáè¾–¼iûûÈÄìþîn«tŸÇˆ_{­Š[ƒw­<P¦ÿøxÃ×„žY)m8¬&„@ÌsºnYTPt?)
+V[2·ÆO¥*Û7¸I›AOÐF«ÙEåOÐºE9Nb©	¨¢ÛÎ¼¨Ü¦0µ’€Lù»ZÊß­ú§£j*_ªÉ»Ök—ölã7SíŠÉý46ÜïÈC‚ÓyèEwyÂS,SfÙÈ ãS?¸Q
+DtCœIœ¢…÷ÀÂvv~z CÇÔ®&`ÖŸ³oÎŸ=Í.¯Þ>;ÍþöWöäùÕ™œ)pà),¯-…œ4Æ{Œé(r£
+Z²°iŒ/y<"l Lnãôš¼£ÄmÞË”	 œNÒqP¢X€Kw|šŒŸGs7ò8›ÆqîÎ¸ÉÜ†Á´dçqf²¢ôÉ \("â2<fP>†@ÖdqÊòe1LX4½.óbà0XØpÛ«=°Å2<	ðHÆ[Éyö—çŒß¡eFb.{_Å‰5Ò	ãB…5BuIí0˜›n‡rþ‘Äƒ]„™œsÄ©…š¤ZÔåH3s·ƒxšFÄ3ª¸+]2Æ?üñÏ
+Sñw2þwÍ$ÕO&ÐƒŠ2~ÃÑ¼röì‘ŽÑŠRw±aÛnT+8"Ó·cøßÿòOÿñ_ÿþu,ñ¸0 t54/P*Ø#–¤ÀÛGK³ŸŽ§¦˜þ~1‰§b²†è™ã*
+Ù€ŸŽ"Éí.ÿRGðµð{I_'æ“e€õ" ( èÐq†¤Eá«‰|áÑŒñ[JêÅ¶ãÛˆ‘›±Øë(\±eÆÕù+ ~Xuî‚	Ixº²Lâ[(½U¨¬x@Ê$_ÐPDPFÛhÂNUûjVT5
+øå‹ÐeõÀŠõ¨!\á¡¯°°º
+¥`Èz`ÈŠqÏxæ¥eØÈ1*ìíÒ47YÙ
+÷Æ·”C¼µÄÂ1<aƒlëùð\(¢0?º¥*i;%Ûˆ«ˆ'/à¹ A•
+TÜÕ¡ñ¢þò5¾È~À™õ"K>"ž*Û¸âC *¤ÄŠL•¸eiÇÐ–:$þ· 6—ƒP$‘ŸÎã›%]@ ¸2Xb‚”àbÞ—`ññË‹C“½|ý
+øÛçO^¢Åö¨…MÁc`–ƒ­Lƒ„Mƒ4ËA§r–`dAy‡€FõQ %v¸w&9ÞQ É¡)ž~³¼ë<Xpù~Ë'œ´§Ü—âUøQ¤1Ê•/dK¿¸Ê0™ÓQq_T8MŒÍ_ÉM0ª¡¶y×ŸÌX48ÿZa£â[ÝŒè,&õMöíÙ7À©Ã3äÔÙÙÓKà{3ýi?7¢,Bøñ„§´¢Ã½ŸˆÝ¹Ew	]AZUpÖ ªý©7Ê„æqaÚÈx~çbã0ÂÀ& ìlšÆˆ«2±†Éf86êÌÑà~Ì@U±jÀyaQ¶€¨jqÒ‚§ `‰`{MkZ ÍÍq–@°†Wžr²ãn}-ËBJ)¬‹fK*<ššÄ¬Çsœgn®ˆødßn‚Ì‰ðˆVéb¶òÍ¤55Á^„Ø$úØn€«.×-ø!ê'åôBØÄœSQ(…„8\B+D®ËÔóJ<€þ|9=cës0šE¯?ÛÆô!TÁGÿ™Šj·† ƒ€§øÓ™Äñõ¶·~¤âÖÓøÛây+¢ WÓ%ì+ÈÀƒœioåŒA¯:»¶²ÄÍÞÀÑaÈø	˜›71EŽ“\Q³j˜wœcŒÑÞCbrµœl¥õ	äÆÿâàË98Öøx\_m§d×éÂN—¦€7Lùƒ4yÈ²IÏZ¡Ðøõ2G#(ûšÌ²ìRù™´¯2Y)£ŠÒòV»Lzï+•ÔÜÎyD&LzDµvÌæx‰*x’…‚\7˜:‹.’G%j5Úb] aopdÿç?ck…` ÌIÀnþí­L°Âô+_>C0Ý“‚öms20Š˜½tsoÎÄp{‚þß½qƒÃm¼ü¯‹!t“íÁö¯˜ùÜ_Rî	ö=j´?ÚPe…ôÙuu]æŸ_ °zü~ÎƒKÏ»…*(õ€þ@,äf<ES¯Ë65›“ýo ‹0ÖÈÅî²ˆs?ƒ”:ÌpUlÈ¤.ŠXÙ|@ÈÆ“+Ú<±d›0!c>O8ˆ…Ê¹ˆªÀq•¸vüü‚&¸štGvÁ™o‰B¼j>1uø$s°<žÍB4À!w£%ˆâ+æ1µ§×"=zn
+Ü"©Â¥ðÕâõGCM’ûûz•Ú6ÕTÂlïjú)ž„x+ž>Á|T`®ä˜/ý‰]È”ìFÉÁzºXKéì†áqÃã$åÂ±bå8äÅÛø
+$#Ë)P¥KSXa¼â¯,öTØ-2@ Â(<
+‚ „aÍ…²µˆ÷£€éEÉªfRè‰ó[¬ValB!ÛäDX-rkÌ–e$,²aw(²¯ŽšáõÞÓe–ƒ‡ÿ-/A^‚qQ¢)ÂÒ­ÂM<·p))Q‚½3™:sF¨Â9TVH¥{Q˜‡EæýñŽå{©(È¼Ó@ä­õ5üT	©Õõ;è¨MOÌ' }´
+[ñ\+iP]R³#êÀä6 ·á&	wS†á.s§ Jdu”œ€H>°fx6ÿ*:$E9¡82Æ_Æz˜	]A}ö ‚§Š¨iG¤°®cY¤ô¼4­ªÅ.ÜÀ×7Ô-f6Yáœº`A‡lìç€­…}Áz@ ŽÅÎ¸]š#WºZ“»l
+¤œeÉÇyn„½©,òT¤
 
-const express = require("express");
-const path = require("path");
-const crypto = require("crypto");
-const { AccessToken } = require("livekit-server-sdk");
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-const SUPABASE_URL =
-  process.env.SUPABASE_URL ||
-  "https://ogzkrakaypfhowkgvvzp.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  process.env.SUPABASE_PUBLISHABLE_KEY ||
-  "sb_publishable_uzizmRLBZehb_4MkQcgqEg_DPQ0pyKl";
-
-app.use(express.json({ limit: "20kb" }));
-app.use(express.static(path.join(__dirname, "public")));
-
-// Basic health check
-app.get("/api/health", (req, res) => {
-  res.json({
-    success: true,
-    app: "FFineXX",
-    message: "FFineXX server is running"
-  });
-});
-
-// Verify the caller's Supabase access token.
-async function getSignedInUser(req) {
-  const authorization = req.get("authorization") || "";
-  const match = authorization.match(/^Bearer\s+(.+)$/i);
-
-  if (!match) return null;
-
-  const response = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-    method: "GET",
-    headers: {
-      apikey: SUPABASE_PUBLISHABLE_KEY,
-      Authorization: `Bearer ${match[1]}`
-    }
-  });
-
-  if (!response.ok) return null;
-
-  const user = await response.json();
-
-  if (!user || typeof user.id !== "string" || !user.id) {
-    return null;
-  }
-
-  return user;
-}
-
-// Create a LiveKit token for an authenticated viewer or approved host.
-app.post("/api/live/token", async (req, res) => {
-  try {
-    const {
-      LIVEKIT_URL,
-      LIVEKIT_API_KEY,
-      LIVEKIT_API_SECRET,
-      LIVEKIT_HOST_USER_IDS
-    } = process.env;
-
-    if (!LIVEKIT_URL || !LIVEKIT_API_KEY || !LIVEKIT_API_SECRET) {
-      return res.status(503).json({
-        success: false,
-        error: "LiveKit is not configured on the server."
-      });
-    }
-
-    const user = await getSignedInUser(req);
-
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        error: "Please sign in to FFineXX first."
-      });
-    }
-
-    const body = req.body || {};
-    const { roomName, participantName, role } = body;
-
-    if (
-      typeof roomName !== "string" ||
-      !/^[a-zA-Z0-9_-]{1,80}$/.test(roomName) ||
-      typeof participantName !== "string" ||
-      participantName.trim().length < 1 ||
-      participantName.trim().length > 50 ||
-      !["host", "viewer"].includes(role)
-    ) {
-      return res.status(400).json({
-        success: false,
-        error: "Provide a valid room name, participant name, and role."
-      });
-    }
-
-    // Only IDs explicitly configured by the site owner may host.
-    const approvedHostIds = (LIVEKIT_HOST_USER_IDS || "")
-      .split(",")
-      .map(id => id.trim())
-      .filter(Boolean);
-
-    if (role === "host" && !approvedHostIds.includes(user.id)) {
-      return res.status(403).json({
-        success: false,
-        error: "Your account is not approved to start a LIVE broadcast."
-      });
-    }
-
-    const identity = `${role}_${crypto.randomUUID()}`;
-
-    const token = new AccessToken(
-      LIVEKIT_API_KEY,
-      LIVEKIT_API_SECRET,
-      {
-        identity,
-        name: participantName.trim(),
-        ttl: "1h"
-      }
-    );
-
-    token.addGrant({
-      roomJoin: true,
-      room: roomName,
-      canPublish: role === "host",
-      canSubscribe: true,
-      canPublishData: role === "host"
-    });
-
-    return res.json({
-      success: true,
-      url: LIVEKIT_URL,
-      token: await token.toJwt(),
-      identity,
-      role
-    });
-  } catch (error) {
-    console.error("LiveKit token error:", error.message);
-
-    return res.status(500).json({
-      success: false,
-      error: "Could not create a LiveKit token."
-    });
-  }
-});
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`FFineXX is running on port ${PORT}`);
-});
+tú€gZì+Î”IÜ$rçìš¯2eÎÁ¯À¬~÷‡gƒòB+,Ÿ !¨˜!‹:X¼¡ª ¬úU”ñlhI­÷T!ÀYcê?üñÏ†I÷ñc£4c˜~YŒqŒÿÍbŒajÕÇØV-TUÃ1¶V5Ä(¬a8FS
+ƒŽ@„Á=¸,“n[–0SäÁÎÇÕ!LU‡ÀÊ 3uÃŒ›èÁ/È°h
+DI'O—Ü”;/dyä8Š<ä³ô«Î»Â?šÊµ½¿7÷•×dÕ·àœ(÷>bEU÷I=WXáÕ°ˆAd_oÓ Ï!Š-Ž_TýÒOå"y&„·ðNZiQ®ndH ròˆBgÛ¯.~i²‹W¿”l» Ãš…äHXÅ+z=øð™)“H=›’‡ØDœ(¹$úØ$¹$yc–±I&Ÿ%£~_ê×<©—¼k<ÂctMÄiê¢‚dÈ›Ûy ý YhŠ"E‘ S‘T”OPÛÁ\ãgÙv•‡Aèâ~ôA#µ’1kÊEŽ@15< šÿ7zöQ”úFü£#{)¸G‰“: S©	Ôx()¬¾Ð3ŒùMäODYÚ"Ø$ÇÓ»xÚœ†Peq…«ñ¢œ?Oäå”ÈBQÊ§ …‘¬³¹èÈ~œJŠ}auŽŽèBøãøÇêg¡Ž?^=éq·vîÝ÷B.\ayôgiÊk1rA±b«´ÄïÛ&ÆJ_ŠXhôîýPzÕŸ 4û±·D´ &x’.>Yû­Ào÷¦ËHØT ^ÂÊ­¯ì®		|Jÿ<"ýÿ¾A<ÒÕ%!§gaØ2Ôù¼Ñ¶€õÏ]oÞšŒÆ‹Â(Œ-‘Ê´yÞiN,Ìp`yš:ÑJíöðg­âØ¦maò©ü´oaa#ö—ç6õ¤jˆ~dS¨i×ÏLêCµ>ZžglÀT=j_4ÂŽrÙó{-Ž,Ú–,/äC½[Öl/êìÕfYŽ®6VÎ&ÚV QfúåÕË¯›»KŽ¦m|Ë L¯­VÝ¨ÚûQwi7HhÌÏ–®­ír{1³Ôj±^YdÞ9Æ‰eih÷G3*EÁsäÈv¿j»#´*5&}UªTx®)÷¯¡VŠ…(ë
+·™ …ºjÜÞeÞiŒ÷Û…¢,cÖ–µænÖ*­…ßnKÆQ1A’ó•¬ò×Š•º–ÛÒyrŽrzUðE
+aX#‰˜Ñ=”"Á¹¦EKée•Úz[Ë*Æð~ïGXW×÷ŸßÀ$$Âjo€¨Å0[íÑXYöª¡EÂíZj'×v®·.ãzTçÕ0˜¶šxzÝn×›!>ä9‡ž!çZ÷¸>ö}ºøÀRÃû¶î÷dYÕ§%¾CžÄwfaEjD¾½-w„ç’#cácöÅÚË;û=^ù®;lØjß€ŸáÔvÊñr“ô´Ë4½}óµE—¯øk:ƒ÷Äo;¸˜*1l¯y8*Ø(&I'¾'¸1‚ºVT>0ä¢Ô¸õ úµð†G‡™°>¢-K½ ®ÞèðO|Èoàå|qÀêLä?…ôÀoÑ8à16ƒ›³°òhQ.œ}¹pKFiF{çƒÅLìQá€K… c—’ý2-vüÀ¢"È`Q‘˜Ô—­Rð*iváU[ÑFk¯%¿ïQ:tªð°]“”s%.÷{õ(`S	!fÄ4µP—ëêDsÃ—£BTÝÈ'Á.ç™uïnâ¶+ú†»¹$#Üº"ß\ð,þ´×»­8NcÆ#œ²ÕŒKP‚Rê¶LÓ^duÛt³Uä1&kqú(†=¥· Í‚_“H7ªñB™ w?ªÒ²èx´~Yy,h=4	¶½ÖèdÐ×-h÷/”Wî
+×],%aÑþl¤nê5CÆ"<Í.Ê¥7<¥ÛZÅaõÎ•6­jAÎÜ¨ÿ,3Ó]eÌ:Ö‚»ŒBÓ>jHŠÃ+—mäŠe“R´$^'wíŸwíÞ!ýi^ê…ºP'È†¥]¬%˜Å•¤HZª4S1šº6{ùdsáJ°öÅŸ¡ø4/+³k*À"MÅb¿›±[ŽuðLŠˆÊ·ìV‹þ`I!“Í‹î¸ü;Ÿb_-ñZIe!é:}
+Q#ŸAL Â>õ¥í9šaRP¢7«hÔÜŒL+ãÄmS…ïcäÝ$!aŽ‡®šv>Û4Z5š¿º|ý
+dÃÂ`ºj½³,«{¼oWfJõ—¡Jºˆ&Œ…$	:ŽxQŠÌYè¯.a¨ÌÕc	”2,|aS«àÿÉ@X!«:(òŒí%ª(.á,˜^„	 ótµÆc !-Ü[7 qà9„’Æ›np€=†¹^ð|ûŽqñúòÊ0ñ"½3õï5ãI	€Y€-ðxüßBÇÔZSpãÑ‚àøºÏSð(~ÏQœ[D|öý÷†@· ÌÔEò-C_4ðG4%ð¿ÿž`Â¹_¬ø+9Ä•×Ø¸_Xm::ZÂ^Ÿ‰#yµñ8V];å^œú#QðÅ Yð“5SœÕ8ÂtáÅ3ðÍ˜î˜¼MC'ã{?,«CÖ2ÊæÁ4o	È¨©˜ÑÈÞ–X»Aª$ÈÃfZÆ£ÀBÀ¾f ß±Ð÷†'àAlË³XKI¢/Y¸+HÇ<Kñß…šaÆ<
+£³>ô<"™SdØ-u
+v4“ÇFÉnŽ€ä#{(ŸN!UÏµ×âˆO²
+añÝpÊ›®‚Zª6³oÛ¶0Å!oÎ½ëíb}`<¦íí›ó§ íq„$ÈL
+Æ3\B!ˆ»d[ÈÖ ß«ð§ñ2‚FñÓJC'&‰ŽÑ/ €Ürò(E)&…Ñ*„k$&ïßÒÖ(Q¬&Uò«N0dBFn€®ðÛÚÁ¨úÈÃ/Ñ%„ëÈ¨$
+‚íëí™ŒAÿ½œkkÎqT!ºÄáéÈøû	8‚kC4¦ø%GÇ	"Ô$ßšòTvW„ò5ÒîÉˆ\AŒ™‘—eW0ad¨¯ÍJ:âC7í£ÀòÛÃýcŸL§â£sñ&ê8K$5N6†?cZX¬§Ûˆ1IZñDŸÒç×÷Šâ"
+oâ ;q¢£®_˜dà¢X†
+¾B¨IKœdOIÑ"¾!aaa<w‰Já¸PÎ s^âõ¾ßw†°ÜTR‡ßC.î…K9+ÒÝ~@ap;•šLa©•(–øl7”Â>âq¼ñ¨²<¬P^b1ÚI
+´¡îOIà}ð Î~¦|³ÜkÃzWxæŽ+â•—À„¨x“ß%âÆû¹Gb¦x Ó,87]Iû ïP€¨ƒù›à!óc"„ÈŸ˜¿T¼"ë½Œ ÏÉÊÀÐÄå…$†½â½|aòõî…a¢7FœØ¡Y…W<ÇÐ˜è¢ý]ô*fR§KyRHBdƒˆ|±]ÊÀãÐ=°r²ƒ@]^ˆÓWëíaƒ~Jeï^O„kf²0_eˆú}Q*Ò|xHA©ªá”jÙIªÊvŠºÈþ#¡gàú
+Y/¢K;@¡1
+pÄ…Ù­Óîƒ8ë+`ô÷ÀŒ‚¶Žœ "8¢¶’8’¾ó³­¨ Ðo
+Šˆ½@ÍÿöWR/ãìÿceþJÅë"H£ÉÄÆ?Éc}øà¬6¼Ôàã½Tí›}£B*éqPúñPF(h)—í0Ë¸ Qª¶­ŠCü"WÞ,:=ßâÐ§ô PK    <Z]]öÐ«Î×   s             ¤    package.jsonPK    <Z]]éÎ<ñ…	  ?  
+           ¤  ai-routes.cjsPK    <Z]]ç´yW.  r  	           ¤±
+  server.jsPK    <Z]]'JÁ9?  
+  	           ¤  README.mdPK    <Z]]‹/üÓG  ·T             ¤l  public/index.htmlPK      "  â2    
